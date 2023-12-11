@@ -6,23 +6,23 @@
 extern int mode; // 游戏模式，1表示双人对战，2表示人机对战
 
 // 空棋盘模板 
-char arrayForEmptyBoard[SIZE][SIZE*CHARSIZE+1] = 
+char arrayForEmptyBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1] = 
 {
-		"┏┯┯┯┯┯┯┯┯┯┯┯┯┯┓",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┠┼┼┼┼┼┼┼┼┼┼┼┼┼┨",
-		"┗┷┷┷┷┷┷┷┷┷┷┷┷┷┛"
+		"┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+		"└─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘"
 };
 
 // 以下是棋子的图案
@@ -35,19 +35,17 @@ char play2CurrentPic[]="△"; // 白棋子的当前落子位置
 int arrayForInnerBoardLayout[SIZE][SIZE];
 
 // 显示的棋盘 
-char arrayForDisplayBoard[SIZE][SIZE*CHARSIZE+1];
+char arrayForDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
-
-int lastPlayerMoveStone[2];  // 上一步玩家落子的坐标
-int currentPlayerMoveStone[2];  // 当前玩家落子的坐标
-int player;  // 当前等待落子的玩家，1表示黑方，2表示白方
+// 当前等待落子的玩家，1表示黑方，2表示白方
+int player;
 
 // 初始化一个空棋盘格局 
 void initRecordBoard(void){
 	//通过双重循环，将arrayForInnerBoardLayout清0
-    int i,j;
-    for (i=0;i<SIZE;i++)
-        for (j=0;j<SIZE;j++)
+    int i, j;
+    for (i = 0; i < SIZE; i++)
+        for (j = 0; j < SIZE; j++)
             arrayForInnerBoardLayout[i][j]=0;
 }
 
@@ -55,33 +53,33 @@ void initRecordBoard(void){
 void innerLayoutToDisplayArray(void){
 	//第一步：将arrayForEmptyBoard中记录的空棋盘，复制到arrayForDisplayBoard中
     int i, j;
-    for (i=0;i<SIZE;i++)
-        for (j=0;j<SIZE*CHARSIZE+1;j++)
+    for (i = 0; i < SIZE; i++)
+        for (j = 0; j < (2 * SIZE - 1) * CHARSIZE + 1; j++)
             arrayForDisplayBoard[i][j]=arrayForEmptyBoard[i][j];
     //第二步：扫描arrayForInnerBoardLayout，当遇到非0的元素，将●或者◎复制到arrayForDisplayBoard的相应位置上
 	//注意：arrayForDisplayBoard所记录的字符是中文字符，每个字符占2个字节。●和◎也是中文字符，每个也占2个字节。
-    for (i=0;i<SIZE;i++){
-        for (j=0;j<SIZE;j++){
+    for (i = 0; i < SIZE; i++){
+        for (j = 0; j < SIZE; j++){
             switch (arrayForInnerBoardLayout[i][j]){
                 case (1):
-                    arrayForDisplayBoard[i][j * CHARSIZE] = play1Pic[0];
-                    arrayForDisplayBoard[i][j * CHARSIZE + 1] = play1Pic[1];
-                    arrayForDisplayBoard[i][j * CHARSIZE + 2] = play1Pic[2];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE] = play1Pic[0];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play1Pic[1];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE + 2] = play1Pic[2];
                     break;
                 case (2):
-                    arrayForDisplayBoard[i][j * CHARSIZE] = play2Pic[0];
-                    arrayForDisplayBoard[i][j * CHARSIZE + 1] = play2Pic[1];
-                    arrayForDisplayBoard[i][j * CHARSIZE + 2] = play2Pic[2];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE] = play2Pic[0];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play2Pic[1];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE + 2] = play2Pic[2];
                     break;
                 case (-1):
-                    arrayForDisplayBoard[i][j * CHARSIZE] = play1CurrentPic[0];
-                    arrayForDisplayBoard[i][j * CHARSIZE + 1] = play1CurrentPic[1];
-                    arrayForDisplayBoard[i][j * CHARSIZE + 2] = play1CurrentPic[2];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE] = play1CurrentPic[0];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play1CurrentPic[1];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE + 2] = play1CurrentPic[2];
                     break;
                 case (-2):
-                    arrayForDisplayBoard[i][j * CHARSIZE] = play2CurrentPic[0];
-                    arrayForDisplayBoard[i][j * CHARSIZE + 1] = play2CurrentPic[1];
-                    arrayForDisplayBoard[i][j * CHARSIZE + 2] = play2CurrentPic[2];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE] = play2CurrentPic[0];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play2CurrentPic[1];
+                    arrayForDisplayBoard[i][2 * j * CHARSIZE + 2] = play2CurrentPic[2];
                     break;
             }
             
@@ -101,7 +99,7 @@ void displayBoard(void){
     else
         printf("人 机 模 式\n\n");
     printf("本游戏支持一些指令：\n");
-    printf("“quit”-回到主页面  “regret”-悔棋\n\n");
+    printf("quit/q -> 回到主页面  regret/r -> 悔棋\n\n");
     
     // 将arrayForDisplayBoard输出到屏幕上
     for (i = 0; i < SIZE; i++){
@@ -109,7 +107,7 @@ void displayBoard(void){
     }
 
     // 输出最下面的一行字母A B ....
-    printf("    ");
+    printf("   ");
     for (i = 0; i < SIZE; i++)
         printf("%2c", 'A' + i);
     printf("\n\n");

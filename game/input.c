@@ -12,7 +12,7 @@ void mygetline(char s[], int lim){
     while (--lim > 0 && (c = getchar()) != EOF && c != '\n'){
         s[i++] = c;
     }
-    if ((c == '\n')){
+    if (c == '\n'){
         s[i] = '\0';
     }else{
         putchar('\n');
@@ -21,21 +21,21 @@ void mygetline(char s[], int lim){
 }
 
 // 比较两个字符串，1表示二者相同，0表示二者不同
-int mystrcmp(char *s, char *t){
+int mystrcmp(char *source, char *pattern){
     int i;
-    for (i = 0; s[i] == t[i]; i++)
-        if (s[i] == '\0')
+    for (i = 0; source[i] == pattern[i]; i++)
+        if (source[i] == '\0')
             return 1;
     return 0;
 }
 
-// 对玩家输入进行判断：如果输入的是合法坐标格式，直接完成转换并储存在数组currentPlayerMoveStone[2]为，同时返回0；如果输入的是quit指令，返回1；如果输入的是regret指令，返回2；如果输入有误，返回-1
+// 对玩家输入进行判断：如果输入的是合法坐标格式，直接完成转换并储存在currentPlayerMoveStone中，同时返回0；如果输入的是quit指令，返回1；如果输入的是regret指令，返回2；如果输入有误，返回-1
 int inputCheck(void){
     if (inputToCoordinate() == 0){
         return 0;
-    }else if (mystrcmp(line, "quit")){
+    }else if (mystrcmp(line, "quit") || mystrcmp(line, "q")){
         return 1;
-    }else if (mystrcmp(line, "regret")){
+    }else if (mystrcmp(line, "regret") || mystrcmp(line, "r")){
         return 2;
     }else{
         return -1;

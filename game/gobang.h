@@ -19,10 +19,14 @@ extern int arrayForInnerBoardLayout[SIZE][SIZE];
 // 显示的棋盘 
 extern char arrayForDisplayBoard[SIZE][SIZE*CHARSIZE+1];
 
+struct moveStone{
+    int x;
+    int y;
+};
 // 上一步玩家落子的坐标
-extern int lastPlayerMoveStone[];
+extern struct moveStone lastPlayerMoveStone;
 // 当前玩家落子的坐标
-extern int currentPlayerMoveStone[];
+extern struct moveStone currentPlayerMoveStone;
 
 // 当前等待落子的玩家，1表示黑方，2表示白方
 extern int player;
@@ -58,7 +62,7 @@ void mygetline(char s[], int lim);
 int mystrcmp(char *s, char *t);
 
 
-// 对玩家输入进行判断：如果输入的是坐标，直接修改currentPlayerMoveStone[2]并返回0；如果输入的是quit指令，返回1；如果输入的是regret指令，返回2；如果输入有误，返回-1
+// 对玩家输入进行判断：如果输入的是坐标，直接修改currentPlayerMoveStone并返回0；如果输入的是quit指令，返回1；如果输入的是regret指令，返回2；如果输入有误，返回-1
 int inputCheck(void);
 
 // 将玩家的输入转化为坐标，若为合法坐标，则返回0，否则返回-1
