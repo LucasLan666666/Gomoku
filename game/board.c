@@ -1,28 +1,27 @@
 // 关于棋盘的一些基础配置，包括棋盘的大小，棋盘的显示，棋盘的初始化等等
 #include <stdio.h>
 #include <stdlib.h>
-#include "macro.h"
+#include "gomoku.h"
 
-extern int mode; // 游戏模式，1表示双人对战，2表示人机对战
+extern int gameMode; // 游戏模式，1表示双人对战，2表示人机对战
 
 // 空棋盘模板 
-char arrayForEmptyBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1] = 
-{
-		"┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
-		"└─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘"
+char arrayForEmptyBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1] = {
+	"┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
+	"└─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┴─┘"
 };
 
 // 以下是棋子的图案
@@ -55,7 +54,7 @@ void innerLayoutToDisplayArray(void){
     int i, j;
     for (i = 0; i < SIZE; i++)
         for (j = 0; j < (2 * SIZE - 1) * CHARSIZE + 1; j++)
-            arrayForDisplayBoard[i][j]=arrayForEmptyBoard[i][j];
+            arrayForDisplayBoard[i][j] = arrayForEmptyBoard[i][j];
     //第二步：扫描arrayForInnerBoardLayout，当遇到非0的元素，将●或者◎复制到arrayForDisplayBoard的相应位置上
 	//注意：arrayForDisplayBoard所记录的字符是中文字符，每个字符占2个字节。●和◎也是中文字符，每个也占2个字节。
     for (i = 0; i < SIZE; i++){
@@ -94,27 +93,26 @@ void displayBoard(void){
     int result = system("clear");  // system函数会返回一个整数，如果不这样赋值，编译器会发出警告
 
     // 输出提示信息
-    if (mode == 1)
+    if (gameMode == 1)
         printf("双 人 模 式\n\n");
     else
         printf("人 机 模 式\n\n");
     printf("本游戏支持一些指令：\n");
-    printf("quit/q -> 回到主页面  regret/r -> 悔棋\n\n");
+    printf("    quit/q -> 回到主页面  regret/r -> 悔棋（开发中）\n\n");
     
     // 将arrayForDisplayBoard输出到屏幕上
-    for (i = 0; i < SIZE; i++){
-        printf("%3d %s\n", SIZE - i, arrayForDisplayBoard[i]);
+    if (judgeWin() == 0){
+        for (int i = 0; i < SIZE; i++){
+            printf("%3d %s          %s\n", SIZE - i, arrayForDisplayBoard[i], DOGE[i]);
+        }
+    }else{
+        for (int i = 0; i < SIZE; i++){
+            printf("%3d %s          %s\n", SIZE - i, arrayForDisplayBoard[i], GAME_OVER[i]);
+        }
     }
-
     // 输出最下面的一行字母A B ....
     printf("   ");
     for (i = 0; i < SIZE; i++)
         printf("%2c", 'A' + i);
     printf("\n\n");
-
-    // 输出当前等待落子的玩家
-    if (player == 1)
-        printf("现在请黑方落子：");
-    else
-        printf("现在请白方落子：");
 }
