@@ -16,16 +16,13 @@ void playerVsPlayer(void){
         displayBoard();  // 显示棋盘
 
         // 输出当前等待落子的玩家
-        if (player == 1){
-            printf("现在请黑方落子：\n");
-        }else{
-            printf("现在请白方落子：\n");
-        }
+        printf("    现在请%s落子：\n\t", (player == 1) ? "黑方" : "白方");
+
         mygetline();  // 从键盘读取输入到line中
 
         // 对玩家输入进行判断：如果输入的是坐标，返回0；如果输入的是quit指令，返回1；如果输入的是regret指令，返回2；如果输入有误，返回-1
         while ((check = inputCheckInGame()) == -1){
-            printf("你的输入有误，请重新输入：\n");
+            printf("    你的输入有误，请重新输入：\n\t");
             mygetline();
         }
         switch (check){

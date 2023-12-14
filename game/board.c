@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "gomoku.h"
 
-extern int gameMode; // 游戏模式，1表示双人对战，2表示人机对战
+extern int gameMode; // 游戏模式，1表示双人对战，2表示人机对战，3表示读取棋谱，4表示退出游戏，-1表示输入有误
 
 // 空棋盘模板 
 char arrayForEmptyBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1] = {
@@ -90,14 +90,17 @@ void innerLayoutToDisplayArray(void){
 void displayBoard(void){
 	int i;
 	// 清屏
-    int result = system("clear");  // system函数会返回一个整数，如果不这样赋值，编译器会发出警告
+    int clear = system("clear");  // 清屏
 
     // 输出提示信息
-    if (gameMode == 1)
-        printf("双 人 模 式\n\n");
-    else
-        printf("人 机 模 式\n\n");
-    printf("本游戏支持一些指令：\n");
+    if (gameMode == 1){
+        printf("    双      人      模      式\n\n");
+    }else if (gameMode == 2){
+        printf("    人      机      模      式\n\n");
+    }else if (gameMode == 3){
+        // 开发中...
+    }
+    printf("    本游戏支持一些指令：\n");
     printf("    quit/q -> 回到主页面  regret/r -> 悔棋（开发中）\n\n");
     
     // 将arrayForDisplayBoard输出到屏幕上

@@ -17,8 +17,7 @@ void mygetline(void){
         c = getchar();
     }
     if (c == EOF){  //读到EOF，退出程序
-        int result = system("clear");
-        exit(0);
+        End();
     }else if (c == '\n'){
         line[i] = '\0';
     }else if (i == MAXLINE - 1){
@@ -29,40 +28,24 @@ void mygetline(void){
 
 /*
  *  对玩家输入进行判断：
- *      如果输入1，将gameMode设置为1；
- *      如果输入2，将gameMode设置为2；
- *      如果输入的是quit指令，退出游戏；
+ *      如果输入1，返回1；
+ *      如果输入2，返回2；
+ *      如果输入3，返回3；
+ *      如果输入quit指令，返回4；
  *      如果输入有误，返回-1；    
  */
 int inputCheckInHomePage(void){
     if (strcmp(line, "1") == 0){
-            gameMode = 1;
-            printf("你选择了人人对战模式\n");
-            printf("是否记录棋谱？（y/n）\n");
-            mygetline();            
-            isRecord();
-            if (gameRecord && readWritePermission){
-                createGameRecordFile();
-            }else{
-                printf("棋谱创建失败，没有足够权限，请尝试在其他目录下执行本程序\n");
-            }
+        return 1;
     }else if (strcmp(line, "2") == 0){
-            gameMode = 2;
-            printf("你选择了人机对战模式\n");
-            printf("是否记录棋谱？（y/n）\n");
-            mygetline();            
-            isRecord();
-            if (gameRecord && readWritePermission){
-                createGameRecordFile();
-            }else{
-                printf("棋谱创建失败，没有足够权限，请尝试在其他目录下执行本程序\n");
-            }
+        return 2;   
+    }else if (strcmp(line, "3") == 0){
+        return 3;   
     }else if ((strcmp(line, "quit") == 0) || (strcmp(line, "q") == 0)){
-            exit(0);
+        return 4;
     }else{
         return -1;
     }
-    return 0;
 }
 
 /*
@@ -73,9 +56,9 @@ int inputCheckInHomePage(void){
  *      如果输入有误，返回-1
  */
 int inputCheckInGame(void){
-    if ((strcmp(line, "quit") == 0)|| (strcmp(line, "q") == 0)){
+    if ((strcmp(line, "quit") == 0) || (strcmp(line, "q") == 0)){
         return 1;
-    }else if ((strcmp(line, "regret") == 0)|| (strcmp(line, "r") == 0)){
+    }else if ((strcmp(line, "regret") == 0) || (strcmp(line, "r") == 0)){
         return 2;
     }else if (inputToCoordinate() == 0){
         return 0;

@@ -66,24 +66,31 @@ void createGameRecordFile(void){
     time_t now = time(NULL);
     struct tm *t = localtime(&now);
         strftime(localTime, NAMESIZE, "%Y-%m-%d_%H-%M-%S", t);
+    
     // 针对玩家输入创建文件
-    if (strcmp(line, "") == 0){  // 玩家输入空字符，用时间命名
+    while (1){
+        if (strcmp(line, "") == 0){  // 玩家输入空字符，用时间命名
         sprintf(roundName, "%s%s", "Game-", localTime);  // 将时间转化为字符串
-    }else{
-        strcpy(roundName, line);  // 用玩家输入命名
-    }
-
-    // 创建文件
-    sprintf(pathOfRound, "%s/%s.txt", "game_record", roundName);  // 将路径和文件名合并
-    while (isFileExist(pathOfRound)){
-        printf("文件名与已有文件重名，请重新命名：\n");
+        }else{
+            strcpy(roundName, line);  // 用玩家输入命名
+        }
+        sprintf(pathOfRound, "%s/%s.txt", "game_record", roundName);  // 生成路径名
+        if ((isFileExist(pathOfRound)) == 0){
+            break;
+        }
+        printf("文件已存在，请重新输入：\n");
         mygetline();
     }
+    
+    // 修改时间打入棋谱的格式
+    strftime(localTime, NAMESIZE, "%Y/%m/%d %H:%M:%S", t);
+    
+    // 创建文件
     FILE *fp = fopen(pathOfRound, "w");  // 创建文件
     // 写入文件
-    fprintf(fp, "Round Name: %s\n", roundName);
-    fprintf(fp, "Game Mode: %d\n", gameMode);
-    fprintf(fp, "Round Time: %s\n", localTime);
+    fprintf(fp, "Round Name:  %s\n", roundName);
+    fprintf(fp, "Game Mode:   %d\n", gameMode);
+    fprintf(fp, "Round Time:  %s\n", localTime);
     fprintf(fp, "Game Record:\n");
     // 关闭文件
     fclose(fp);
@@ -98,3 +105,6 @@ void recordGameRoundToLocal(void){
     // 关闭文件
     fclose(fp);
 }
+
+// 读取棋谱    
+void readGameRecord(void){}  // 开发中...
