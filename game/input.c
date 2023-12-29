@@ -50,7 +50,7 @@ int inputCheckInHomePage(void){
 
 /*
  *  对玩家在游戏中输入进行判断：
- *      如果输入的是合法坐标格式，直接完成转换并储存在currentPlayerPlaceStone中，同时返回0；
+ *      如果输入的是合法坐标格式，直接完成转换并储存在stepRecord[stepNum]中，同时返回0；
  *      如果输入的是quit指令，返回1；
  *      如果输入的是regret指令，返回2；
  *      如果输入有误，返回-1

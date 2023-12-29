@@ -27,16 +27,16 @@ void playerVsPlayer(void){
         }
         switch (check){
         case 0:
-            stepNum++;  // 步数+1
             coordinateToPlaceStone();  // 将坐标转化为棋盘上的落子
             if (gameRecord && readWritePermission){  // 判断是否开启记谱模式，以及是否有读写权限
                 recordGameRoundToLocal();  // 记录棋谱到本地
             }
+            stepNum++;  // 步数+1（现在才回归正常步数）
             if (judgeWin() != 0){  // 判断是否有玩家获胜
                 innerLayoutToDisplayArray();
                 displayBoard();  // 显示棋盘
                 printf("恭喜%s获胜！\n", (player == 1) ? "白方" : "黑方");  // 因为一方落子瞬间player会反转，所以这里要取反
-                printf("按下Enter返回主页\n");
+                printf("输入任意内容返回主页\n");
                 mygetline();
                 quit = 1;
             }

@@ -1,4 +1,6 @@
 // 头文件，包含了一些常量定义和函数声明
+#ifndef GOMOKU_H
+#define GOMOKU_H
 #define SIZE 15  // 棋盘大小
 #define CHARSIZE 3  // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
 #define MAXLINE 50  // 定义玩家输入的最大长度
@@ -16,7 +18,16 @@ extern int gameRecord;  // 是否开启记谱模式，1为是，0为否
 extern int readWritePermission;  // 是否有读写权限，1为是，0为否
 extern char roundName[NAMESIZE + 6];  // 游戏对局名称
 extern char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
+
+// 用于记录玩家落子的坐标
+struct placeStone{
+    int x;
+    int y;
+};
+
 extern int stepNum;  // 记录当前步数
+extern struct placeStone stepRecord[225];  // 记录每一步的下棋内容，stepRecord[0]为第一步，stepRecord[1]为第二步，以此类推
+
 
 // 空棋盘模板
 extern char arrayForEmptyBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
@@ -33,13 +44,14 @@ extern int arrayForInnerBoardLayout[SIZE][SIZE];
 // 显示的棋盘 
 extern char arrayForDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
-struct placeStone{
-    int x;
-    int y;
+// 用于记录棋盘上面一个子的各方面信息
+struct stoneState{
+    int x;  // 横坐标
+    int y;  // 纵坐标
+    int player;  // 玩家，1表示黑方，2表示白方
+    int N, NE, E, SE, S, SW, W, NW;  // 8个方向的连子数（不包含自身）
+    int step;  // 步数
 };
-
-extern struct placeStone lastPlayerPlaceStone;  // 上一步玩家落子的坐标
-extern struct placeStone currentPlayerPlaceStone;  // 当前玩家落子的坐标
 
 // 当前等待落子的玩家，1表示黑方，2表示白方
 extern int player;
@@ -80,7 +92,7 @@ int inputCheckInHomePage(void);
 
 /*
  *  对玩家在游戏中输入进行判断：
- *      如果输入的是合法坐标格式，直接完成转换并储存在currentPlayerPlaceStone中，同时返回0；
+ *      如果输入的是合法坐标格式，直接完成转换并储存在stepRecord[stepNum]中，同时返回0；
  *      如果输入的是quit指令，返回1；
  *      如果输入的是regret指令，返回2；
  *      如果输入有误，返回-1
@@ -113,3 +125,5 @@ void readGameRecord(void);
 
 // 判断是否有胜者出现：若黑棋获胜，返回1；白棋获胜，返回2；未出现胜者，返回0
 int judgeWin(void);
+
+#endif
