@@ -1,7 +1,7 @@
 // 此文件用于对局势进行分析判断
 #include "gomoku.h"
 
-// 判断是否有胜者出现：若黑棋获胜，返回1；白棋获胜，返回2；未出现胜者，返回0
+// 判断是否有胜者出现：若黑棋获胜，返回 BLACK；白棋获胜，返回 WHITE；未出现胜者，返回 NOBODY
 int judgeWin(void){
     // 判断是否有五子连珠
     for (int i = 0; i <= 3; i++){
@@ -9,5 +9,5 @@ int judgeWin(void){
             return player;
         }
     }
-    return 0;
+    return NOBODY;
 }

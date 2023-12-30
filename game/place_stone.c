@@ -53,16 +53,15 @@ int inputToCoordinate(void){
 }
 
 // 将玩家当前输入的坐标转化为棋盘上的落子，并更新棋子的状态
-void coordinateToPlaceStone(void)
-{
+void coordinateToPlaceStone(void){
     // 下面将坐标转化为落子
     // 改变上一步的落子状态，使其不再是当前落子位置（加判断，是因为第一次黑方下棋是没有上一步的）
     if (stepNum > 0){
-        arrayForInnerBoardLayout[stepRecord[stepNum - 1].x][stepRecord[stepNum - 1].y].current = 0;
+        arrayForInnerBoardLayout[stepRecord[stepNum - 1].x][stepRecord[stepNum - 1].y].current = NO;
     }
 
     // 改变当前棋子的落子状态
-    arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].current = 1;
+    arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].current = YES;
     arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].player = player;
 
     //该步下完后，更新整个棋盘上目前已经落子的每个棋子的状态
@@ -132,11 +131,6 @@ void coordinateToPlaceStone(void)
             j++, arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].direction[7]++
             );
     }
-    
-    // 将当前玩家落子坐标赋值给上一步玩家落子坐标，主要是为了区分符号显示
-
-    stepRecord[stepNum - 1].x = stepRecord[stepNum].x;
-    stepRecord[stepNum - 1].y = stepRecord[stepNum].y;
 
     // 转换玩家，黑方下完白方下，白方下完黑方下
     player = (player == BLACK) ? WHITE : BLACK;

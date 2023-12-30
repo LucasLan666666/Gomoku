@@ -64,7 +64,7 @@ void innerLayoutToDisplayArray(void){
 	//注意：arrayForDisplayBoard所记录的字符是中文字符，每个字符占2个字节。●和◎也是中文字符，每个也占2个字节。
     for (i = 0; i < SIZE; i++){
         for (j = 0; j < SIZE; j++){
-            if (arrayForInnerBoardLayout[i][j].current == 0){
+            if (arrayForInnerBoardLayout[i][j].current == NO){
                 if (arrayForInnerBoardLayout[i][j].player == BLACK){
                     arrayForDisplayBoard[i][2 * j * CHARSIZE] = play1Pic[0];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play1Pic[1];
@@ -74,7 +74,7 @@ void innerLayoutToDisplayArray(void){
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play2Pic[1];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 2] = play2Pic[2];
                 }
-            }else if (arrayForInnerBoardLayout[i][j].current == 1){        
+            }else if (arrayForInnerBoardLayout[i][j].current == YES){        
                 if (arrayForInnerBoardLayout[i][j].player == BLACK){
                     arrayForDisplayBoard[i][2 * j * CHARSIZE] = play1CurrentPic[0];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play1CurrentPic[1];

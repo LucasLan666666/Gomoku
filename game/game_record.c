@@ -89,10 +89,10 @@ void createGameRecordFile(void){
     // 创建文件
     FILE *fp = fopen(pathOfRound, "w");  // 创建文件
     // 写入文件
-    fprintf(fp, "Round Name:  %s\n", roundName);
-    fprintf(fp, "Game Mode:   %d\n", gameMode);
-    fprintf(fp, "Round Time:  %s\n", localTime);
-    fprintf(fp, "Game Record:\n");
+    fprintf(fp, "# Round Name:  %s\n", roundName);
+    fprintf(fp, "# Game Mode:   %d\n", gameMode);
+    fprintf(fp, "# Round Time:  %s\n", localTime);
+    fprintf(fp, "# Game Record:\n");
     // 关闭文件
     fclose(fp);
 }
@@ -106,6 +106,40 @@ void recordGameRoundToLocal(void){
     // 关闭文件
     fclose(fp);
 }
+
+// 删除棋谱中的最后一步
+void deleteLastStepInLocal(void) {
+    FILE *fp = fopen(pathOfRound, "r");
+    FILE *fpTemp = fopen("temp.txt", "w");
+    char buffer[256];
+    long last_offset = -1;
+
+    // 先读取并写入第一行
+    if (fgets(buffer, sizeof(buffer), fp) != NULL) {
+        fputs(buffer, fpTemp);
+        last_offset = ftell(fp);
+    }
+
+    // 找到最后一行的开始位置
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+        if (ftell(fp) != last_offset) {
+            fseek(fp, last_offset, SEEK_SET);
+            fgets(buffer, sizeof(buffer), fp);
+            fputs(buffer, fpTemp);
+            fseek(fp, ftell(fp), SEEK_SET);
+            last_offset = ftell(fp);
+        }
+    }
+
+    fclose(fp);
+    fclose(fpTemp);
+
+    // 删除原文件并将临时文件重命名为原文件
+    remove(pathOfRound);
+    rename("temp.txt", pathOfRound);
+}
+
+
 
 // 读取棋谱    
 void readGameRecord(void){}  // 开发中...

@@ -9,6 +9,8 @@
 #define BLACK 1  // 定义黑方
 #define WHITE 2  // 定义白方
 #define NOBODY 0  // 定义没有人
+#define YES 1  // 定义是
+#define NO 0  // 定义否
 
 // 用于记录棋盘上面一个子的信息
 struct stone{
@@ -121,6 +123,9 @@ void createGameRecordFile(void);
 
 // 记录棋谱到本地
 void recordGameRoundToLocal(void);
+
+// 删除棋谱中的最后一步
+void deleteLastStepInLocal(void);
 
 // 读取棋谱    
 void readGameRecord(void);

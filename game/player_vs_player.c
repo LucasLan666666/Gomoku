@@ -5,22 +5,30 @@
 #include "gomoku.h"
 
 void playerVsPlayer(void){
-    int quit = 0;  //表示是否退出，1为退出，0为不退出
+    int quit = NO;  //表示是否退出
+    int regret = NO;  // 表示是否悔棋
     int check;  // 储存读取输入的相关信息
     player = BLACK;  //黑方先落子，所以初始化player为1
     stepNum = 0;  // 初始化步数为0
     initRecordBoard(); // 初始化一个空棋盘
 
-    while (quit == 0){
+    while (quit == NO){
         innerLayoutToDisplayArray();  // 将心中的棋盘转成用于显示的棋盘
         displayBoard();  // 显示棋盘
+
+        if (stepNum == 0 && regret == YES){
+            printf("    已经是第一步，无法悔棋！\n");
+        }else if (stepNum > 0 && regret == YES){
+            printf("    悔棋成功！\n");
+        }
+        regret = NO;
 
         // 输出当前等待落子的玩家
         printf("    现在请%s落子：\n\t", (player == BLACK) ? "黑方" : "白方");
 
         mygetline();  // 从键盘读取输入到line中
 
-        // 对玩家输入进行判断：如果输入的是坐标，返回0；如果输入的是quit指令，返回1；如果输入的是regret指令，返回2；如果输入有误，返回-1
+        // 对玩家输入进行判断：如果输入的是坐标，返回 0；如果输入的是 quit 指令，返回 1；如果输入的是 regret 指令，返回 2；如果输入有误，返回 -1
         while ((check = inputCheckInGame()) == -1){
             printf("    你的输入有误，请重新输入：\n\t");
             mygetline();
@@ -31,28 +39,43 @@ void playerVsPlayer(void){
             if (gameRecord && readWritePermission){  // 判断是否开启记谱模式，以及是否有读写权限
                 recordGameRoundToLocal();  // 记录棋谱到本地
             }
-            if (judgeWin() != 0){  // 判断是否有玩家获胜
+            if (judgeWin() != NOBODY){  // 判断是否有玩家获胜
                 innerLayoutToDisplayArray();
                 displayBoard();  // 显示棋盘
-                printf("恭喜%s获胜！\n", (player == BLACK) ? "白方" : "黑方");  // 因为一方落子瞬间player会反转，所以这里要取反
-                printf("输入任意内容返回主页\n");
+                printf("    恭喜%s获胜！\n", (player == BLACK) ? "白方" : "黑方");  // 因为一方落子瞬间player会反转，所以这里要取反
+                printf("    输入任意内容返回主页\n");
                 mygetline();
-                quit = 1;
+                quit = YES;
             }
+            // 步数+1
+            stepNum++;
             break;
         case 1:
-            quit = 1;  break;  // 退出while循环
+            quit = YES;  break;  // 退出while循环
         case 2:
-            regret1(); break;
+            regret1(); regret = YES; break;
         default:
             break;
         }
-        // 步数+1
-        stepNum++;
     }
 }
 
 // 人人对战模式的悔棋模式
 void regret1(void){
-    // 犹豫要不要写，如果写了悔棋模式，怎么记谱还没想好
+    if (stepNum != 0){
+        // 步数-1
+        stepNum--;
+        // 将上一步落子清除
+        arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].current = 0;
+        arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].player = 0;
+        for (int k = 0; k < 8; k++){
+            arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].direction[k] = 0;
+        }
+        // 转换为上一个玩家
+        player = (player == BLACK) ? WHITE : BLACK;
+        // coordinateToPlaceStone();  // 将坐标转化为棋盘上的落子
+        if (gameRecord && readWritePermission){  // 判断是否开启记谱模式，以及是否有读写权限
+            deleteLastStepInLocal();  // 删除棋谱中的最后一步
+        }
+    }
 }
