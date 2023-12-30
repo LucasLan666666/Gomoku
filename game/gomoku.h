@@ -125,7 +125,7 @@ void createGameRecordFile(void);
 void recordGameRoundToLocal(void);
 
 // 删除棋谱中的最后一步
-void deleteLastStepInLocal(void);
+void saveRegretToLocal(void);
 
 // 读取棋谱    
 void readGameRecord(void);

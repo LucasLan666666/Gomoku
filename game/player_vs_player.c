@@ -73,9 +73,8 @@ void regret1(void){
         }
         // 转换为上一个玩家
         player = (player == BLACK) ? WHITE : BLACK;
-        // coordinateToPlaceStone();  // 将坐标转化为棋盘上的落子
         if (gameRecord && readWritePermission){  // 判断是否开启记谱模式，以及是否有读写权限
-            deleteLastStepInLocal();  // 删除棋谱中的最后一步
+            saveRegretToLocal();  // 记录悔棋到本地
         }
     }
 }
