@@ -5,6 +5,23 @@
 #define CHARSIZE 3  // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
 #define MAXLINE 50  // 定义玩家输入的最大长度
 #define NAMESIZE 20  // 定义玩家输入的名字的最大长度
+#define MAXSTEP SIZE*SIZE  // 定义最大步数
+#define BLACK 1  // 定义黑方
+#define WHITE 2  // 定义白方
+#define NOBODY 0  // 定义没有人
+
+// 用于记录棋盘上面一个子的信息
+struct stone{
+    int current;  // 0 表示不是当前落子目标，1 表示是当前落子目标
+    int player;  // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY表示没有棋子
+    int direction[8];  // 8 个方向与自己同色的连子数（不包含自身），只统计最多四个连子的情况，北方为零号元素，顺时针方向依次为 1，2，3，4，5，6，7
+};
+
+// 用于记录玩家落子的坐标
+struct placeStone{
+    int x;
+    int y;
+};
 
 // 字符艺术
 extern const char* HAPPY_GOMOKU[];
@@ -19,15 +36,9 @@ extern int readWritePermission;  // 是否有读写权限，1为是，0为否
 extern char roundName[NAMESIZE + 6];  // 游戏对局名称
 extern char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
 
-// 用于记录玩家落子的坐标
-struct placeStone{
-    int x;
-    int y;
-};
-
 extern int stepNum;  // 记录当前步数
-extern struct placeStone stepRecord[225];  // 记录每一步的下棋内容，stepRecord[0]为第一步，stepRecord[1]为第二步，以此类推
-
+extern struct placeStone stepRecord[];  // 记录每一步的下棋内容，stepRecord[0]为第一步，stepRecord[1]为第二步，以此类推
+extern char stepName[];  // 记录下棋内容的字符串
 
 // 空棋盘模板
 extern char arrayForEmptyBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
@@ -39,21 +50,12 @@ extern char play2Pic[];  // 白棋子
 extern char play2CurrentPic[]; // 白棋子的当前落子位置
 
 // 当前的棋盘的格局 
-extern int arrayForInnerBoardLayout[SIZE][SIZE];
+extern struct stone arrayForInnerBoardLayout[SIZE][SIZE];
 
 // 显示的棋盘 
 extern char arrayForDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
-// 用于记录棋盘上面一个子的各方面信息
-struct stoneState{
-    int x;  // 横坐标
-    int y;  // 纵坐标
-    int player;  // 玩家，1表示黑方，2表示白方
-    int N, NE, E, SE, S, SW, W, NW;  // 8个方向的连子数（不包含自身）
-    int step;  // 步数
-};
-
-// 当前等待落子的玩家，1表示黑方，2表示白方
+// 当前等待落子的玩家，BLACK 表示黑方，WHITE 表示白方
 extern int player;
 
 // 记录读取到的一行
@@ -102,7 +104,7 @@ int inputCheckInGame(void);
 // 将玩家的输入转化为坐标，若为合法坐标，则返回0，否则返回-1
 int inputToCoordinate(void);
 
-// 将玩家当前输入的坐标转化为棋盘上的落子
+// 将玩家当前输入的坐标转化为棋盘上的落子，并更新棋子的状态
 void coordinateToPlaceStone(void);
 
 // 从键盘读取输入判断是否开启记谱模式，y为是，n为否，并将结果记录在gameRecord和readWritePermission中

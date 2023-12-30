@@ -12,8 +12,8 @@ int readWritePermission;  // 是否有读写权限，1为是，0为否
 char roundName[NAMESIZE + 6];  // 游戏对局名称
 char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
 int stepNum;  // 记录当前步数
-struct placeStone stepRecord[225];  // 记录每一步的下棋内容，stepRecord[0]为第一步，stepRecord[1]为第二步，以此类推
-char step[4];  // 记录下棋内容的字符串
+struct placeStone stepRecord[MAXSTEP];  // 记录每一步的下棋内容，stepRecord[0]为第一步，stepRecord[1]为第二步，以此类推
+char stepName[13];  // 记录下棋内容的字符串
 
 // 从键盘读取输入判断是否开启记谱模式，y为是，n为否，并将结果记录在gameRecord和readWritePermission中
 void isRecord(void){
@@ -101,8 +101,8 @@ void createGameRecordFile(void){
 void recordGameRoundToLocal(void){
     FILE *fp = fopen(pathOfRound, "a");
     // 写入文件
-    sprintf(step, "%d%c", 15 - stepRecord[stepNum].x, stepRecord[stepNum].y + 'A');  // 将坐标转化为字符串，储存在step中
-    fprintf(fp, "%s\n", step);
+    sprintf(stepName, "%d%c", SIZE - stepRecord[stepNum].x, stepRecord[stepNum].y + 'A');  // 将坐标转化为字符串，储存在stepName中
+    fprintf(fp, "%s\n", stepName);
     // 关闭文件
     fclose(fp);
 }

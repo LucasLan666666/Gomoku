@@ -7,7 +7,7 @@
 void playerVsPlayer(void){
     int quit = 0;  //表示是否退出，1为退出，0为不退出
     int check;  // 储存读取输入的相关信息
-    player = 1;  //黑方先落子，所以初始化player为1
+    player = BLACK;  //黑方先落子，所以初始化player为1
     stepNum = 0;  // 初始化步数为0
     initRecordBoard(); // 初始化一个空棋盘
 
@@ -16,7 +16,7 @@ void playerVsPlayer(void){
         displayBoard();  // 显示棋盘
 
         // 输出当前等待落子的玩家
-        printf("    现在请%s落子：\n\t", (player == 1) ? "黑方" : "白方");
+        printf("    现在请%s落子：\n\t", (player == BLACK) ? "黑方" : "白方");
 
         mygetline();  // 从键盘读取输入到line中
 
@@ -31,11 +31,10 @@ void playerVsPlayer(void){
             if (gameRecord && readWritePermission){  // 判断是否开启记谱模式，以及是否有读写权限
                 recordGameRoundToLocal();  // 记录棋谱到本地
             }
-            stepNum++;  // 步数+1（现在才回归正常步数）
             if (judgeWin() != 0){  // 判断是否有玩家获胜
                 innerLayoutToDisplayArray();
                 displayBoard();  // 显示棋盘
-                printf("恭喜%s获胜！\n", (player == 1) ? "白方" : "黑方");  // 因为一方落子瞬间player会反转，所以这里要取反
+                printf("恭喜%s获胜！\n", (player == BLACK) ? "白方" : "黑方");  // 因为一方落子瞬间player会反转，所以这里要取反
                 printf("输入任意内容返回主页\n");
                 mygetline();
                 quit = 1;
@@ -48,6 +47,8 @@ void playerVsPlayer(void){
         default:
             break;
         }
+        // 步数+1
+        stepNum++;
     }
 }
 

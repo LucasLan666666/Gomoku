@@ -31,7 +31,7 @@ char play2Pic[]="◎";  // 白棋子
 char play2CurrentPic[]="△"; // 白棋子的当前落子位置
 
 // 当前的棋盘的格局 
-int arrayForInnerBoardLayout[SIZE][SIZE];
+struct stone arrayForInnerBoardLayout[SIZE][SIZE];
 
 // 显示的棋盘 
 char arrayForDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
@@ -41,11 +41,16 @@ int player;
 
 // 初始化一个空棋盘格局 
 void initRecordBoard(void){
-	//通过双重循环，将arrayForInnerBoardLayout清0
-    int i, j;
+	//通过三重循环，将arrayForInnerBoardLayout清0
+    int i, j, k;
     for (i = 0; i < SIZE; i++)
-        for (j = 0; j < SIZE; j++)
-            arrayForInnerBoardLayout[i][j]=0;
+        for (j = 0; j < SIZE; j++){
+            arrayForInnerBoardLayout[i][j].current = 0;
+            arrayForInnerBoardLayout[i][j].player = NOBODY;
+            for (k = 0; k < 8; k++){
+                arrayForInnerBoardLayout[i][j].direction[k] = 0;
+            }
+        }
 }
 
 //将arrayForInnerBoardLayout中记录的棋子位置，转化到arrayForDisplayBoard中
@@ -59,27 +64,26 @@ void innerLayoutToDisplayArray(void){
 	//注意：arrayForDisplayBoard所记录的字符是中文字符，每个字符占2个字节。●和◎也是中文字符，每个也占2个字节。
     for (i = 0; i < SIZE; i++){
         for (j = 0; j < SIZE; j++){
-            switch (arrayForInnerBoardLayout[i][j]){
-                case (1):
+            if (arrayForInnerBoardLayout[i][j].current == 0){
+                if (arrayForInnerBoardLayout[i][j].player == BLACK){
                     arrayForDisplayBoard[i][2 * j * CHARSIZE] = play1Pic[0];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play1Pic[1];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 2] = play1Pic[2];
-                    break;
-                case (2):
+                }else if (arrayForInnerBoardLayout[i][j].player == WHITE){
                     arrayForDisplayBoard[i][2 * j * CHARSIZE] = play2Pic[0];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play2Pic[1];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 2] = play2Pic[2];
-                    break;
-                case (-1):
+                }
+            }else if (arrayForInnerBoardLayout[i][j].current == 1){        
+                if (arrayForInnerBoardLayout[i][j].player == BLACK){
                     arrayForDisplayBoard[i][2 * j * CHARSIZE] = play1CurrentPic[0];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play1CurrentPic[1];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 2] = play1CurrentPic[2];
-                    break;
-                case (-2):
+                }else if (arrayForInnerBoardLayout[i][j].player == WHITE){
                     arrayForDisplayBoard[i][2 * j * CHARSIZE] = play2CurrentPic[0];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 1] = play2CurrentPic[1];
                     arrayForDisplayBoard[i][2 * j * CHARSIZE + 2] = play2CurrentPic[2];
-                    break;
+                }
             }
             
         }
