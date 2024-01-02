@@ -5,7 +5,7 @@
 int judgeWin(void){
     // 判断是否有五子连珠
     for (int i = 0; i <= 3; i++){
-        if (arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].direction[i] + arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].direction[i + 4] + 1 >= 5){
+        if (innerBoard[stepRecord[stepNum].x][stepRecord[stepNum].y].direction[i] + innerBoard[stepRecord[stepNum].x][stepRecord[stepNum].y].direction[i + 4] + 1 >= 5){
             return player;
         }
     }

@@ -44,7 +44,7 @@ int inputToCoordinate(void){
     if (
            (stepRecord[stepNum].x >= 0) && (stepRecord[stepNum].x <= 14) 
         && (stepRecord[stepNum].y >= 0) && (stepRecord[stepNum].y <= 14) 
-        && (arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].player == NOBODY)
+        && (innerBoard[stepRecord[stepNum].x][stepRecord[stepNum].y].player == NOBODY)
         ){
         return 0;
     }else{
@@ -57,12 +57,12 @@ void coordinateToPlaceStone(void){
     // 下面将坐标转化为落子
     // 改变上一步的落子状态，使其不再是当前落子位置（加判断，是因为第一次黑方下棋是没有上一步的）
     if (stepNum > 0){
-        arrayForInnerBoardLayout[stepRecord[stepNum - 1].x][stepRecord[stepNum - 1].y].current = NO;
+        innerBoard[stepRecord[stepNum - 1].x][stepRecord[stepNum - 1].y].current = NO;
     }
 
     // 改变当前棋子的落子状态
-    arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].current = YES;
-    arrayForInnerBoardLayout[stepRecord[stepNum].x][stepRecord[stepNum].y].player = player;
+    innerBoard[stepRecord[stepNum].x][stepRecord[stepNum].y].current = YES;
+    innerBoard[stepRecord[stepNum].x][stepRecord[stepNum].y].player = player;
 
     //该步下完后，更新整个棋盘上目前已经落子的每个棋子的状态
     for (int i = 0; i <= stepNum; i++){
@@ -71,64 +71,64 @@ void coordinateToPlaceStone(void){
             int j = 1;
             (j <= 4)
             && (stepRecord[i].y + j <= 14)
-            && (arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y + j].player == arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].player);
-            j++, arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].direction[0]++
+            && (innerBoard[stepRecord[i].x][stepRecord[i].y + j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
+            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[0]++
             );
         // 东北方的连子数
         for (
             int j = 1;
             (j <= 4)
             && (stepRecord[i].y + j <= 14) && (stepRecord[i].x + j <= 14)
-            && (arrayForInnerBoardLayout[stepRecord[i].x + j][stepRecord[i].y + j].player == arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].player);
-            j++, arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].direction[1]++
+            && (innerBoard[stepRecord[i].x + j][stepRecord[i].y + j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
+            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[1]++
             );
         // 东方的连子数
         for (
             int j = 1;
             (j <= 4)
             && (stepRecord[i].x + j <= 14)
-            && (arrayForInnerBoardLayout[stepRecord[i].x + j][stepRecord[i].y].player == arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].player);
-            j++, arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].direction[2]++
+            && (innerBoard[stepRecord[i].x + j][stepRecord[i].y].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
+            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[2]++
             );
         // 东南方的连子数
         for (
             int j = 1;
             (j <= 4)
             && (stepRecord[i].y - j >= 0) && (stepRecord[i].x + j <= 14)
-            && (arrayForInnerBoardLayout[stepRecord[i].x + j][stepRecord[i].y - j].player == arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].player);
-            j++, arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].direction[3]++
+            && (innerBoard[stepRecord[i].x + j][stepRecord[i].y - j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
+            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[3]++
             );
         // 南方的连子数
         for (
             int j = 1;
             (j <= 4)
             && (stepRecord[i].y - j >= 0)
-            && (arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y - j].player == arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].player);
-            j++, arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].direction[4]++
+            && (innerBoard[stepRecord[i].x][stepRecord[i].y - j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
+            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[4]++
             );
         // 西南方的连子数
         for (
             int j = 1;
             (j <= 4)
             && (stepRecord[i].y - j >= 0) && (stepRecord[i].x - j >= 0)
-            && (arrayForInnerBoardLayout[stepRecord[i].x - j][stepRecord[i].y - j].player == arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].player);
-            j++, arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].direction[5]++
+            && (innerBoard[stepRecord[i].x - j][stepRecord[i].y - j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
+            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[5]++
             );
         // 西方的连子数
         for (
             int j = 1;
             (j <= 4)
             && (stepRecord[i].x - j >= 0)
-            && (arrayForInnerBoardLayout[stepRecord[i].x - j][stepRecord[i].y].player == arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].player);
-            j++, arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].direction[6]++
+            && (innerBoard[stepRecord[i].x - j][stepRecord[i].y].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
+            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[6]++
             );
         // 西北方的连子数
         for (
             int j = 1;
             (j <= 4)
             && (stepRecord[i].y + j <= 14) && (stepRecord[i].x - j >= 0)
-            && (arrayForInnerBoardLayout[stepRecord[i].x - j][stepRecord[i].y + j].player == arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].player);
-            j++, arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].direction[7]++
+            && (innerBoard[stepRecord[i].x - j][stepRecord[i].y + j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
+            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[7]++
             );
     }
 }

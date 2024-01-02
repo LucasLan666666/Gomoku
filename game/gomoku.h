@@ -54,7 +54,7 @@ extern char play2Pic[];  // 白棋子
 extern char play2CurrentPic[]; // 白棋子的当前落子位置
 
 // 当前的棋盘的格局 
-extern struct stone arrayForInnerBoardLayout[SIZE][SIZE];
+extern struct stone innerBoard[SIZE][SIZE];
 
 // 显示的棋盘 
 extern char arrayForDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
@@ -65,11 +65,14 @@ extern int player;
 // 记录读取到的一行
 extern char line[];
 
+extern int regret;  // 记录是否悔棋，YES 为是，NO 为否
+
 void homePage(void);  // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
 void whoGoFirst(void); // 提示玩家输入自己执子的颜色，并修改 computer 的值
 void End(void);  // 直接清屏退出游戏
 
 void playerVsPlayer(void);  // 人人对战模式
+int pvp_placeStone(void);  // 人人对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；若判得游戏结束，返回 YES
 void regret1(void);  // 人人对战模式的悔棋模式
 
 void playerVsComputer(void);  // 人机对战模式
@@ -78,7 +81,7 @@ void regret2(void);  // 人机对战模式的悔棋模式
 // 初始化一个空棋盘格局
 void initRecordBoard(void);
 
-//将 arrayForInnerBoardLayout 中记录的棋子位置，转化到 arrayForDisplayBoard 中
+//将 innerBoard 中记录的棋子位置，转化到 arrayForDisplayBoard 中
 void innerLayoutToDisplayArray(void);
 
 //显示棋盘格局以及其他有关信息

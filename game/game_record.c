@@ -92,8 +92,15 @@ void createGameRecordFile(void){
     FILE *fp = fopen(pathOfRound, "w");  // 创建文件
     // 写入文件
     fprintf(fp, "# Round Name:  %s\n", roundName);
-    fprintf(fp, "# Game Mode:   %d\n", gameMode);
     fprintf(fp, "# Round Time:  %s\n", localTime);
+    fprintf(fp, "# Game Mode:\n");
+    fprintf(fp,"%d\n", gameMode);
+    if (gameMode == 2){
+        fprintf(fp, "# Player Color:\n");
+        fprintf(fp,"%d\n", (computer == BLACK) ? 2 : 1);
+    }
+    fprintf(fp, "# Record?(y for yes, n for no)\n");
+    fprintf(fp,"y\n");
     fprintf(fp, "# Game Record:\n");
     // 关闭文件
     fclose(fp);
@@ -115,5 +122,4 @@ void saveRegretToLocal(void){
     fprintf(fp, "regret\n");
     // 关闭文件
     fclose(fp);
-
 }
