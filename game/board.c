@@ -99,22 +99,32 @@ void displayBoard(void){
     // 输出提示信息
     if (gameMode == 1){
         printf("    双      人      模      式\n\n");
-    }else if (gameMode == 2){
+    }else{
         printf("    人      机      模      式\n\n");
-    }else if (gameMode == 3){
-        // 开发中...
     }
     printf("    本游戏支持一些指令：\n");
-    printf("    quit/q -> 回到主页面  regret/r -> 悔棋（开发中）\n\n");
+    printf("    quit/q -> 回到主页面  regret/r -> 悔棋\n\n");
     
     // 将arrayForDisplayBoard输出到屏幕上
     if (judgeWin() == 0){
-        for (int i = 0; i < SIZE; i++){
-            printf("%3d %s          %s\n", SIZE - i, arrayForDisplayBoard[i], DOGE[i]);
+        if (gameMode == 1){
+            for (int i = 0; i < SIZE; i++){
+                printf("%3d %s          %s\n", SIZE - i, arrayForDisplayBoard[i], DOGE[i]);
+            }
+        }else{
+            for (int i = 0; i < SIZE; i++){
+                printf("%3d %s          %s\n", SIZE - i, arrayForDisplayBoard[i], INTELLIGENT_DOGE[i]);
+            }
         }
     }else{
-        for (int i = 0; i < SIZE; i++){
-            printf("%3d %s          %s\n", SIZE - i, arrayForDisplayBoard[i], GAME_OVER[i]);
+        if (gameMode == 1){
+            for (int i = 0; i < SIZE; i++){
+                printf("%3d %s          %s\n", SIZE - i, arrayForDisplayBoard[i], GAME_OVER[i]);
+            }
+        }else{
+            for (int i = 0; i < SIZE; i++){
+                printf("%3d %s          %s\n", SIZE - i, arrayForDisplayBoard[i], FROG[i]);
+            }
         }
     }
     // 输出最下面的一行字母A B ....

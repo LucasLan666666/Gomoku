@@ -29,9 +29,11 @@ struct placeStone{
 extern const char* HAPPY_GOMOKU[];
 extern const char* FROG[];
 extern const char* DOGE[];
+extern const char* INTELLIGENT_DOGE[];
 extern const char* GAME_OVER[];
 
-extern int gameMode;  // 游戏模式，1表示双人对战，2表示人机对战，3表示读取棋谱，4表示退出游戏，-1表示输入有误
+extern int gameMode;  // 游戏模式，1 表示双人对战，2 表示人机对战，3 表示退出游戏，-1表示输入有误
+extern int computer;  // 电脑执子，BLACK 为黑子，WHITE 为白子
 
 extern int gameRecord;  // 是否开启记谱模式，1为是，0为否
 extern int readWritePermission;  // 是否有读写权限，1为是，0为否
@@ -39,7 +41,7 @@ extern char roundName[NAMESIZE + 6];  // 游戏对局名称
 extern char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
 
 extern int stepNum;  // 记录当前步数
-extern struct placeStone stepRecord[];  // 记录每一步的下棋内容，stepRecord[0]为第一步，stepRecord[1]为第二步，以此类推
+extern struct placeStone stepRecord[];  // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
 extern char stepName[];  // 记录下棋内容的字符串
 
 // 空棋盘模板
@@ -63,7 +65,8 @@ extern int player;
 // 记录读取到的一行
 extern char line[];
 
-void homePage(void);  // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到quit或者q时退出游戏
+void homePage(void);  // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
+void whoGoFirst(void); // 提示玩家输入自己执子的颜色，并修改 computer 的值
 void End(void);  // 直接清屏退出游戏
 
 void playerVsPlayer(void);  // 人人对战模式
@@ -75,7 +78,7 @@ void regret2(void);  // 人机对战模式的悔棋模式
 // 初始化一个空棋盘格局
 void initRecordBoard(void);
 
-//将arrayForInnerBoardLayout中记录的棋子位置，转化到arrayForDisplayBoard中
+//将 arrayForInnerBoardLayout 中记录的棋子位置，转化到 arrayForDisplayBoard 中
 void innerLayoutToDisplayArray(void);
 
 //显示棋盘格局以及其他有关信息
@@ -86,36 +89,35 @@ void mygetline(void);
 
 /*
  *  对玩家输入进行判断：
- *      如果输入1，返回1；
- *      如果输入2，返回2；
- *      如果输入3，返回3；
- *      如果输入quit指令，返回4；
- *      如果输入有误，返回-1；    
+ *      如果输入 1，返回 1；
+ *      如果输入 2，返回 2；
+ *      如果输入 quit 指令，返回 3；
+ *      如果输入有误，返回 -1；    
  */
 int inputCheckInHomePage(void);
 
 /*
  *  对玩家在游戏中输入进行判断：
- *      如果输入的是合法坐标格式，直接完成转换并储存在stepRecord[stepNum]中，同时返回0；
- *      如果输入的是quit指令，返回1；
- *      如果输入的是regret指令，返回2；
- *      如果输入有误，返回-1
+ *      如果输入的是合法坐标格式，直接完成转换并储存在 stepRecord[stepNum] 中，同时返回 0；
+ *      如果输入的是 quit 指令，返回 1；
+ *      如果输入的是 regret 指令，返回 2；
+ *      如果输入有误，返回 -1
  */
 int inputCheckInGame(void);
 
-// 将玩家的输入转化为坐标，若为合法坐标，则返回0，否则返回-1
+// 将玩家的输入转化为坐标，若为合法坐标，则返回 0，否则返回 -1
 int inputToCoordinate(void);
 
 // 将玩家当前输入的坐标转化为棋盘上的落子，并更新棋子的状态
 void coordinateToPlaceStone(void);
 
-// 从键盘读取输入判断是否开启记谱模式，y为是，n为否，并将结果记录在gameRecord和readWritePermission中
+// 从键盘读取输入判断是否开启记谱模式，y 为是，n 为否，并将结果记录在 gameRecord 和 readWritePermission 中
 void isRecord(void);
 
-// 判断当前目录下是否有读写权限，有则返回1，没有返回0
+// 判断当前目录下是否有读写权限，有则返回 1，没有返回 0
 int isReadWritePermission(void);
 
-// 判断文件是否存在，存在返回1，不存在返回0
+// 判断文件是否存在，存在返回 1，不存在返回 0
 int isFileExist(const char *filename);
 
 // 创立棋谱文件,询问玩家如何起名，将棋谱文件命名为玩家输入的名字，否则默认为对局开始时间
@@ -127,10 +129,7 @@ void recordGameRoundToLocal(void);
 // 删除棋谱中的最后一步
 void saveRegretToLocal(void);
 
-// 读取棋谱    
-void readGameRecord(void);
-
-// 判断是否有胜者出现：若黑棋获胜，返回1；白棋获胜，返回2；未出现胜者，返回0
+// 判断是否有胜者出现：若黑棋获胜，返回 1；白棋获胜，返回 2；未出现胜者，返回 0
 int judgeWin(void);
 
 #endif

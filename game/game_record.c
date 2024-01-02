@@ -7,16 +7,18 @@
 #include <time.h>
 #include "gomoku.h"
 
-int gameRecord;  // 是否开启记谱模式，1为是，0为否
-int readWritePermission;  // 是否有读写权限，1为是，0为否
+int gameRecord;  // 是否开启记谱模式，1 为是，0 为否
+int readWritePermission;  // 是否有读写权限，1 为是，0 为否
 char roundName[NAMESIZE + 6];  // 游戏对局名称
 char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
 int stepNum;  // 记录当前步数
-struct placeStone stepRecord[MAXSTEP];  // 记录每一步的下棋内容，stepRecord[0]为第一步，stepRecord[1]为第二步，以此类推
+struct placeStone stepRecord[MAXSTEP];  // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
 char stepName[13];  // 记录下棋内容的字符串
 
-// 从键盘读取输入判断是否开启记谱模式，y为是，n为否，并将结果记录在gameRecord和readWritePermission中
+// 从键盘读取输入判断是否开启记谱模式，y 为是，n 为否，并将结果记录在 gameRecord 和 readWritePermission中
 void isRecord(void){
+    printf("是否记录棋谱？（y/n）\n");
+    mygetline();            
     while (1){
         if ((strcmp(line, "y") == 0) || (strcmp(line, "") == 0)){
             gameRecord = 1;
@@ -35,7 +37,7 @@ void isRecord(void){
     }
 }
 
-// 判断当前目录下是否有读写权限，有则返回1，没有返回0
+// 判断当前目录下是否有读写权限，有则返回 1，没有返回 0
 int isReadWritePermission(void){
     if (access(".", R_OK | W_OK) == 0) {
         return 1;
@@ -45,7 +47,7 @@ int isReadWritePermission(void){
     return 1;
 }
 
-// 判断文件是否存在，存在返回1，不存在返回0
+// 判断文件是否存在，存在返回 1，不存在返回 0
 int isFileExist(const char *filename) {
     return access(filename, F_OK) != -1;
 }
@@ -115,8 +117,3 @@ void saveRegretToLocal(void){
     fclose(fp);
 
 }
-
-
-
-// 读取棋谱    
-void readGameRecord(void){}  // 开发中...

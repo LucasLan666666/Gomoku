@@ -8,8 +8,8 @@ void playerVsPlayer(void){
     int quit = NO;  //表示是否退出
     int regret = NO;  // 表示是否悔棋
     int check;  // 储存读取输入的相关信息
-    player = BLACK;  //黑方先落子，所以初始化player为1
-    stepNum = 0;  // 初始化步数为0
+    player = BLACK;  //黑方先落子，所以初始化 player 为 1
+    stepNum = 0;  // 初始化步数为 0
     initRecordBoard(); // 初始化一个空棋盘
 
     while (quit == NO){
@@ -17,7 +17,7 @@ void playerVsPlayer(void){
         displayBoard();  // 显示棋盘
 
         if (stepNum == 0 && regret == YES){
-            printf("    已经是第一步，无法悔棋！\n");
+            printf("    已经是第一步，无法再悔棋了！\n");
         }else if (stepNum > 0 && regret == YES){
             printf("    悔棋成功！\n");
         }
@@ -42,16 +42,18 @@ void playerVsPlayer(void){
             if (judgeWin() != NOBODY){  // 判断是否有玩家获胜
                 innerLayoutToDisplayArray();
                 displayBoard();  // 显示棋盘
-                printf("    恭喜%s获胜！\n", (player == BLACK) ? "白方" : "黑方");  // 因为一方落子瞬间player会反转，所以这里要取反
+                printf("    恭喜%s获胜！\n", (player == BLACK) ? "黑方" : "白方");
                 printf("    输入任意内容返回主页\n");
                 mygetline();
                 quit = YES;
             }
             // 步数+1
             stepNum++;
+            // 转换玩家，黑方下完白方下，白方下完黑方下
+            player = (player == BLACK) ? WHITE : BLACK;
             break;
         case 1:
-            quit = YES;  break;  // 退出while循环
+            quit = YES; break;  // 退出 while 循环
         case 2:
             regret1(); regret = YES; break;
         default:

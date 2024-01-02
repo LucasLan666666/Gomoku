@@ -4,7 +4,7 @@
 
 // 将玩家的输入转化为坐标，若为合法坐标，则返回0，否则返回-1
 int inputToCoordinate(void){
-    int i = 0; // 用于遍历line
+    int i = 0; // 用于遍历 line
 
     // 将当下横纵坐标清零，考虑到存在输入错误的情况
     stepRecord[stepNum].x = 0;
@@ -131,7 +131,4 @@ void coordinateToPlaceStone(void){
             j++, arrayForInnerBoardLayout[stepRecord[i].x][stepRecord[i].y].direction[7]++
             );
     }
-
-    // 转换玩家，黑方下完白方下，白方下完黑方下
-    player = (player == BLACK) ? WHITE : BLACK;
 }
