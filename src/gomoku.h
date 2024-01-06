@@ -1,22 +1,35 @@
 // 头文件，包含了一些常量定义和函数声明
-#ifndef GOMOKU_H
-#define GOMOKU_H
-#define SIZE 15  // 棋盘大小
-#define CHARSIZE 3  // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
-#define MAXLINE 50  // 定义玩家输入的最大长度
-#define NAMESIZE 20  // 定义玩家输入的名字的最大长度
-#define MAXSTEP SIZE*SIZE  // 定义最大步数
-#define BLACK 1  // 定义黑方
-#define WHITE 2  // 定义白方
-#define NOBODY 0  // 定义没有人
-#define YES 1  // 定义是
-#define NO 0  // 定义否
+#ifndef    GOMOKU_H
+#define    GOMOKU_H
+#define        SIZE           15  // 棋盘大小
+#define    CHARSIZE            3  // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
+#define     MAXLINE           50  // 定义玩家输入的最大长度
+#define    NAMESIZE           20  // 定义玩家输入的名字的最大长度
+#define       BLACK            1  // 定义黑方
+#define       WHITE            2  // 定义白方
+#define      NOBODY            0  // 定义没有人
+#define         YES            1  // 定义是
+#define          NO            0  // 定义否
+#define        TRUE            1  // 定义真
+#define       FALSE            0  // 定义假
+#define     MAXSTEP    SIZE*SIZE  // 定义最大步数
+
+// 用于描述一个棋子附近某个坐标处的各种信息
+// struct state{
+//     int free;
+//     int 
+// };
 
 // 用于记录棋盘上面一个子的信息
 struct stone{
-    int current;  // 0 表示不是当前落子目标，1 表示是当前落子目标
-    int player;  // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY表示没有棋子
-    int direction[8];  // 8 个方向与自己同色的连子数（不包含自身），只统计最多四个连子的情况，北方为零号元素，顺时针方向依次为 1，2，3，4，5，6，7
+    // NO 表示不是当前落子目标，YES 表示是当前落子目标(主要用于图标显示)
+    int current;
+    // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY 表示没有棋子
+    int player;
+
+    // 用于记录当前棋子附近的信息
+    int direction[8];
+    // struct state direction[8][5]; 
 };
 
 // 用于记录玩家落子的坐标
@@ -45,7 +58,7 @@ extern struct placeStone stepRecord[];  // 记录每一步的下棋内容，step
 extern char stepName[];  // 记录下棋内容的字符串
 
 // 空棋盘模板
-extern char arrayForEmptyBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
+extern char emptyDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
 // 以下是棋子的图案
 extern char play1Pic[];  // 黑棋子
@@ -57,7 +70,7 @@ extern char play2CurrentPic[]; // 白棋子的当前落子位置
 extern struct stone innerBoard[SIZE][SIZE];
 
 // 显示的棋盘 
-extern char arrayForDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
+extern char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
 // 当前等待落子的玩家，BLACK 表示黑方，WHITE 表示白方
 extern int player;
@@ -69,6 +82,7 @@ extern int regret;  // 记录是否悔棋，YES 为是，NO 为否
 
 void homePage(void);  // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
 void whoGoFirst(void); // 提示玩家输入自己执子的颜色，并修改 computer 的值
+void changePlayer(void);  // 切换玩家
 void End(void);  // 直接清屏退出游戏
 
 void playerVsPlayer(void);  // 人人对战模式
@@ -76,16 +90,17 @@ int pvp_placeStone(void);  // 人人对战下棋的主要内容，将玩家输�
 void regret1(void);  // 人人对战模式的悔棋模式
 
 void playerVsComputer(void);  // 人机对战模式
+int pve_placeStone(void);  // 人机对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；如果是电脑，直接修改 innerBoard 的内容；若判得游戏结束，返回 YES
 void regret2(void);  // 人机对战模式的悔棋模式
 
 // 初始化一个空棋盘格局
-void initRecordBoard(void);
+void initInnerBoard(void);
 
-//将 innerBoard 中记录的棋子位置，转化到 arrayForDisplayBoard 中
-void innerLayoutToDisplayArray(void);
+//将 innerBoard 中记录的棋子位置，转化到 displayBoard 中
+void innerBoard2Displayboard(void);
 
 //显示棋盘格局以及其他有关信息
-void displayBoard(void);
+void printDisplayBoard(void);
 
 // 自己写的函数，读取一行玩家的输入，从第一个非零字符开始（注意不会读到换行符'\n'）
 void mygetline(void);
@@ -135,4 +150,10 @@ void saveRegretToLocal(void);
 // 判断是否有胜者出现：若黑棋获胜，返回 1；白棋获胜，返回 2；未出现胜者，返回 0
 int judgeWin(void);
 
+// 电脑随机落子
+void gorilla(void);
+// 获取指定范围内随机数
+int getRandom(int min, int max);
+// 判断电脑的下棋位置是否合法，合法返回 1，否则返回 0
+int isValid(struct placeStone coordinate);
 #endif

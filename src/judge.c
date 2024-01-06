@@ -11,3 +11,12 @@ int judgeWin(void){
     }
     return NOBODY;
 }
+
+// 判断下棋位置是否合法，合法返回 1，否则返回 0
+int isValid(struct placeStone coordinate){
+    if (innerBoard[coordinate.x][coordinate.y].player == NOBODY){
+        return 1;
+    }else{
+        return 0;
+    }
+}

@@ -96,8 +96,8 @@ void createGameRecordFile(void){
     fprintf(fp, "# Game Mode:\n");
     fprintf(fp,"%d\n", gameMode);
     if (gameMode == 2){
-        fprintf(fp, "# Player Color:\n");
-        fprintf(fp,"%d\n", (computer == BLACK) ? 2 : 1);
+        fprintf(fp, "# Player Color(1 for BLACK while 2 for WHITE):\n");
+        fprintf(fp,"%d\n", (computer == BLACK) ? WHITE : BLACK);
     }
     fprintf(fp, "# Record?(y for yes, n for no)\n");
     fprintf(fp,"y\n");
@@ -111,6 +111,11 @@ void recordGameRoundToLocal(void){
     FILE *fp = fopen(pathOfRound, "a");
     // 写入文件
     sprintf(stepName, "%d%c", SIZE - stepRecord[stepNum].x, stepRecord[stepNum].y + 'A');  // 将坐标转化为字符串，储存在stepName中
+    if (gameMode == 2 && player == computer){
+        fprintf(fp, "# ");
+    }else{
+        fprintf(fp, "  ");
+    }
     fprintf(fp, "%s\n", stepName);
     // 关闭文件
     fclose(fp);
@@ -119,7 +124,7 @@ void recordGameRoundToLocal(void){
 void saveRegretToLocal(void){
     FILE *fp = fopen(pathOfRound, "a");
     // 写入文件
-    fprintf(fp, "regret\n");
+    fprintf(fp, "  regret\n");
     // 关闭文件
     fclose(fp);
 }

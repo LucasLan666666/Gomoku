@@ -14,7 +14,7 @@ int inputToCoordinate(void){
         while (isdigit(line[i])){
             stepRecord[stepNum].x = stepRecord[stepNum].x * 10 + line[i] - '0';
             i++;
-        }       
+        }
         if (isalpha(line[i])){
             stepRecord[stepNum].y = line[i] - (line[i] >= 'a' ? 'a' : 'A');
             i++;
@@ -44,7 +44,7 @@ int inputToCoordinate(void){
     if (
            (stepRecord[stepNum].x >= 0) && (stepRecord[stepNum].x <= 14) 
         && (stepRecord[stepNum].y >= 0) && (stepRecord[stepNum].y <= 14) 
-        && (innerBoard[stepRecord[stepNum].x][stepRecord[stepNum].y].player == NOBODY)
+        && (isValid(stepRecord[stepNum]))
         ){
         return 0;
     }else{

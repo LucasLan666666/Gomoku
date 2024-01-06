@@ -32,6 +32,7 @@ void homePage(void){
     for (int i = 0; i < 15; i++){
         printf("%s", HAPPY_GOMOKU[i]);
     }
+    printf("作者：蓝宇舟\n");
     printf("欢迎来到五子棋游戏！请选择你的游戏模式：\n");
     printf("（1）：人人对战\n");
     printf("（2）：人机对战\n");
@@ -62,6 +63,11 @@ void homePage(void){
 void End(void){
     int clear = system("clear");
     exit(0);
+}
+
+// 转换玩家，黑方下完白方下，白方下完黑方下
+void changePlayer(void){
+    player = (player == BLACK) ? WHITE : BLACK;
 }
 
 // 提示玩家输入自己执子的颜色，并修改 computer 的值
