@@ -39,27 +39,33 @@ int player;
 
 // 初始化一个空棋盘格局 
 void initInnerBoard(void){
-	//通过三重循环，将innerBoard清0
+	//通过三重循环，将 innerBoard 清 0
     int i, j, k;
     for (i = 0; i < SIZE; i++)
         for (j = 0; j < SIZE; j++){
             innerBoard[i][j].current = NO;
             innerBoard[i][j].player = NOBODY;
-            for (k = 0; k < 8; k++){
-                innerBoard[i][j].direction[k] = 0;
-            }
         }
 }
 
-//将innerBoard中记录的棋子位置，转化到displayBoard中
+// 将虚拟棋盘清零
+void initVBoard(int vBoard[SIZE][SIZE]){
+    int i, j;
+    for (i = 0; i < SIZE; i++)
+        for (j = 0; j < SIZE; j++){
+            vBoard[i][j] = NOBODY;
+        }
+}
+
+//将 innerBoard 中记录的棋子位置，转化到 displayBoard 中
 void innerBoard2Displayboard(void){
-	//第一步：将emptyDisplayBoard中记录的空棋盘，复制到displayBoard中
+	//第一步：将 emptyDisplayBoard 中记录的空棋盘，复制到 displayBoard 中
     int i, j;
     for (i = 0; i < SIZE; i++)
         for (j = 0; j < (2 * SIZE - 1) * CHARSIZE + 1; j++)
             displayBoard[i][j] = emptyDisplayBoard[i][j];
-    //第二步：扫描innerBoard，当遇到非0的元素，将●或者◎复制到displayBoard的相应位置上
-	//注意：displayBoard所记录的字符是中文字符，每个字符占2个字节。●和◎也是中文字符，每个也占2个字节。
+    //第二步：扫描 innerBoard，当遇到非 0 的元素，将 ● 或者 ◎ 复制到 displayBoard 的相应位置上
+	//注意：displayBoard 所记录的字符是中文字符，每个字符占 2 个字节。● 和 ◎ 也是中文字符，每个也占 2 个字节。
     for (i = 0; i < SIZE; i++){
         for (j = 0; j < SIZE; j++){
             if (innerBoard[i][j].current == NO){
@@ -88,6 +94,16 @@ void innerBoard2Displayboard(void){
     }
 }
 
+// 将 innerBoard 中记录的棋子位置，转化到 vBoard 中
+void innerBoard2VBoard(int vBoard[SIZE][SIZE]){
+    int i, j;
+    for (i = 0; i < SIZE; i++){
+        for (j = 0; j < SIZE; j++){
+            vBoard[i][j] = innerBoard[i][j].player;
+        }
+    }
+}
+
 //显示棋盘格局 
 void printDisplayBoard(void){
 	int i;
@@ -104,7 +120,7 @@ void printDisplayBoard(void){
     printf("    quit/q -> 回到主页面  regret/r -> 悔棋\n\n");
     
     // 将displayBoard输出到屏幕上
-    if (judgeWin() == 0){
+    if (judgeWin() == NOBODY && stepNum < MAXSTEP){
         if (gameMode == 1){
             for (int i = 0; i < SIZE; i++){
                 printf("%3d %s          %s\n", SIZE - i, displayBoard[i], DOGE[i]);
@@ -115,7 +131,7 @@ void printDisplayBoard(void){
             }
         }
     }else{
-        if (gameMode == 2 && computer != player){
+        if (judgeWin() != computer && gameMode == 2){
             for (int i = 0; i < SIZE; i++){
                 printf("%3d %s          %s\n", SIZE - i, displayBoard[i], FROG[i]);
             }

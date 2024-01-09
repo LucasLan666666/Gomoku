@@ -94,13 +94,13 @@ void createGameRecordFile(void){
     fprintf(fp, "# Round Name:  %s\n", roundName);
     fprintf(fp, "# Round Time:  %s\n", localTime);
     fprintf(fp, "# Game Mode:\n");
-    fprintf(fp,"%d\n", gameMode);
+    fprintf(fp,"  %d\n", gameMode);
     if (gameMode == 2){
         fprintf(fp, "# Player Color(1 for BLACK while 2 for WHITE):\n");
-        fprintf(fp,"%d\n", (computer == BLACK) ? WHITE : BLACK);
+        fprintf(fp,"  %d\n", (computer == BLACK) ? WHITE : BLACK);
     }
     fprintf(fp, "# Record?(y for yes, n for no)\n");
-    fprintf(fp,"y\n");
+    fprintf(fp,"  n\n");
     fprintf(fp, "# Game Record:\n");
     // 关闭文件
     fclose(fp);

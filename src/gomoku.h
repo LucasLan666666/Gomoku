@@ -13,6 +13,10 @@
 #define        TRUE            1  // 定义真
 #define       FALSE            0  // 定义假
 #define     MAXSTEP    SIZE*SIZE  // 定义最大步数
+#define    OVERLINE            1  // 定义长连禁手
+#define     D_THREE            2  // 定义双三禁手
+#define      D_FOUR            3  // 定义双四禁手
+#define     COMBINE            4  // 定义组合禁手
 
 // 用于描述一个棋子附近某个坐标处的各种信息
 // struct state{
@@ -26,10 +30,6 @@ struct stone{
     int current;
     // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY 表示没有棋子
     int player;
-
-    // 用于记录当前棋子附近的信息
-    int direction[8];
-    // struct state direction[8][5]; 
 };
 
 // 用于记录玩家落子的坐标
@@ -38,6 +38,8 @@ struct placeStone{
     int y;
 };
 
+// 用于对
+
 // 字符艺术
 extern const char* HAPPY_GOMOKU[];
 extern const char* FROG[];
@@ -45,11 +47,11 @@ extern const char* DOGE[];
 extern const char* INTELLIGENT_DOGE[];
 extern const char* GAME_OVER[];
 
-extern int gameMode;  // 游戏模式，1 表示双人对战，2 表示人机对战，3 表示退出游戏，-1表示输入有误
+extern int gameMode;  // 游戏模式，1 表示双人对战，2 表示人机对战，3 表示退出游戏，-1 表示输入有误
 extern int computer;  // 电脑执子，BLACK 为黑子，WHITE 为白子
 
-extern int gameRecord;  // 是否开启记谱模式，1为是，0为否
-extern int readWritePermission;  // 是否有读写权限，1为是，0为否
+extern int gameRecord;  // 是否开启记谱模式，1 为是，0 为否
+extern int readWritePermission;  // 是否有读写权限，1 为是，0 为否
 extern char roundName[NAMESIZE + 6];  // 游戏对局名称
 extern char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
 
@@ -95,9 +97,13 @@ void regret2(void);  // 人机对战模式的悔棋模式
 
 // 初始化一个空棋盘格局
 void initInnerBoard(void);
+// 将虚拟棋盘清零
+void initVBoard(int vBoard[SIZE][SIZE]);
 
 //将 innerBoard 中记录的棋子位置，转化到 displayBoard 中
 void innerBoard2Displayboard(void);
+// 将 innerBoard 中记录的棋子位置，转化到 vBoard 中
+void innerBoard2VBoard(int vBoard[SIZE][SIZE]);
 
 //显示棋盘格局以及其他有关信息
 void printDisplayBoard(void);
@@ -149,11 +155,28 @@ void saveRegretToLocal(void);
 
 // 判断是否有胜者出现：若黑棋获胜，返回 1；白棋获胜，返回 2；未出现胜者，返回 0
 int judgeWin(void);
+// 判断下棋位置是否合法，合法返回 YES，否则返回 NO
+int isValid(struct placeStone coordinate);
+
+// 判断禁手，是返回禁手类型，否返回 NO
+int isForbiddenMove(int vBoard[SIZE][SIZE], struct placeStone coordinate);
+// 判断五连，返回五连的数量
+int fiveInARow(int board[SIZE][SIZE], struct placeStone coordinate);
+// 判断长连，返回长连的数量
+int overline(int board[SIZE][SIZE], struct placeStone coordinate);
+// 判断冲四，返回冲四的数量
+int four(int board[SIZE][SIZE], struct placeStone coordinate);
+// 判断活四，返回活四的数量
+int straightFour(int board[SIZE][SIZE], struct placeStone coordinate);
+// 判断活三，返回活三的数量
+int three(int board[SIZE][SIZE], struct placeStone coordinate);
+
+// 复制虚拟棋盘的副本
+void copyBoard(int to[SIZE][SIZE], int from[SIZE][SIZE]);
 
 // 电脑随机落子
 void gorilla(void);
 // 获取指定范围内随机数
 int getRandom(int min, int max);
-// 判断电脑的下棋位置是否合法，合法返回 1，否则返回 0
-int isValid(struct placeStone coordinate);
+
 #endif

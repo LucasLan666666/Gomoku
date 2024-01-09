@@ -34,7 +34,7 @@ void homePage(void){
     }
     printf("作者：蓝宇舟\n");
     printf("欢迎来到五子棋游戏！请选择你的游戏模式：\n");
-    printf("（1）：人人对战\n");
+    printf("（1）：双人对战\n");
     printf("（2）：人机对战\n");
     printf("输入“quit”或者“q”可以退出游戏(此外，在游戏任何时候输入EOF（文件结束符，linux 下默认是“Ctrl + D”），可以强制退出整个游戏)\n");
     

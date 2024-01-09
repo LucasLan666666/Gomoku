@@ -41,11 +41,7 @@ int inputToCoordinate(void){
         return -1;
 
     // 判断是否合法坐标
-    if (
-           (stepRecord[stepNum].x >= 0) && (stepRecord[stepNum].x <= 14) 
-        && (stepRecord[stepNum].y >= 0) && (stepRecord[stepNum].y <= 14) 
-        && (isValid(stepRecord[stepNum]))
-        ){
+    if (isValid(stepRecord[stepNum])){
         return 0;
     }else{
         return -1;
@@ -63,72 +59,4 @@ void coordinateToPlaceStone(void){
     // 改变当前棋子的落子状态
     innerBoard[stepRecord[stepNum].x][stepRecord[stepNum].y].current = YES;
     innerBoard[stepRecord[stepNum].x][stepRecord[stepNum].y].player = player;
-
-    //该步下完后，更新整个棋盘上目前已经落子的每个棋子的状态
-    for (int i = 0; i <= stepNum; i++){
-        // 北方的连子数
-        for (
-            int j = 1;
-            (j <= 4)
-            && (stepRecord[i].y + j <= 14)
-            && (innerBoard[stepRecord[i].x][stepRecord[i].y + j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
-            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[0]++
-            );
-        // 东北方的连子数
-        for (
-            int j = 1;
-            (j <= 4)
-            && (stepRecord[i].y + j <= 14) && (stepRecord[i].x + j <= 14)
-            && (innerBoard[stepRecord[i].x + j][stepRecord[i].y + j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
-            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[1]++
-            );
-        // 东方的连子数
-        for (
-            int j = 1;
-            (j <= 4)
-            && (stepRecord[i].x + j <= 14)
-            && (innerBoard[stepRecord[i].x + j][stepRecord[i].y].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
-            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[2]++
-            );
-        // 东南方的连子数
-        for (
-            int j = 1;
-            (j <= 4)
-            && (stepRecord[i].y - j >= 0) && (stepRecord[i].x + j <= 14)
-            && (innerBoard[stepRecord[i].x + j][stepRecord[i].y - j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
-            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[3]++
-            );
-        // 南方的连子数
-        for (
-            int j = 1;
-            (j <= 4)
-            && (stepRecord[i].y - j >= 0)
-            && (innerBoard[stepRecord[i].x][stepRecord[i].y - j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
-            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[4]++
-            );
-        // 西南方的连子数
-        for (
-            int j = 1;
-            (j <= 4)
-            && (stepRecord[i].y - j >= 0) && (stepRecord[i].x - j >= 0)
-            && (innerBoard[stepRecord[i].x - j][stepRecord[i].y - j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
-            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[5]++
-            );
-        // 西方的连子数
-        for (
-            int j = 1;
-            (j <= 4)
-            && (stepRecord[i].x - j >= 0)
-            && (innerBoard[stepRecord[i].x - j][stepRecord[i].y].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
-            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[6]++
-            );
-        // 西北方的连子数
-        for (
-            int j = 1;
-            (j <= 4)
-            && (stepRecord[i].y + j <= 14) && (stepRecord[i].x - j >= 0)
-            && (innerBoard[stepRecord[i].x - j][stepRecord[i].y + j].player == innerBoard[stepRecord[i].x][stepRecord[i].y].player);
-            j++, innerBoard[stepRecord[i].x][stepRecord[i].y].direction[7]++
-            );
-    }
 }

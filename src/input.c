@@ -10,13 +10,13 @@ char line[MAXLINE];  //记录读取到的一行
 void mygetline(void){
     int c;
     int i = 0;  // 用于遍历line
-    while ((c = getchar()) == ' ')  // 跳过开头的空格
-        ;
     while (c == '#'){
         while ((c = getchar()) != '\n')  // 读到 “#”，跳过这一行
             ;
         c = getchar();
     }
+    while ((c = getchar()) == ' ')  // 跳过开头的空格
+        ;
     while ((i  < MAXLINE - 1) && (c != EOF) && (c != '\n')){
         line[i++] = c;
         c = getchar();
