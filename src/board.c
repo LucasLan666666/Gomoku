@@ -104,6 +104,15 @@ void innerBoard2VBoard(int vBoard[SIZE][SIZE]){
     }
 }
 
+// 复制虚拟棋盘的副本
+void copyBoard(int to[SIZE][SIZE], int from[SIZE][SIZE]){
+    for (int i = 0; i < SIZE; i++){
+        for (int j = 0; j < SIZE; j++){
+            to[i][j] = from[i][j];
+        }
+    }
+}
+
 //显示棋盘格局 
 void printDisplayBoard(void){
 	int i;

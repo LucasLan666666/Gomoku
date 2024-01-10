@@ -38,8 +38,6 @@ struct placeStone{
     int y;
 };
 
-// 用于对
-
 // 字符艺术
 extern const char* HAPPY_GOMOKU[];
 extern const char* FROG[];
