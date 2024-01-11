@@ -29,7 +29,7 @@ void playerVsComputer(void){
         }
 
         // 眠三函数功能测试
-        testForSleepThree(stepRecord[stepNum - 2]);
+        // testForSleepThree(stepRecord[stepNum - 2]);
 
         // 输出当前等待落子的玩家
         if (player != computer){

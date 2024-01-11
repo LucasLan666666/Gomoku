@@ -41,20 +41,37 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
             // 先看正方向一端能否落子
             if (x + dx1 >= 0 && x + dx1 < SIZE && y + dy1 >= 0 && y + dy1 < SIZE && board_copy[x + dx1][y + dy1] == NOBODY){
                 struct placeStone newCoordinate = {x + dx1, y + dy1};
-                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                    available++;
+                // 多看一格，确保不是长连
+                dx1 += directions[i][0];
+                dy1 += directions[i][1];
+                if (x + dx1 < 0 || x + dx1 >= SIZE || y + dy1 < 0 || y + dy1 >= SIZE || board_copy[x + dx1][y + dy1] != player){
+                    if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                        available++;
+                    }
                 }
+                // 撤销多看的一格
+                dx1 -= directions[i][0];
+                dy1 -= directions[i][1];
             }
             // 再看反方向一端能否落子
             if (x + dx2 >= 0 && x + dx2 < SIZE && y + dy2 >= 0 && y + dy2 < SIZE && board_copy[x + dx2][y + dy2] == NOBODY){
                 struct placeStone newCoordinate = {x + dx2, y + dy2};
-                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                    available++;
+                // 多看一格，确保不是长连
+                dx2 -= directions[i][0];
+                dy2 -= directions[i][1];
+                if (x + dx2 < 0 || x + dx2 >= SIZE || y + dy2 < 0 || y + dy2 >= SIZE || board_copy[x + dx2][y + dy2] != player){
+                    if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                        available++;
+                    }
                 }
+                // 撤销多看的一格
+                dx2 += directions[i][0];
+                dy2 += directions[i][1];
             }
             if (available == 1){
                 num++;
             }
+
         // 1-0-3 类型，可能在两个相反方向上形成不同的冲四，每个冲四只可能有一种成五方式
         }else if (count == 1){
             // 正方向的 1-0-3
@@ -97,6 +114,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                     }
                 }
             }
+
         // 3-0-1 类型，可能在两个相反方向上形成不同的冲四，每个冲四只可能有一种成五方式
         }else if (count == 3){
             // 正方向的 3-0-1
@@ -137,6 +155,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                     }
                 }
             }
+
         // 2-0-2 类型，可能在两个相反方向上形成不同的冲四，每个冲四只可能有一种成五方式
         }else if (count == 2){
             // 正方向的 2-0-2

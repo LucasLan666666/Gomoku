@@ -37,6 +37,7 @@ int threeForWin(int board[SIZE][SIZE], struct placeStone coordinate, int player)
         // 三子连珠类型，可能在两个方向形成四子连珠，为了判断四子连珠是不是活四，又要验证两端能否成五
         if (count == 3){
             // 判断两端是否能落子
+            int avail_straightFour = 0; // 记录两端能先形成活四的数量
 
             // 先看正方向一端能否落子形成四子连珠
             if (x + dx1 >= 0 && x + dx1 < SIZE && y + dy1 >= 0 && y + dy1 < SIZE && board_copy[x + dx1][y + dy1] == NOBODY){
@@ -51,24 +52,41 @@ int threeForWin(int board[SIZE][SIZE], struct placeStone coordinate, int player)
                     // 正方向多看一格
                     dx_1 += directions[i][0];
                     dy_1 += directions[i][1];
+
                     // 看一看正方向第五个是不是空位
                     if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
                         struct placeStone newCoordinate = {x + dx_1, y + dy_1};
-                        if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                            avail_five++;
+                        // 多看一格，确保不是长连
+                        dx_1 += directions[i][0];
+                        dy_1 += directions[i][1];
+                        if (x + dx_1 < 0 || x + dx_1 >= SIZE || y + dy_1 < 0 || y + dy_1 >= SIZE || board_copy[x + dx_1][y + dy_1] != player){                      
+                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                avail_five++;
+                            }
                         }
+                        // 撤销多看的一格
+                        dx_1 -= directions[i][0];
+                        dy_1 -= directions[i][1];
                     }
                     // 看一看反方向第五个是不是空位
                     if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
                         struct placeStone newCoordinate = {x + dx_2, y + dy_2};
-                        if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                            avail_five++;
+                        // 多看一格，确保不是长连
+                        dx_2 -= directions[i][0];
+                        dy_2 -= directions[i][1];
+                        if (x + dx_2 < 0 || x + dx_2 >= SIZE || y + dy_2 < 0 || y + dy_2 >= SIZE || board_copy[x + dx_2][y + dy_2] != player){  
+                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                avail_five++;
+                            }
                         }
+                        // 撤销多看的一格
+                        dx_2 += directions[i][0];
+                        dy_2 += directions[i][1];
                     }
 
                     // 判断正方向这个四子连珠是不是活四，是的话 avail_straightFour 加一
                     if (avail_five == 2){
-                        num++;
+                        avail_straightFour++;
                     }
                     board_copy[newCoordinate.x][newCoordinate.y] = NOBODY; // 撤销落下的第四颗棋子
                 }
@@ -87,28 +105,47 @@ int threeForWin(int board[SIZE][SIZE], struct placeStone coordinate, int player)
                     // 反方向多看一格
                     dx_2 -= directions[i][0];
                     dy_2 -= directions[i][1];
+
                     // 看一看正方向第五个是不是空位
                     if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
                         struct placeStone newCoordinate = {x + dx_1, y + dy_1};
-                        if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                            avail_five++;
+                        // 多看一格，确保不是长连
+                        dx_1 += directions[i][0];
+                        dy_1 += directions[i][1];
+                        if (x + dx_1 < 0 || x + dx_1 >= SIZE || y + dy_1 < 0 || y + dy_1 >= SIZE || board_copy[x + dx_1][y + dy_1] != player){                      
+                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                avail_five++;
+                            }
                         }
+                        // 撤销多看的一格
+                        dx_1 -= directions[i][0];
+                        dy_1 -= directions[i][1];
                     }
                     // 看一看反方向第五个是不是空位
                     if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
                         struct placeStone newCoordinate = {x + dx_2, y + dy_2};
-                        if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                            avail_five++;
+                        // 多看一格，确保不是长连
+                        dx_2 -= directions[i][0];
+                        dy_2 -= directions[i][1];
+                        if (x + dx_2 < 0 || x + dx_2 >= SIZE || y + dy_2 < 0 || y + dy_2 >= SIZE || board_copy[x + dx_2][y + dy_2] != player){  
+                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                avail_five++;
+                            }
                         }
+                        // 撤销多看的一格
+                        dx_2 += directions[i][0];
+                        dy_2 += directions[i][1];
                     }
 
                     // 判断正方向这个四子连珠是不是活四，是的话 avail_straightFour 加一
                     if (avail_five == 2){
-                        num++;
+                        avail_straightFour++;
                     }
                     board_copy[newCoordinate.x][newCoordinate.y] = NOBODY; // 撤销落下的第四颗棋子
                 }
             }
+
+            num += avail_straightFour;
 
         // 1-0-2 类型，可能在两个相反方向上形成不同的活三，每个活三只有一种成活四方式
         }else if (count == 1){
@@ -133,19 +170,36 @@ int threeForWin(int board[SIZE][SIZE], struct placeStone coordinate, int player)
                     if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第四颗棋子能否落下
                         int avail_five = 0; // 记录四子连珠两端能形成五连的数量
                         board_copy[newCoordinate.x][newCoordinate.y] = player; // 假设落下了第四颗棋子
+
                         // 看一看正方向第五个是不是空位
                         if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
                             struct placeStone newCoordinate = {x + dx_1, y + dy_1};
-                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                                avail_five++;
+                            // 多看一格，确保不是长连
+                            dx_1 += directions[i][0];
+                            dy_1 += directions[i][1];
+                            if (x + dx_1 < 0 || x + dx_1 >= SIZE || y + dy_1 < 0 || y + dy_1 >= SIZE || board_copy[x + dx_1][y + dy_1] != player){                      
+                                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                    avail_five++;
+                                }
                             }
+                            // 撤销多看的一格
+                            dx_1 -= directions[i][0];
+                            dy_1 -= directions[i][1];
                         }
                         // 看一看反方向第五个是不是空位
                         if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
                             struct placeStone newCoordinate = {x + dx_2, y + dy_2};
-                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                                avail_five++;
+                            // 多看一格，确保不是长连
+                            dx_2 -= directions[i][0];
+                            dy_2 -= directions[i][1];
+                            if (x + dx_2 < 0 || x + dx_2 >= SIZE || y + dy_2 < 0 || y + dy_2 >= SIZE || board_copy[x + dx_2][y + dy_2] != player){  
+                                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                    avail_five++;
+                                }
                             }
+                            // 撤销多看的一格
+                            dx_2 += directions[i][0];
+                            dy_2 += directions[i][1];
                         }
                         
                         // 判断这个 1-0-2 能否形成活四
@@ -177,19 +231,36 @@ int threeForWin(int board[SIZE][SIZE], struct placeStone coordinate, int player)
                     if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第四颗棋子能否落下
                         int avail_five = 0; // 记录四子连珠两端能形成五连的数量
                         board_copy[newCoordinate.x][newCoordinate.y] = player; // 假设落下了第四颗棋子
+
                         // 看一看正方向第五个是不是空位
                         if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
                             struct placeStone newCoordinate = {x + dx_1, y + dy_1};
-                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                                avail_five++;
+                            // 多看一格，确保不是长连
+                            dx_1 += directions[i][0];
+                            dy_1 += directions[i][1];
+                            if (x + dx_1 < 0 || x + dx_1 >= SIZE || y + dy_1 < 0 || y + dy_1 >= SIZE || board_copy[x + dx_1][y + dy_1] != player){                      
+                                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                    avail_five++;
+                                }
                             }
+                            // 撤销多看的一格
+                            dx_1 -= directions[i][0];
+                            dy_1 -= directions[i][1];
                         }
                         // 看一看反方向第五个是不是空位
                         if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
                             struct placeStone newCoordinate = {x + dx_2, y + dy_2};
-                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                                avail_five++;
+                            // 多看一格，确保不是长连
+                            dx_2 -= directions[i][0];
+                            dy_2 -= directions[i][1];
+                            if (x + dx_2 < 0 || x + dx_2 >= SIZE || y + dy_2 < 0 || y + dy_2 >= SIZE || board_copy[x + dx_2][y + dy_2] != player){  
+                                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                    avail_five++;
+                                }
                             }
+                            // 撤销多看的一格
+                            dx_2 += directions[i][0];
+                            dy_2 += directions[i][1];
                         }
                         
                         // 判断这个 1-0-2 能否形成活四
@@ -224,19 +295,36 @@ int threeForWin(int board[SIZE][SIZE], struct placeStone coordinate, int player)
                     if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第四颗棋子能否落下
                         int avail_five = 0; // 记录四子连珠两端能形成五连的数量
                         board_copy[newCoordinate.x][newCoordinate.y] = player; // 假设落下了第四颗棋子
+                        
                         // 看一看正方向第五个是不是空位
                         if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
                             struct placeStone newCoordinate = {x + dx_1, y + dy_1};
-                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                                avail_five++;
+                            // 多看一格，确保不是长连
+                            dx_1 += directions[i][0];
+                            dy_1 += directions[i][1];
+                            if (x + dx_1 < 0 || x + dx_1 >= SIZE || y + dy_1 < 0 || y + dy_1 >= SIZE || board_copy[x + dx_1][y + dy_1] != player){                      
+                                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                    avail_five++;
+                                }
                             }
+                            // 撤销多看的一格
+                            dx_1 -= directions[i][0];
+                            dy_1 -= directions[i][1];
                         }
                         // 看一看反方向第五个是不是空位
                         if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
                             struct placeStone newCoordinate = {x + dx_2, y + dy_2};
-                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                                avail_five++;
+                            // 多看一格，确保不是长连
+                            dx_2 -= directions[i][0];
+                            dy_2 -= directions[i][1];
+                            if (x + dx_2 < 0 || x + dx_2 >= SIZE || y + dy_2 < 0 || y + dy_2 >= SIZE || board_copy[x + dx_2][y + dy_2] != player){  
+                                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                    avail_five++;
+                                }
                             }
+                            // 撤销多看的一格
+                            dx_2 += directions[i][0];
+                            dy_2 += directions[i][1];
                         }
                         
                         // 判断这个 2-0-1 能否形成活四
@@ -268,19 +356,36 @@ int threeForWin(int board[SIZE][SIZE], struct placeStone coordinate, int player)
                     if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第四颗棋子能否落下
                         int avail_five = 0; // 记录四子连珠两端能形成五连的数量
                         board_copy[newCoordinate.x][newCoordinate.y] = player; // 假设落下了第四颗棋子
+
                         // 看一看正方向第五个是不是空位
                         if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
                             struct placeStone newCoordinate = {x + dx_1, y + dy_1};
-                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                                avail_five++;
+                            // 多看一格，确保不是长连
+                            dx_1 += directions[i][0];
+                            dy_1 += directions[i][1];
+                            if (x + dx_1 < 0 || x + dx_1 >= SIZE || y + dy_1 < 0 || y + dy_1 >= SIZE || board_copy[x + dx_1][y + dy_1] != player){                      
+                                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                    avail_five++;
+                                }
                             }
+                            // 撤销多看的一格
+                            dx_1 -= directions[i][0];
+                            dy_1 -= directions[i][1];
                         }
                         // 看一看反方向第五个是不是空位
                         if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
                             struct placeStone newCoordinate = {x + dx_2, y + dy_2};
-                            if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
-                                avail_five++;
+                            // 多看一格，确保不是长连
+                            dx_2 -= directions[i][0];
+                            dy_2 -= directions[i][1];
+                            if (x + dx_2 < 0 || x + dx_2 >= SIZE || y + dy_2 < 0 || y + dy_2 >= SIZE || board_copy[x + dx_2][y + dy_2] != player){  
+                                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
+                                    avail_five++;
+                                }
                             }
+                            // 撤销多看的一格
+                            dx_2 += directions[i][0];
+                            dy_2 += directions[i][1];
                         }
                         
                         // 判断这个 2-0-1 能否形成活四

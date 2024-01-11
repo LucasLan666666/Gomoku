@@ -17,10 +17,10 @@ char stepName[13];  // 记录下棋内容的字符串
 
 // 从键盘读取输入判断是否开启记谱模式，y 为是，n 为否，并将结果记录在 gameRecord 和 readWritePermission中
 void isRecord(void){
-    printf("是否记录棋谱？（y/n）\n");
+    printf("是否记录棋谱？（y / n）\n");
     mygetline();            
     while (1){
-        if ((strcmp(line, "y") == 0) || (strcmp(line, "") == 0)){
+        if (strcmp(line, "y") == 0){
             gameRecord = 1;
             break;
         }else if (strcmp(line, "n") == 0){ 
@@ -93,7 +93,7 @@ void createGameRecordFile(void){
     // 写入文件
     fprintf(fp, "# Round Name:  %s\n", roundName);
     fprintf(fp, "# Round Time:  %s\n", localTime);
-    fprintf(fp, "# Game Mode:\n");
+    fprintf(fp, "# Game Mode(1 for pvp while 2 for pve):\n");
     fprintf(fp,"  %d\n", gameMode);
     if (gameMode == 2){
         fprintf(fp, "# Player Color(1 for BLACK while 2 for WHITE):\n");

@@ -11,6 +11,7 @@ void playerVsPlayer(void){
     int check;  // 储存读取输入的相关信息
     regret = NO;  // 初始化悔棋为否
     player = BLACK;  //黑方先落子，所以初始化 player 为 1
+    computer = NOBODY;  // 初始化电脑执子为无
     stepNum = 0;  // 初始化步数为 0
     initInnerBoard(); // 初始化一个空棋盘
 
