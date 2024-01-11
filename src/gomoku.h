@@ -157,23 +157,35 @@ int judgeWin(void);
 int isValid(struct placeStone coordinate);
 
 // 判断禁手，是返回禁手类型，否返回 NO
-int isForbiddenMove(int vBoard[SIZE][SIZE], struct placeStone coordinate);
+int isForbiddenMove(int vBoard[SIZE][SIZE], struct placeStone coordinate, int player);
 // 判断五连，返回五连的数量
-int fiveInARow(int board[SIZE][SIZE], struct placeStone coordinate);
+int fiveInARow(int board[SIZE][SIZE], struct placeStone coordinate, int player);
 // 判断长连，返回长连的数量
-int overline(int board[SIZE][SIZE], struct placeStone coordinate);
+int overline(int board[SIZE][SIZE], struct placeStone coordinate, int player);
 // 判断冲四，返回冲四的数量
-int four(int board[SIZE][SIZE], struct placeStone coordinate);
+int four(int board[SIZE][SIZE], struct placeStone coordinate, int player);
 // 判断活四，返回活四的数量
-int straightFour(int board[SIZE][SIZE], struct placeStone coordinate);
+int straightFour(int board[SIZE][SIZE], struct placeStone coordinate, int player);
 // 判断活三，返回活三的数量
-int three(int board[SIZE][SIZE], struct placeStone coordinate);
+int three(int board[SIZE][SIZE], struct placeStone coordinate, int player);
+// 判断眠三，返回眠三可以形成冲四种类的数量
+int sleepThree(int board[SIZE][SIZE], struct placeStone coordinate, int player);
+// 眠三函数功能测试
+void testForSleepThree(struct placeStone coordinate);
+// 判断活三，返回能形成活四的数量
+int threeForWin(int board[SIZE][SIZE], struct placeStone coordinate, int player);
 
 // 复制虚拟棋盘的副本
 void copyBoard(int to[SIZE][SIZE], int from[SIZE][SIZE]);
 
 // 电脑随机落子
-void gorilla(void);
+struct placeStone gorilla(void);
+// AI 下棋，接受电脑颜色作为参数，调整下棋策略，返回落子坐标
+struct placeStone AI(int computer);
+// AI 执黑
+struct placeStone AI_black();
+// AI 执白
+struct placeStone AI_white();
 // 获取指定范围内随机数
 int getRandom(int min, int max);
 

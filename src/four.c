@@ -2,7 +2,7 @@
 #include "gomoku.h"
 
 // 判断冲四，返回冲四的数量
-int four(int board[SIZE][SIZE], struct placeStone coordinate){
+int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
     int x = coordinate.x;
     int y = coordinate.y;
     int directions[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}}; // 四个方向：水平、垂直、主对角线、副对角线
@@ -10,7 +10,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate){
     int num = 0;
 
     copyBoard(board_copy, board); // 再构建一个棋盘副本
-    board_copy[x][y] = BLACK;  // 假设落子
+    board_copy[x][y] = player;  // 假设落子
 
     // 遍历四个方向
     for (int i = 0; i < 4; i++){
@@ -21,14 +21,14 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate){
         int dy2 = -directions[i][1];
 
         // 向一个方向查找
-        while (x + dx1 >= 0 && x + dx1 < SIZE && y + dy1 >= 0 && y + dy1 < SIZE && board_copy[x + dx1][y + dy1] == BLACK){
+        while (x + dx1 >= 0 && x + dx1 < SIZE && y + dy1 >= 0 && y + dy1 < SIZE && board_copy[x + dx1][y + dy1] == player){
             count++;
             dx1 += directions[i][0];
             dy1 += directions[i][1];
         }
 
         // 向相反方向查找
-        while (x + dx2 >= 0 && x + dx2 < SIZE && y + dy2 >= 0 && y + dy2 < SIZE && board_copy[x + dx2][y + dy2] == BLACK){
+        while (x + dx2 >= 0 && x + dx2 < SIZE && y + dy2 >= 0 && y + dy2 < SIZE && board_copy[x + dx2][y + dy2] == player){
             count++;
             dx2 -= directions[i][0];
             dy2 -= directions[i][1];
@@ -41,14 +41,14 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate){
             // 先看正方向一端能否落子
             if (x + dx1 >= 0 && x + dx1 < SIZE && y + dy1 >= 0 && y + dy1 < SIZE && board_copy[x + dx1][y + dy1] == NOBODY){
                 struct placeStone newCoordinate = {x + dx1, y + dy1};
-                if (isForbiddenMove(board_copy, newCoordinate) == NO){ // 判断第五颗棋子能否落下
+                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
                     available++;
                 }
             }
             // 再看反方向一端能否落子
             if (x + dx2 >= 0 && x + dx2 < SIZE && y + dy2 >= 0 && y + dy2 < SIZE && board_copy[x + dx2][y + dy2] == NOBODY){
                 struct placeStone newCoordinate = {x + dx2, y + dy2};
-                if (isForbiddenMove(board_copy, newCoordinate) == NO){ // 判断第五颗棋子能否落下
+                if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第五颗棋子能否落下
                     available++;
                 }
             }
@@ -66,13 +66,13 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate){
                 // 跳过空位数三子连珠
                 dx_1 += directions[i][0];
                 dy_1 += directions[i][1];
-                while (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == BLACK){
+                while (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == player){
                     count2++;
                     dx_1 += directions[i][0];
                     dy_1 += directions[i][1];
                 }
                 if (count2 == 3){
-                    if (isForbiddenMove(board_copy, newCoordinate) == NO){
+                    if (isForbiddenMove(board_copy, newCoordinate, player) == NO){
                         num++;
                     }
                 }
@@ -86,13 +86,13 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate){
                 // 跳过空位数三子连珠
                 dx_2 -= directions[i][0];
                 dy_2 -= directions[i][1];
-                while (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == BLACK){
+                while (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == player){
                     count2++;
                     dx_2 -= directions[i][0];
                     dy_2 -= directions[i][1];
                 }
                 if (count2 == 3){
-                    if (isForbiddenMove(board_copy, newCoordinate) == NO){
+                    if (isForbiddenMove(board_copy, newCoordinate, player) == NO){
                         num++;
                     }
                 }
@@ -107,13 +107,13 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate){
                 struct placeStone newCoordinate = {x + dx_1, y + dy_1};
                 dx_1 += directions[i][0];
                 dy_1 += directions[i][1];
-                while (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == BLACK){
+                while (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == player){
                     count2++;
                     dx_1 += directions[i][0];
                     dy_1 += directions[i][1];
                 }
                 if (count2 == 1){
-                    if (isForbiddenMove(board_copy, newCoordinate) == NO){
+                    if (isForbiddenMove(board_copy, newCoordinate, player) == NO){
                         num++;
                     }
                 }
@@ -126,13 +126,13 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate){
                 struct placeStone newCoordinate = {x + dx_2, y + dy_2};
                 dx_2 -= directions[i][0];
                 dy_2 -= directions[i][1];
-                while (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == BLACK){
+                while (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == player){
                     count2++;
                     dx_2 -= directions[i][0];
                     dy_2 -= directions[i][1];
                 }
                 if (count2 == 1){
-                    if (isForbiddenMove(board_copy, newCoordinate) == NO){
+                    if (isForbiddenMove(board_copy, newCoordinate, player) == NO){
                         num++;
                     }
                 }
@@ -147,13 +147,13 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate){
                 struct placeStone newCoordinate = {x + dx_1, y + dy_1};
                 dx_1 += directions[i][0];
                 dy_1 += directions[i][1];
-                while (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == BLACK){
+                while (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == player){
                     count2++;
                     dx_1 += directions[i][0];
                     dy_1 += directions[i][1];
                 }
                 if (count2 == 2){
-                    if (isForbiddenMove(board_copy, newCoordinate) == NO){
+                    if (isForbiddenMove(board_copy, newCoordinate, player) == NO){
                         num++;
                     }
                 }
@@ -166,13 +166,13 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate){
                 struct placeStone newCoordinate = {x + dx_2, y + dy_2};
                 dx_2 -= directions[i][0];
                 dy_2 -= directions[i][1];
-                while (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == BLACK){
+                while (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == player){
                     count2++;
                     dx_2 -= directions[i][0];
                     dy_2 -= directions[i][1];
                 }
                 if (count2 == 2){
-                    if (isForbiddenMove(board_copy, newCoordinate) == NO){
+                    if (isForbiddenMove(board_copy, newCoordinate, player) == NO){
                         num++;
                     }
                 }

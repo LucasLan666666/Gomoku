@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "gomoku.h"
 
 char line[MAXLINE];  //记录读取到的一行
@@ -15,7 +16,7 @@ void mygetline(void){
             ;
         c = getchar();
     }
-    while ((c = getchar()) == ' ')  // 跳过开头的空格
+    while (isspace((c = getchar())))  // 跳过开头的空格
         ;
     while ((i  < MAXLINE - 1) && (c != EOF) && (c != '\n')){
         line[i++] = c;
@@ -52,10 +53,10 @@ int inputCheckInHomePage(void){
 
 /*
  *  对玩家在游戏中输入进行判断：
- *      如果输入的是合法坐标格式，直接完成转换并储存在stepRecord[stepNum]中，同时返回0；
- *      如果输入的是quit指令，返回1；
- *      如果输入的是regret指令，返回2；
- *      如果输入有误，返回-1
+ *      如果输入的是合法坐标格式，直接完成转换并储存在 stepRecord[stepNum] 中，同时返回 0；
+ *      如果输入的是 quit 指令，返回 1；
+ *      如果输入的是 regret 指令，返回 2；
+ *      如果输入有误，返回 -1
  */
 int inputCheckInGame(void){
     if ((strcmp(line, "quit") == 0) || (strcmp(line, "q") == 0)){

@@ -3,13 +3,16 @@
 #include "gomoku.h"
 
 // 电脑随机落子，直接修改 innerBoard(注意要下在合法位置)
-void gorilla(void){
+struct placeStone gorilla(void){
+    // 创建一颗虚拟棋子
+    struct placeStone coordinate;
     // 使用当前时间作为随机数种子
     srand(time(0));
     do{
-        stepRecord[stepNum].x = getRandom(0, SIZE - 1);
-        stepRecord[stepNum].y = getRandom(0, SIZE - 1);
-    }while(!isValid(stepRecord[stepNum]));
+        coordinate.x = getRandom(0, SIZE - 1);
+        coordinate.y = getRandom(0, SIZE - 1);
+    }while(!isValid(coordinate));
+    return coordinate;
 }
 
 int getRandom(int min, int max){

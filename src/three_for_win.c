@@ -1,8 +1,8 @@
-// 此文件用于对活三的判断
+// 此文件用于对活三的判断，专门为打分设计
 #include "gomoku.h"
 
-// 判断活三，返回活三的数量
-int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
+// 判断活三，返回能形成活四的数量
+int threeForWin(int board[SIZE][SIZE], struct placeStone coordinate, int player){
     int x = coordinate.x;
     int y = coordinate.y;
     int directions[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}}; // 四个方向：水平、垂直、主对角线、副对角线
@@ -37,7 +37,6 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
         // 三子连珠类型，可能在两个方向形成四子连珠，为了判断四子连珠是不是活四，又要验证两端能否成五
         if (count == 3){
             // 判断两端是否能落子
-            int avail_straightFour = 0; // 记录两端能先形成活四的数量
 
             // 先看正方向一端能否落子形成四子连珠
             if (x + dx1 >= 0 && x + dx1 < SIZE && y + dy1 >= 0 && y + dy1 < SIZE && board_copy[x + dx1][y + dy1] == NOBODY){
@@ -69,7 +68,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
 
                     // 判断正方向这个四子连珠是不是活四，是的话 avail_straightFour 加一
                     if (avail_five == 2){
-                        avail_straightFour++;
+                        num++;
                     }
                     board_copy[newCoordinate.x][newCoordinate.y] = NOBODY; // 撤销落下的第四颗棋子
                 }
@@ -105,14 +104,10 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
 
                     // 判断正方向这个四子连珠是不是活四，是的话 avail_straightFour 加一
                     if (avail_five == 2){
-                        avail_straightFour++;
+                        num++;
                     }
                     board_copy[newCoordinate.x][newCoordinate.y] = NOBODY; // 撤销落下的第四颗棋子
                 }
-            }
-
-            if (avail_straightFour > 0){
-                num++;
             }
 
         // 1-0-2 类型，可能在两个相反方向上形成不同的活三，每个活三只有一种成活四方式

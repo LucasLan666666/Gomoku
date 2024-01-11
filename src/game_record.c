@@ -110,7 +110,7 @@ void createGameRecordFile(void){
 void recordGameRoundToLocal(void){
     FILE *fp = fopen(pathOfRound, "a");
     // 写入文件
-    sprintf(stepName, "%d%c", SIZE - stepRecord[stepNum].x, stepRecord[stepNum].y + 'A');  // 将坐标转化为字符串，储存在stepName中
+    sprintf(stepName, "%c%d", stepRecord[stepNum].y + 'A', SIZE - stepRecord[stepNum].x);  // 将坐标转化为字符串，储存在stepName中
     if (gameMode == 2 && player == computer){
         fprintf(fp, "# ");
     }else{

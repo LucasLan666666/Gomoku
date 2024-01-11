@@ -23,10 +23,14 @@ int inputToCoordinate(void){
         }
     }else if (isalpha(line[0])){  // 读取玩家输入的坐标(先字母后数字)
         stepRecord[stepNum].y = line[i] - (line[i] >= 'a' ? 'a' : 'A');
-            i++;
-        while (isdigit(line[i])){
-            stepRecord[stepNum].x = stepRecord[stepNum].x * 10 + line[i] - '0';
-            i++;
+        i++;
+        if (isdigit(line[i])){
+            while (isdigit(line[i])){
+                stepRecord[stepNum].x = stepRecord[stepNum].x * 10 + line[i] - '0';
+                i++;
+            }
+        }else{
+            return -1;
         }
     }else{
         return -1;

@@ -18,11 +18,11 @@ void playerVsPlayer(void){
         innerBoard2Displayboard();  // 将心中的棋盘转成用于显示的棋盘
         printDisplayBoard();  // 显示棋盘
         if (stepNum == 0 && regret == YES){
-            printf("    已经是第一步，无法再悔棋了！\n");
+            printf("    已经是第一步，无法再继续悔棋了！\n");
         }else if (stepNum > 0 && regret == YES){
             printf("    悔棋成功！\n");
         }
-        regret = NO;
+        regret = NO;   
 
         // 输出当前等待落子的玩家
         printf("    现在请%s落子：", (player == BLACK) ? "黑方" : "白方");
@@ -62,7 +62,7 @@ int pvp_placeStone(void){
         }else{
             printf("    平局！\n");
         }
-        printf("    输入 q 返回主页, 或者输入 r 悔棋\n");
+        printf("    输入 q 返回主页, 或者输入 r 悔棋：\n");
         mygetline();
         // 对玩家输入进行判断：如果输入的是坐标，返回 0；如果输入的是 quit 指令，返回 1；如果输入的是 regret 指令，返回 2；如果输入有误，返回 -1
         while ((check = inputCheckInGame()) == -1 || check == 0){

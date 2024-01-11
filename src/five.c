@@ -2,7 +2,7 @@
 #include "gomoku.h"
 
 // 判断五连，返回五连的数量
-int fiveInARow(int board[SIZE][SIZE], struct placeStone coordinate){
+int fiveInARow(int board[SIZE][SIZE], struct placeStone coordinate, int player){
     int x = coordinate.x;
     int y = coordinate.y;
     int dx;
@@ -20,7 +20,7 @@ int fiveInARow(int board[SIZE][SIZE], struct placeStone coordinate){
         // 向一个方向查找
         dx = directions[i][0];
         dy = directions[i][1];
-        while (x + dx >= 0 && x + dx < SIZE && y + dy >= 0 && y + dy < SIZE && board_copy[x + dx][y + dy] == BLACK){
+        while (x + dx >= 0 && x + dx < SIZE && y + dy >= 0 && y + dy < SIZE && board_copy[x + dx][y + dy] == player){
             count++;
             dx += directions[i][0];
             dy += directions[i][1];
@@ -29,7 +29,7 @@ int fiveInARow(int board[SIZE][SIZE], struct placeStone coordinate){
         // 向相反方向查找
         dx = -directions[i][0];
         dy = -directions[i][1];
-        while (x + dx >= 0 && x + dx < SIZE && y + dy >= 0 && y + dy < SIZE && board_copy[x + dx][y + dy] == BLACK){
+        while (x + dx >= 0 && x + dx < SIZE && y + dy >= 0 && y + dy < SIZE && board_copy[x + dx][y + dy] == player){
             count++;
             dx -= directions[i][0];
             dy -= directions[i][1];

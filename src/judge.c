@@ -38,38 +38,50 @@ int isValid(struct placeStone coordinate){
     int vBoard[SIZE][SIZE];
     initVBoard(vBoard);
     innerBoard2VBoard(vBoard);
-    if (   vBoard[coordinate.x][coordinate.y] == NOBODY
-        && coordinate.x >= 0 && coordinate.x < SIZE
+    if (   coordinate.x >= 0 && coordinate.x < SIZE
         && coordinate.y >= 0 && coordinate.y < SIZE
-        && isForbiddenMove(vBoard, coordinate) == NO){
-            return YES;    
+        && vBoard[coordinate.x][coordinate.y] == NOBODY
+        && isForbiddenMove(vBoard, coordinate, player) == NO){
+        return YES;
     }else{
-        if (isForbiddenMove(vBoard, coordinate) == OVERLINE){
-            printf("    长连禁手！\n");
-        }else if (isForbiddenMove(vBoard, coordinate) == D_THREE){
-            printf("    双三禁手！\n");
-        }else if (isForbiddenMove(vBoard, coordinate) == D_FOUR){
-            printf("    双四禁手！\n");
-        }else if (isForbiddenMove(vBoard, coordinate) == COMBINE){
-            printf("    组合禁手！\n");
+        if (player != computer){ // 若是玩家下棋，输出错误信息
+            if (coordinate.x < 0 || coordinate.x >= SIZE || coordinate.y < 0 || coordinate.y >= SIZE){
+                printf("    超出棋盘范围！\n");
+            }else if (vBoard[coordinate.x][coordinate.y] != NOBODY){
+                printf("    此处已有棋子！\n");
+            }
+            switch (isForbiddenMove(vBoard, coordinate, player)){
+                case OVERLINE:
+                    printf("    长连禁手！\n");
+                    break;
+                case D_THREE:
+                    printf("    双三禁手！\n");
+                    break;
+                case D_FOUR:
+                    printf("    双四禁手！\n");
+                    break;
+                case COMBINE:
+                    printf("    组合禁手！\n");
+                    break;
+            }
         }
         return NO;
     }
 }
 
 // 判断禁手，是返回禁手类型，否返回 NO
-int isForbiddenMove(int vBoard[SIZE][SIZE], struct placeStone coordinate){
+int isForbiddenMove(int vBoard[SIZE][SIZE], struct placeStone coordinate, int player){
     if (player == WHITE){
         return NO;
-    }if (fiveInARow(vBoard, coordinate) >= 1){
+    }if (fiveInARow(vBoard, coordinate, player) >= 1){
         return NO;
-    }else if (overline(vBoard, coordinate) >= 1){
+    }else if (overline(vBoard, coordinate, player) >= 1){
         return OVERLINE;
-    }else if (three(vBoard, coordinate) >= 2 && four(vBoard, coordinate) == 0 && straightFour(vBoard, coordinate) == 0){
+    }else if (three(vBoard, coordinate, player) >= 2 && four(vBoard, coordinate, player) == 0 && straightFour(vBoard, coordinate, player) == 0){
         return D_THREE;
-    }else if ((four(vBoard, coordinate) + straightFour(vBoard, coordinate)) >= 2 && three(vBoard, coordinate) == 0){
+    }else if ((four(vBoard, coordinate, player) + straightFour(vBoard, coordinate, player)) >= 2 && three(vBoard, coordinate, player) == 0){
         return D_FOUR;
-    }else if (three(vBoard, coordinate) >= 2 || (four(vBoard, coordinate) + straightFour(vBoard, coordinate)) >= 2){
+    }else if (three(vBoard, coordinate, player) >= 2 || (four(vBoard, coordinate, player) + straightFour(vBoard, coordinate, player)) >= 2){
         return COMBINE;
     }else{
         return NO;

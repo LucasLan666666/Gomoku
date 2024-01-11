@@ -17,31 +17,36 @@ void playerVsComputer(void){
         innerBoard2Displayboard();  // 将心中的棋盘转成用于显示的棋盘
         printDisplayBoard();  // 显示棋盘
         if (stepNum == 0 && regret == YES){
-            printf("    已经是第一步，无法再悔棋了！\n");
+            printf("    已经是第一步，无法再继续悔棋了！\n");
         }else if (stepNum > 0 && regret == YES){
             printf("    悔棋成功！\n");
         }
         regret = NO;
 
         if (stepNum > 0 && player != computer){
-            sprintf(stepName, "%d%c", SIZE - stepRecord[stepNum - 1].x, stepRecord[stepNum - 1].y + 'A');  // 刷新 stepName
+            sprintf(stepName, "%c%d", stepRecord[stepNum - 1].y + 'A', SIZE - stepRecord[stepNum - 1].x);  // 刷新 stepName
             printf("    电脑落子的位置为：%s\n", stepName);
         }
+
+        // 眠三函数功能测试
+        testForSleepThree(stepRecord[stepNum - 2]);
+
         // 输出当前等待落子的玩家
         if (player != computer){
             printf("    现在请%s落子：", (player == BLACK) ? "黑方" : "白方");
         }
 
         if (player != computer){
-            mygetline();  // 从键盘读取输入到line中
+            mygetline();  // 从键盘读取输入到 line 中
             // 对玩家输入进行判断：如果输入的是坐标，返回 0；如果输入的是 quit 指令，返回 1；如果输入的是 regret 指令，返回 2；如果输入有误，返回 -1
             while ((check = inputCheckInGame()) == -1){
                 printf("    你的输入有误，请重新输入：");
                 mygetline();
             }
         }else{
-            gorilla();  // 电脑随机下棋
-            check = 0;  // 电脑默认只会下棋，不会悔棋
+            // stepRecord[stepNum] = gorilla();  // 电脑随机下棋
+            stepRecord[stepNum] = AI(computer);  // AI 下棋
+            check = 0;  // 因为电脑默认只会下棋，不会悔棋
         }
         switch (check){
         case 0:
@@ -72,7 +77,7 @@ int pve_placeStone(void){
         }else{
             printf("    平局！\n");
         }
-        printf("    输入 q 返回主页, 或者输入 r 悔棋:");
+        printf("    输入 q 返回主页, 或者输入 r 悔棋：");
         mygetline();
         // 对玩家输入进行判断：如果输入的是坐标，返回 0；如果输入的是 quit 指令，返回 1；如果输入的是 regret 指令，返回 2；如果输入有误，返回 -1
         while ((check = inputCheckInGame()) == -1 || check == 0){
