@@ -1,6 +1,6 @@
 // 此文件用于对局势进行分析判断
 #include <stdio.h>
-#include "gomoku.h"
+#include "../gomoku.h"
 
 // 判断是否有胜者出现：若黑棋获胜，返回 BLACK；白棋获胜，返回 WHITE；未出现胜者，返回 NOBODY
 int judgeWin(void){
@@ -33,7 +33,7 @@ int judgeWin(void){
 }
 
 // 判断下棋位置是否合法，合法返回 YES，否则返回 NO
-int isValid(struct placeStone coordinate){
+int isValid(Coordinate coordinate){
     // 将心中棋盘转换为虚拟棋盘
     int vBoard[SIZE][SIZE];
     initVBoard(vBoard);
@@ -70,7 +70,7 @@ int isValid(struct placeStone coordinate){
 }
 
 // 判断禁手，是返回禁手类型，否返回 NO
-int isForbiddenMove(int vBoard[SIZE][SIZE], struct placeStone coordinate, int player){
+int isForbiddenMove(int vBoard[SIZE][SIZE], Coordinate coordinate, int player){
     if (player == WHITE){
         return NO;
     }if (fiveInARow(vBoard, coordinate, player) >= 1){

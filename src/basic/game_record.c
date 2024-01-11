@@ -5,14 +5,14 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <time.h>
-#include "gomoku.h"
+#include "../gomoku.h"
 
 int gameRecord;  // 是否开启记谱模式，1 为是，0 为否
 int readWritePermission;  // 是否有读写权限，1 为是，0 为否
 char roundName[NAMESIZE + 6];  // 游戏对局名称
 char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
 int stepNum;  // 记录当前步数
-struct placeStone stepRecord[MAXSTEP];  // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
+Coordinate stepRecord[MAXSTEP];  // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
 char stepName[13];  // 记录下棋内容的字符串
 
 // 从键盘读取输入判断是否开启记谱模式，y 为是，n 为否，并将结果记录在 gameRecord 和 readWritePermission中

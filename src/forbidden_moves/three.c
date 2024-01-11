@@ -1,8 +1,8 @@
 // 此文件用于对活三的判断
-#include "gomoku.h"
+#include "../gomoku.h"
 
 // 判断活三，返回活三的数量
-int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
+int three(int board[SIZE][SIZE], Coordinate coordinate, int player){
     int x = coordinate.x;
     int y = coordinate.y;
     int directions[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}}; // 四个方向：水平、垂直、主对角线、副对角线
@@ -45,7 +45,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dy_1 = dy1;
                 int dx_2 = dx2;
                 int dy_2 = dy2;
-                struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                Coordinate newCoordinate = {x + dx_1, y + dy_1};
                 if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第四颗棋子能否落下
                     int avail_five = 0; // 记录四子连珠两端能形成五连的数量
                     board_copy[newCoordinate.x][newCoordinate.y] = player; // 假设落下了第四颗棋子
@@ -55,7 +55,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
 
                     // 看一看正方向第五个是不是空位
                     if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
-                        struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                        Coordinate newCoordinate = {x + dx_1, y + dy_1};
                         // 多看一格，确保不是长连
                         dx_1 += directions[i][0];
                         dy_1 += directions[i][1];
@@ -70,7 +70,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                     }
                     // 看一看反方向第五个是不是空位
                     if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
-                        struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                        Coordinate newCoordinate = {x + dx_2, y + dy_2};
                         // 多看一格，确保不是长连
                         dx_2 -= directions[i][0];
                         dy_2 -= directions[i][1];
@@ -98,7 +98,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dy_1 = dy1;
                 int dx_2 = dx2;
                 int dy_2 = dy2;
-                struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                Coordinate newCoordinate = {x + dx_2, y + dy_2};
                 if (isForbiddenMove(board_copy, newCoordinate, player) == NO){ // 判断第四颗棋子能否落下
                     int avail_five = 0; // 记录四子连珠两端能形成五连的数量
                     board_copy[newCoordinate.x][newCoordinate.y] = player; // 假设落下了第四颗棋子
@@ -108,7 +108,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
 
                     // 看一看正方向第五个是不是空位
                     if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
-                        struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                        Coordinate newCoordinate = {x + dx_1, y + dy_1};
                         // 多看一格，确保不是长连
                         dx_1 += directions[i][0];
                         dy_1 += directions[i][1];
@@ -123,7 +123,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                     }
                     // 看一看反方向第五个是不是空位
                     if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
-                        struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                        Coordinate newCoordinate = {x + dx_2, y + dy_2};
                         // 多看一格，确保不是长连
                         dx_2 -= directions[i][0];
                         dy_2 -= directions[i][1];
@@ -159,7 +159,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dx_2 = dx2;
                 int dy_2 = dy2;
                 int count2 = 0;
-                struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                Coordinate newCoordinate = {x + dx_1, y + dy_1};
                 // 跳过空位数二子连珠
                 dx_1 += directions[i][0];
                 dy_1 += directions[i][1];
@@ -175,7 +175,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
 
                         // 看一看正方向第五个是不是空位
                         if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
-                            struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                            Coordinate newCoordinate = {x + dx_1, y + dy_1};
                             // 多看一格，确保不是长连
                             dx_1 += directions[i][0];
                             dy_1 += directions[i][1];
@@ -190,7 +190,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                         }
                         // 看一看反方向第五个是不是空位
                         if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
-                            struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                            Coordinate newCoordinate = {x + dx_2, y + dy_2};
                             // 多看一格，确保不是长连
                             dx_2 -= directions[i][0];
                             dy_2 -= directions[i][1];
@@ -212,7 +212,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                     }
                 }
             }
-            
+
             // 反方向的 1-0-2
             if (x + dx2 >= 0 && x + dx2 < SIZE && y + dy2 >= 0 && y + dy2 < SIZE && board_copy[x + dx2][y + dy2] == NOBODY){ // 判断是不是空位
                 int dx_1 = dx1;
@@ -220,7 +220,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dx_2 = dx2;
                 int dy_2 = dy2;
                 int count2 = 0;
-                struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                Coordinate newCoordinate = {x + dx_2, y + dy_2};
                 // 跳过空位数二子连珠
                 dx_2 -= directions[i][0];
                 dy_2 -= directions[i][1];
@@ -236,7 +236,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
 
                         // 看一看正方向第五个是不是空位
                         if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
-                            struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                            Coordinate newCoordinate = {x + dx_1, y + dy_1};
                             // 多看一格，确保不是长连
                             dx_1 += directions[i][0];
                             dy_1 += directions[i][1];
@@ -251,7 +251,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                         }
                         // 看一看反方向第五个是不是空位
                         if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
-                            struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                            Coordinate newCoordinate = {x + dx_2, y + dy_2};
                             // 多看一格，确保不是长连
                             dx_2 -= directions[i][0];
                             dy_2 -= directions[i][1];
@@ -264,7 +264,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                             dx_2 += directions[i][0];
                             dy_2 += directions[i][1];
                         }
-                        
+
                         // 判断这个 1-0-2 能否形成活四
                         if (avail_five == 2){
                             num++;
@@ -284,7 +284,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dx_2 = dx2;
                 int dy_2 = dy2;
                 int count2 = 0;
-                struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                Coordinate newCoordinate = {x + dx_1, y + dy_1};
                 // 跳过空位数最后一子
                 dx_1 += directions[i][0];
                 dy_1 += directions[i][1];
@@ -300,7 +300,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                         
                         // 看一看正方向第五个是不是空位
                         if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
-                            struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                            Coordinate newCoordinate = {x + dx_1, y + dy_1};
                             // 多看一格，确保不是长连
                             dx_1 += directions[i][0];
                             dy_1 += directions[i][1];
@@ -315,7 +315,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                         }
                         // 看一看反方向第五个是不是空位
                         if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
-                            struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                            Coordinate newCoordinate = {x + dx_2, y + dy_2};
                             // 多看一格，确保不是长连
                             dx_2 -= directions[i][0];
                             dy_2 -= directions[i][1];
@@ -345,7 +345,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dx_2 = dx2;
                 int dy_2 = dy2;
                 int count2 = 0;
-                struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                Coordinate newCoordinate = {x + dx_2, y + dy_2};
                 // 跳过空位数最后一子
                 dx_2 -= directions[i][0];
                 dy_2 -= directions[i][1];
@@ -361,7 +361,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
 
                         // 看一看正方向第五个是不是空位
                         if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY){
-                            struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                            Coordinate newCoordinate = {x + dx_1, y + dy_1};
                             // 多看一格，确保不是长连
                             dx_1 += directions[i][0];
                             dy_1 += directions[i][1];
@@ -376,7 +376,7 @@ int three(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                         }
                         // 看一看反方向第五个是不是空位
                         if (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == NOBODY){
-                            struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                            Coordinate newCoordinate = {x + dx_2, y + dy_2};
                             // 多看一格，确保不是长连
                             dx_2 -= directions[i][0];
                             dy_2 -= directions[i][1];

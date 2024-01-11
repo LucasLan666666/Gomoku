@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gomoku.h"
+#include "../gomoku.h"
 
 void playerVsComputer(void){
     int quit = NO;  // 表示是否退出

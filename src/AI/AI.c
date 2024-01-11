@@ -1,9 +1,9 @@
-#include "gomoku.h"
+#include "../gomoku.h"
 
 // AI 下棋，接受电脑颜色作为参数，调整下棋策略，返回落子坐标
-struct placeStone AI(int computer){
+Coordinate AI(int computer){
     // 创建一颗虚拟棋子
-    struct placeStone coordinate;
+    Coordinate coordinate;
     if (computer == BLACK){
         coordinate = AI_black(); // 黑棋策略
     }else{
@@ -13,9 +13,9 @@ struct placeStone AI(int computer){
 }
 
 // AI 执黑
-struct placeStone AI_black(){
+Coordinate AI_black(){
     // 创建一颗虚拟棋子
-    struct placeStone coordinate;
+    Coordinate coordinate;
 
     // 先布局
     if (stepNum == 0){
@@ -60,15 +60,15 @@ struct placeStone AI_black(){
 }
 
 // AI 执白
-struct placeStone AI_white(){
+Coordinate AI_white(){
     // 创建一颗虚拟棋子
-    struct placeStone coordinate;
+    Coordinate coordinate;
 
     // 先防守
     if (stepNum == 1){
         int dx = 0;
         int dy = 0;
-        struct placeStone first_black = stepRecord[0];
+        Coordinate first_black = stepRecord[0];
         if (first_black.x >= 7){
             dx = first_black.x - 7;
             coordinate.x = first_black.x - 1;

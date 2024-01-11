@@ -1,8 +1,8 @@
 // 此文件用于对冲四的判断
-#include "gomoku.h"
+#include "../gomoku.h"
 
 // 判断冲四，返回冲四的数量
-int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
+int four(int board[SIZE][SIZE], Coordinate coordinate, int player){
     int x = coordinate.x;
     int y = coordinate.y;
     int directions[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}}; // 四个方向：水平、垂直、主对角线、副对角线
@@ -40,7 +40,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
             int available = 0; // 记录两端能落子的空位数量
             // 先看正方向一端能否落子
             if (x + dx1 >= 0 && x + dx1 < SIZE && y + dy1 >= 0 && y + dy1 < SIZE && board_copy[x + dx1][y + dy1] == NOBODY){
-                struct placeStone newCoordinate = {x + dx1, y + dy1};
+                Coordinate newCoordinate = {x + dx1, y + dy1};
                 // 多看一格，确保不是长连
                 dx1 += directions[i][0];
                 dy1 += directions[i][1];
@@ -55,7 +55,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
             }
             // 再看反方向一端能否落子
             if (x + dx2 >= 0 && x + dx2 < SIZE && y + dy2 >= 0 && y + dy2 < SIZE && board_copy[x + dx2][y + dy2] == NOBODY){
-                struct placeStone newCoordinate = {x + dx2, y + dy2};
+                Coordinate newCoordinate = {x + dx2, y + dy2};
                 // 多看一格，确保不是长连
                 dx2 -= directions[i][0];
                 dy2 -= directions[i][1];
@@ -79,7 +79,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dx_1 = dx1;
                 int dy_1 = dy1;
                 int count2 = 0;
-                struct placeStone newCoordinate = {x + dx1, y + dy1};
+                Coordinate newCoordinate = {x + dx1, y + dy1};
                 // 跳过空位数三子连珠
                 dx_1 += directions[i][0];
                 dy_1 += directions[i][1];
@@ -99,7 +99,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dx_2 = dx2;
                 int dy_2 = dy2;
                 int count2 = 0;
-                struct placeStone newCoordinate = {x + dx2, y + dy2};
+                Coordinate newCoordinate = {x + dx2, y + dy2};
                 // 跳过空位数三子连珠
                 dx_2 -= directions[i][0];
                 dy_2 -= directions[i][1];
@@ -122,7 +122,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dx_1 = dx1;
                 int dy_1 = dy1;
                 int count2 = 0;
-                struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                Coordinate newCoordinate = {x + dx_1, y + dy_1};
                 dx_1 += directions[i][0];
                 dy_1 += directions[i][1];
                 while (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == player){
@@ -141,7 +141,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dx_2 = dx2;
                 int dy_2 = dy2;
                 int count2 = 0;
-                struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                Coordinate newCoordinate = {x + dx_2, y + dy_2};
                 dx_2 -= directions[i][0];
                 dy_2 -= directions[i][1];
                 while (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == player){
@@ -163,7 +163,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dx_1 = dx1;
                 int dy_1 = dy1;
                 int count2 = 0;
-                struct placeStone newCoordinate = {x + dx_1, y + dy_1};
+                Coordinate newCoordinate = {x + dx_1, y + dy_1};
                 dx_1 += directions[i][0];
                 dy_1 += directions[i][1];
                 while (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == player){
@@ -182,7 +182,7 @@ int four(int board[SIZE][SIZE], struct placeStone coordinate, int player){
                 int dx_2 = dx2;
                 int dy_2 = dy2;
                 int count2 = 0;
-                struct placeStone newCoordinate = {x + dx_2, y + dy_2};
+                Coordinate newCoordinate = {x + dx_2, y + dy_2};
                 dx_2 -= directions[i][0];
                 dy_2 -= directions[i][1];
                 while (x + dx_2 >= 0 && x + dx_2 < SIZE && y + dy_2 >= 0 && y + dy_2 < SIZE && board_copy[x + dx_2][y + dy_2] == player){

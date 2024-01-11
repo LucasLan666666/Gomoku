@@ -1,8 +1,8 @@
-#include "gomoku.h"
+#include "../gomoku.h"
 #include <stdio.h>
 
 // 眠三函数功能测试（眠三判定太复杂了，所以专门开个函数测试一下）
-void testForSleepThree(struct placeStone coordinate){
+void testForSleepThree(Coordinate coordinate){
     // 将心中棋盘转换为虚拟棋盘
     int vBoard[SIZE][SIZE];
     initVBoard(vBoard);

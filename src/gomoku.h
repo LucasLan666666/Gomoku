@@ -1,42 +1,54 @@
 // 头文件，包含了一些常量定义和函数声明
 #ifndef    GOMOKU_H
 #define    GOMOKU_H
-#define        SIZE           15  // 棋盘大小
-#define    CHARSIZE            3  // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
-#define     MAXLINE           50  // 定义玩家输入的最大长度
-#define    NAMESIZE           20  // 定义玩家输入的名字的最大长度
-#define       BLACK            1  // 定义黑方
-#define       WHITE            2  // 定义白方
-#define      NOBODY            0  // 定义没有人
-#define         YES            1  // 定义是
-#define          NO            0  // 定义否
-#define        TRUE            1  // 定义真
-#define       FALSE            0  // 定义假
-#define     MAXSTEP    SIZE*SIZE  // 定义最大步数
-#define    OVERLINE            1  // 定义长连禁手
-#define     D_THREE            2  // 定义双三禁手
-#define      D_FOUR            3  // 定义双四禁手
-#define     COMBINE            4  // 定义组合禁手
 
-// 用于描述一个棋子附近某个坐标处的各种信息
-// struct state{
-//     int free;
-//     int 
-// };
+#define        SIZE                          15  // 棋盘大小
+#define     MAXSTEP                   SIZE*SIZE  // 定义最大步数
+#define    CHARSIZE                           3  // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
+
+#define     MAXLINE                          50  // 定义玩家输入的最大长度
+#define    NAMESIZE                          20  // 定义玩家输入的名字的最大长度
+
+#define       BLACK                           1  // 定义黑方
+#define       WHITE                           2  // 定义白方
+#define      NOBODY                           0  // 定义没有人
+
+#define         YES                           1  // 定义是
+#define          NO                           0  // 定义否
+
+#define    OVERLINE                           1  // 定义长连禁手
+#define     D_THREE                           2  // 定义双三禁手
+#define      D_FOUR                           3  // 定义双四禁手
+#define     COMBINE                           4  // 定义组合禁手
+
+#define  SCAN_WIDTH                           9  // 定义扫描宽度，以自我为中心取一个正方形扫描
+#define       WIDTH     SCAN_WIDTH*SCAN_WIDTH-1  // 定义决策树搜索宽度
+#define       DEPTH                           3  // 定义决策树搜索深度
+
+
+
+// 用于记录玩家落子的坐标
+typedef struct Coordinate{
+    int x;
+    int y;
+} Coordinate;
 
 // 用于记录棋盘上面一个子的信息
-struct stone{
+typedef struct Stone{
     // NO 表示不是当前落子目标，YES 表示是当前落子目标(主要用于图标显示)
     int current;
     // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY 表示没有棋子
     int player;
-};
+} Stone;
 
-// 用于记录玩家落子的坐标
-struct placeStone{
-    int x;
-    int y;
-};
+// 决策树的结点
+typedef struct Node {
+    int board[SIZE][SIZE]; // 棋盘
+    int player; // 当前等待落子的玩家，BLACK 表示黑方，WHITE 表示白方
+    int score; // 当前局面的分数
+    struct Node* children[SIZE*SIZE]; // 子节点列表
+    int numChildren; // 子节点数量
+} Node;
 
 // 字符艺术
 extern const char* HAPPY_GOMOKU[];
@@ -54,7 +66,7 @@ extern char roundName[NAMESIZE + 6];  // 游戏对局名称
 extern char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
 
 extern int stepNum;  // 记录当前步数
-extern struct placeStone stepRecord[];  // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
+extern Coordinate stepRecord[];  // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
 extern char stepName[];  // 记录下棋内容的字符串
 
 // 空棋盘模板
@@ -67,7 +79,7 @@ extern char play2Pic[];  // 白棋子
 extern char play2CurrentPic[]; // 白棋子的当前落子位置
 
 // 当前的棋盘的格局 
-extern struct stone innerBoard[SIZE][SIZE];
+extern Stone innerBoard[SIZE][SIZE];
 
 // 显示的棋盘 
 extern char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
@@ -154,39 +166,46 @@ void saveRegretToLocal(void);
 // 判断是否有胜者出现：若黑棋获胜，返回 1；白棋获胜，返回 2；未出现胜者，返回 0
 int judgeWin(void);
 // 判断下棋位置是否合法，合法返回 YES，否则返回 NO
-int isValid(struct placeStone coordinate);
+int isValid(Coordinate coordinate);
 
 // 判断禁手，是返回禁手类型，否返回 NO
-int isForbiddenMove(int vBoard[SIZE][SIZE], struct placeStone coordinate, int player);
+int isForbiddenMove(int vBoard[SIZE][SIZE], Coordinate coordinate, int player);
 // 判断五连，返回五连的数量
-int fiveInARow(int board[SIZE][SIZE], struct placeStone coordinate, int player);
+int fiveInARow(int board[SIZE][SIZE], Coordinate coordinate, int player);
 // 判断长连，返回长连的数量
-int overline(int board[SIZE][SIZE], struct placeStone coordinate, int player);
+int overline(int board[SIZE][SIZE], Coordinate coordinate, int player);
 // 判断冲四，返回冲四的数量
-int four(int board[SIZE][SIZE], struct placeStone coordinate, int player);
+int four(int board[SIZE][SIZE], Coordinate coordinate, int player);
 // 判断活四，返回活四的数量
-int straightFour(int board[SIZE][SIZE], struct placeStone coordinate, int player);
+int straightFour(int board[SIZE][SIZE], Coordinate coordinate, int player);
 // 判断活三，返回活三的数量
-int three(int board[SIZE][SIZE], struct placeStone coordinate, int player);
+int three(int board[SIZE][SIZE], Coordinate coordinate, int player);
 // 判断眠三，返回眠三可以形成冲四种类的数量
-int sleepThree(int board[SIZE][SIZE], struct placeStone coordinate, int player);
+int sleepThree(int board[SIZE][SIZE], Coordinate coordinate, int player);
 // 眠三函数功能测试
-void testForSleepThree(struct placeStone coordinate);
+void testForSleepThree(Coordinate coordinate);
 // 判断活三，返回能形成活四的数量
-int threeForWin(int board[SIZE][SIZE], struct placeStone coordinate, int player);
+int threeForWin(int board[SIZE][SIZE], Coordinate coordinate, int player);
 
 // 复制虚拟棋盘的副本
 void copyBoard(int to[SIZE][SIZE], int from[SIZE][SIZE]);
 
 // 电脑随机落子
-struct placeStone gorilla(void);
+Coordinate gorilla(void);
 // AI 下棋，接受电脑颜色作为参数，调整下棋策略，返回落子坐标
-struct placeStone AI(int computer);
+Coordinate AI(int computer);
 // AI 执黑
-struct placeStone AI_black();
+Coordinate AI_black();
 // AI 执白
-struct placeStone AI_white();
+Coordinate AI_white();
 // 获取指定范围内随机数
 int getRandom(int min, int max);
+
+// 打分函数，接受一个棋盘，返回一个分数
+int evaluate(int board[SIZE][SIZE]);
+// 比大小函数，接受两个分数，返回较大的那个
+int max(int a, int b);
+// 比大小函数，接受两个分数，返回较大的那个
+int min(int a, int b);
 
 #endif

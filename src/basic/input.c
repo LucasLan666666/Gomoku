@@ -3,13 +3,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "gomoku.h"
+#include "../gomoku.h"
 
 char line[MAXLINE];  //记录读取到的一行
 
 // 自己写的函数，读取一行玩家的输入，从第一个非零字符开始（注意不会读到换行符'\n'）
 void mygetline(void){
-    int c;
+    int c = 0;
     int i = 0;  // 用于遍历line
     while (c == '#'){
         while ((c = getchar()) != '\n')  // 读到 “#”，跳过这一行

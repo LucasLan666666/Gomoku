@@ -1,8 +1,8 @@
 // 此文件用于对五连的判断
-#include "gomoku.h"
+#include "../gomoku.h"
 
 // 判断五连，返回五连的数量
-int fiveInARow(int board[SIZE][SIZE], struct placeStone coordinate, int player){
+int fiveInARow(int board[SIZE][SIZE], Coordinate coordinate, int player){
     int x = coordinate.x;
     int y = coordinate.y;
     int dx;

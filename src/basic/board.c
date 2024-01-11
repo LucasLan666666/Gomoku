@@ -1,7 +1,7 @@
 // 关于棋盘的一些基础配置，包括棋盘的大小，棋盘的显示，棋盘的初始化等等
 #include <stdio.h>
 #include <stdlib.h>
-#include "gomoku.h"
+#include "../gomoku.h"
 
 // 空棋盘模板 
 char emptyDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1] = {
@@ -29,7 +29,7 @@ char play2Pic[]="◎";  // 白棋子
 char play2CurrentPic[]="△"; // 白棋子的当前落子位置
 
 // 心中的的棋盘的格局 
-struct stone innerBoard[SIZE][SIZE];
+Stone innerBoard[SIZE][SIZE];
 
 // 显示的棋盘 
 char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
@@ -39,8 +39,8 @@ int player;
 
 // 初始化一个空棋盘格局 
 void initInnerBoard(void){
-	//通过三重循环，将 innerBoard 清 0
-    int i, j, k;
+	//通过二重循环，将 innerBoard 清 0
+    int i, j;
     for (i = 0; i < SIZE; i++)
         for (j = 0; j < SIZE; j++){
             innerBoard[i][j].current = NO;
@@ -118,6 +118,7 @@ void printDisplayBoard(void){
 	int i;
 	// 清屏
     int clear = system("clear");  // 清屏
+    (void)clear;
 
     // 输出提示信息
     if (gameMode == 1){

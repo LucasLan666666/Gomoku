@@ -1,8 +1,8 @@
 // 此文件用于对活四的判断
-#include "gomoku.h"
+#include "../gomoku.h"
 
 // 判断活四，返回活四的数量
-int straightFour(int board[SIZE][SIZE], struct placeStone coordinate, int player){
+int straightFour(int board[SIZE][SIZE], Coordinate coordinate, int player){
     int x = coordinate.x;
     int y = coordinate.y;
     int directions[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}}; // 四个方向：水平、垂直、主对角线、副对角线
@@ -40,7 +40,7 @@ int straightFour(int board[SIZE][SIZE], struct placeStone coordinate, int player
             int available = 0; // 记录两端能落子的空位数量
             // 先看正方向一端能否落子
             if (x + dx1 >= 0 && x + dx1 < SIZE && y + dy1 >= 0 && y + dy1 < SIZE && board_copy[x + dx1][y + dy1] == NOBODY){
-                struct placeStone newCoordinate = {x + dx1, y + dy1};
+                Coordinate newCoordinate = {x + dx1, y + dy1};
                 // 多看一格，确保不是长连
                 dx1 += directions[i][0];
                 dy1 += directions[i][1];
@@ -55,7 +55,7 @@ int straightFour(int board[SIZE][SIZE], struct placeStone coordinate, int player
             }
             // 再看反方向一端能否落子
             if (x + dx2 >= 0 && x + dx2 < SIZE && y + dy2 >= 0 && y + dy2 < SIZE && board_copy[x + dx2][y + dy2] == NOBODY){
-                struct placeStone newCoordinate = {x + dx2, y + dy2};
+                Coordinate newCoordinate = {x + dx2, y + dy2};
                 // 多看一格，确保不是长连
                 dx2 -= directions[i][0];
                 dy2 -= directions[i][1];

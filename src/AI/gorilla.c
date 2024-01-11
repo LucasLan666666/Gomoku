@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <time.h>
-#include "gomoku.h"
+#include "../gomoku.h"
 
 // 电脑随机落子，直接修改 innerBoard(注意要下在合法位置)
-struct placeStone gorilla(void){
+Coordinate gorilla(void){
     // 创建一颗虚拟棋子
-    struct placeStone coordinate;
+    Coordinate coordinate;
     // 使用当前时间作为随机数种子
     srand(time(0));
     do{

@@ -1,8 +1,8 @@
 // 此文件用于对长连的判断
-#include "gomoku.h"
+#include "../gomoku.h"
 
 // 判断长连，返回长连的数量
-int overline(int board[SIZE][SIZE], struct placeStone coordinate, int player){
+int overline(int board[SIZE][SIZE], Coordinate coordinate, int player){
     int x = coordinate.x;
     int y = coordinate.y;
     int dx;

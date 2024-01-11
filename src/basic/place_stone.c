@@ -1,6 +1,6 @@
 // 此文件用于玩家的落子
 #include <ctype.h>
-#include "gomoku.h"
+#include "../gomoku.h"
 
 // 将玩家的输入转化为坐标，若为合法坐标，则返回0，否则返回-1
 int inputToCoordinate(void){

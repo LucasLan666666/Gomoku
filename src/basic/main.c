@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gomoku.h"
+#include "../gomoku.h"
 
 int gameMode;  // 游戏模式，1 表示双人对战，2 表示人机对战，3 表示退出游戏，-1表示输入有误
 int computer;  // 电脑执子，BLACK 为黑子，WHITE 为白子
@@ -28,7 +28,7 @@ int main(){
 // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
 void homePage(void){
     int clear = system("clear");  // 清屏
-
+    (void)clear;
     for (int i = 0; i < 15; i++){
         printf("%s", HAPPY_GOMOKU[i]);
     }
@@ -62,7 +62,9 @@ void homePage(void){
 // 直接清屏退出游戏
 void End(void){
     int clear = system("clear");
+    (void)clear;
     exit(0);
+    printf("感谢您的使用！\n");
 }
 
 // 转换玩家，黑方下完白方下，白方下完黑方下

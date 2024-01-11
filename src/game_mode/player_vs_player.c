@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "gomoku.h"
+#include "../gomoku.h"
 
 int regret;  // 记录是否悔棋，YES 为是，NO 为否
 
