@@ -10,7 +10,7 @@
 #define    NAMESIZE                          20  // 定义玩家输入的名字的最大长度
 
 #define       BLACK                           1  // 定义黑方
-#define       WHITE                           2  // 定义白方
+#define       WHITE                          -1  // 定义白方
 #define      NOBODY                           0  // 定义没有人
 
 #define         YES                           1  // 定义是
@@ -24,29 +24,33 @@
 #define  SCAN_WIDTH                           9  // 定义扫描宽度，以自我为中心取一个正方形扫描
 #define       WIDTH     SCAN_WIDTH*SCAN_WIDTH-1  // 定义决策树搜索宽度
 #define       DEPTH                           3  // 定义决策树搜索深度
-
+#define         MAX                           1  // 定义 MAX 层
+#define         MIN                          -1  // 定义 MIN 层
+#define       INFTY                  2000000000  // 定义无穷
 
 
 // 用于记录玩家落子的坐标
 typedef struct Coordinate{
-    int x;
-    int y;
+    signed char x;
+    signed char y;
 } Coordinate;
 
 // 用于记录棋盘上面一个子的信息
 typedef struct Stone{
     // NO 表示不是当前落子目标，YES 表示是当前落子目标(主要用于图标显示)
-    int current;
+    signed char current;
     // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY 表示没有棋子
-    int player;
+    signed char player;
 } Stone;
 
 // 决策树的结点
 typedef struct Node {
-    int board[SIZE][SIZE]; // 棋盘
-    int player; // 当前等待落子的玩家，BLACK 表示黑方，WHITE 表示白方
+    signed char board[SIZE][SIZE]; // 棋盘
+    signed char player; // 当前等待落子的玩家，BLACK 表示黑方，WHITE 表示白方
     int score; // 当前局面的分数
-    struct Node* children[SIZE*SIZE]; // 子节点列表
+    signed char type; // 所在层类型，分为 MAX 和 MIN
+    signed char floor; // 当前结点的层数
+    struct Node* children[MAXSTEP]; // 子节点列表
     int numChildren; // 子节点数量
 } Node;
 
@@ -58,43 +62,42 @@ extern const char* INTELLIGENT_DOGE[];
 extern const char* GAME_OVER[];
 
 extern int gameMode;  // 游戏模式，1 表示双人对战，2 表示人机对战，3 表示退出游戏，-1 表示输入有误
-extern int computer;  // 电脑执子，BLACK 为黑子，WHITE 为白子
+extern signed char computer;  // 电脑执子，BLACK 为黑子，WHITE 为白子
 
 extern int gameRecord;  // 是否开启记谱模式，1 为是，0 为否
 extern int readWritePermission;  // 是否有读写权限，1 为是，0 为否
-extern char roundName[NAMESIZE + 6];  // 游戏对局名称
-extern char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
+extern signed char roundName[NAMESIZE + 6];  // 游戏对局名称
+extern signed char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
 
 extern int stepNum;  // 记录当前步数
 extern Coordinate stepRecord[];  // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
-extern char stepName[];  // 记录下棋内容的字符串
+extern signed char stepName[];  // 记录下棋内容的字符串
 
 // 空棋盘模板
-extern char emptyDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
+extern signed char emptyDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
 // 以下是棋子的图案
-extern char play1Pic[];  // 黑棋子
-extern char play1CurrentPic[]; // 黑棋子的当前落子位置
-extern char play2Pic[];  // 白棋子
-extern char play2CurrentPic[]; // 白棋子的当前落子位置
+extern signed char play1Pic[];  // 黑棋子
+extern signed char play1CurrentPic[]; // 黑棋子的当前落子位置
+extern signed char play2Pic[];  // 白棋子
+extern signed char play2CurrentPic[]; // 白棋子的当前落子位置
 
 // 当前的棋盘的格局 
 extern Stone innerBoard[SIZE][SIZE];
 
 // 显示的棋盘 
-extern char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
+extern signed char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
 // 当前等待落子的玩家，BLACK 表示黑方，WHITE 表示白方
-extern int player;
+extern signed char player;
 
 // 记录读取到的一行
-extern char line[];
+extern signed char line[];
 
 extern int regret;  // 记录是否悔棋，YES 为是，NO 为否
 
 void homePage(void);  // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
 void whoGoFirst(void); // 提示玩家输入自己执子的颜色，并修改 computer 的值
-void changePlayer(void);  // 切换玩家
 void End(void);  // 直接清屏退出游戏
 
 void playerVsPlayer(void);  // 人人对战模式
@@ -108,12 +111,12 @@ void regret2(void);  // 人机对战模式的悔棋模式
 // 初始化一个空棋盘格局
 void initInnerBoard(void);
 // 将虚拟棋盘清零
-void initVBoard(int vBoard[SIZE][SIZE]);
+void initVBoard(signed char vBoard[SIZE][SIZE]);
 
 //将 innerBoard 中记录的棋子位置，转化到 displayBoard 中
 void innerBoard2Displayboard(void);
 // 将 innerBoard 中记录的棋子位置，转化到 vBoard 中
-void innerBoard2VBoard(int vBoard[SIZE][SIZE]);
+void innerBoard2VBoard(signed char vBoard[SIZE][SIZE]);
 
 //显示棋盘格局以及其他有关信息
 void printDisplayBoard(void);
@@ -152,7 +155,7 @@ void isRecord(void);
 int isReadWritePermission(void);
 
 // 判断文件是否存在，存在返回 1，不存在返回 0
-int isFileExist(const char *filename);
+int isFileExist(const signed char *filename);
 
 // 创立棋谱文件,询问玩家如何起名，将棋谱文件命名为玩家输入的名字，否则默认为对局开始时间
 void createGameRecordFile(void);
@@ -163,49 +166,58 @@ void recordGameRoundToLocal(void);
 // 删除棋谱中的最后一步
 void saveRegretToLocal(void);
 
-// 判断是否有胜者出现：若黑棋获胜，返回 1；白棋获胜，返回 2；未出现胜者，返回 0
+// 判断是否有胜者出现：若黑棋获胜，返回 BLACK；白棋获胜，返回 WHITE；未出现胜者，返回 NOBODY
 int judgeWin(void);
 // 判断下棋位置是否合法，合法返回 YES，否则返回 NO
-int isValid(Coordinate coordinate);
+int isValid(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player, signed char warning);
 
 // 判断禁手，是返回禁手类型，否返回 NO
-int isForbiddenMove(int vBoard[SIZE][SIZE], Coordinate coordinate, int player);
+int isForbiddenMove(signed char vBoard[SIZE][SIZE], Coordinate coordinate, signed char player);
 // 判断五连，返回五连的数量
-int fiveInARow(int board[SIZE][SIZE], Coordinate coordinate, int player);
+int fiveInARow(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player);
 // 判断长连，返回长连的数量
-int overline(int board[SIZE][SIZE], Coordinate coordinate, int player);
+int overline(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player);
 // 判断冲四，返回冲四的数量
-int four(int board[SIZE][SIZE], Coordinate coordinate, int player);
+int four(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player);
 // 判断活四，返回活四的数量
-int straightFour(int board[SIZE][SIZE], Coordinate coordinate, int player);
+int straightFour(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player);
 // 判断活三，返回活三的数量
-int three(int board[SIZE][SIZE], Coordinate coordinate, int player);
+int three(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player);
 // 判断眠三，返回眠三可以形成冲四种类的数量
-int sleepThree(int board[SIZE][SIZE], Coordinate coordinate, int player);
+int sleepThree(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player);
 // 眠三函数功能测试
 void testForSleepThree(Coordinate coordinate);
 // 判断活三，返回能形成活四的数量
-int threeForWin(int board[SIZE][SIZE], Coordinate coordinate, int player);
+int threeForWin(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player);
 
 // 复制虚拟棋盘的副本
-void copyBoard(int to[SIZE][SIZE], int from[SIZE][SIZE]);
+void copyBoard(signed char to[SIZE][SIZE], signed char from[SIZE][SIZE]);
 
 // 电脑随机落子
 Coordinate gorilla(void);
+// 获取指定范围内随机数
+signed char getRandom(signed char min, signed char max);
 // AI 下棋，接受电脑颜色作为参数，调整下棋策略，返回落子坐标
-Coordinate AI(int computer);
+Coordinate AI(signed char computer);
 // AI 执黑
 Coordinate AI_black();
 // AI 执白
 Coordinate AI_white();
-// 获取指定范围内随机数
-int getRandom(int min, int max);
+// 真正的AI
+Coordinate trueAI(void);
 
-// 打分函数，接受一个棋盘，返回一个分数
-int evaluate(int board[SIZE][SIZE]);
+// 打分函数，接受棋盘和玩家作为参数，返回一个分数
+int evaluate(signed char board[SIZE][SIZE], signed char player);
 // 比大小函数，接受两个分数，返回较大的那个
 int max(int a, int b);
 // 比大小函数，接受两个分数，返回较大的那个
 int min(int a, int b);
+
+// 创建一个新的结点
+Node* createNode(signed char board[SIZE][SIZE], signed char player, signed char floor);
+// 释放结点及其子节点的内存空间
+void freeNode(Node* pnode);
+// 构建决策树
+void buildDecisionTree(Node* pnode, signed char depth, int alpha, int beta);
 
 #endif

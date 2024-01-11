@@ -1,11 +1,11 @@
 # 五子棋说明
 
-## 内容
+## 简介
 
 1. 中国科学院大学 2023 年秋季武成岗老师班 C 语言大作业
 2. 由于原始棋盘在终端显示过窄，借用了 [@Squareless-XD](https://github.com/Squareless-XD) 学长的创意，在同一行每相邻两个纵向落子的位置间增加了一条横线
 3. 关于棋盘一些基础函数由老师提供，代码中用到的字符艺术来源于互联网，其余内容均由本人撰写
-4. 正在持续更新中，如果有任何修改建议，欢迎联系我
+4. 关于五子棋开发文档的详细说明正在编写中，如果有任何修改建议，欢迎联系我
 
 ## 注意事项
 
@@ -18,33 +18,30 @@
 
 ### 进行游戏
 
-1. 编译：打开仓库 `Gomoku` ，执行指令 `make` 完成编译
+1. 编译：打开仓库 `Gomoku` ，执行如下指令进行编译
 
    ```
    make
    ```
 
-2. 运行：执行命令
+2. 运行：执行如下命令开始游戏
 
    ```bash
    ./gomoku
    ```
 
-   
+### 记录棋谱
 
-### 记录棋谱 & 读取棋谱
+- 游戏中会提示玩家可以创建棋谱并命名，默认在 `gomoku` 程序所在目录下建立一个名为 `game_record` 的文件夹。
+- 文件夹内会以 `txt` 文件存储对局，存储在目录 `game_record` 之中。
 
-- 游戏中会提示玩家可以创建棋谱，默认在 `gomoku` 程序所在目录下建立一个名为 `game_record` 的文件夹。
+### 读取棋谱
 
-- 文件夹内会以 `txt` 文件存储对局。
+在命令行输入：
 
-- 读谱方法：
-
-  在命令行输入：
-
-  ```bash
-  cat game_record/你的存档名.txt - | ./gomoku 
-  ```
+```bash
+cat game_record/你的存档名.txt - | ./gomoku 
+```
 
 ## 更新日志
 
@@ -73,6 +70,7 @@
 ## 参考资料
 
 - [International Rules of Renju - RenjuNet](https://www.renju.net/rifrules/)
+- [lihongxun945/gobang: javascript gobang AI，JS五子棋AI，源码+教程，基于Alpha-Beta剪枝算法（不是神经网络） (github.com)](https://github.com/lihongxun945/gobang?tab=readme-ov-file)
 - [【断奶班】五子棋零基础自学一本通（转载） - klchang - 博客园 (cnblogs.com)](https://www.cnblogs.com/klchang/articles/4542994.html)
 - [五子棋复杂禁手的判断例题一则 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/527374023)
 

@@ -6,7 +6,7 @@
 
 int regret;  // 记录是否悔棋，YES 为是，NO 为否
 
-void playerVsPlayer(void){
+void playerVsPlayer(void) {
     int quit = NO;  // 表示是否退出
     int check;  // 储存读取输入的相关信息
     regret = NO;  // 初始化悔棋为否
@@ -15,12 +15,12 @@ void playerVsPlayer(void){
     stepNum = 0;  // 初始化步数为 0
     initInnerBoard(); // 初始化一个空棋盘
 
-    while (quit == NO){
+    while (quit == NO) {
         innerBoard2Displayboard();  // 将心中的棋盘转成用于显示的棋盘
         printDisplayBoard();  // 显示棋盘
-        if (stepNum == 0 && regret == YES){
+        if (stepNum == 0 && regret == YES) {
             printf("    已经是第一步，无法再继续悔棋了！\n");
-        }else if (stepNum > 0 && regret == YES){
+        } else if (stepNum > 0 && regret == YES) {
             printf("    悔棋成功！\n");
         }
         regret = NO;   
@@ -30,11 +30,11 @@ void playerVsPlayer(void){
 
         mygetline();  // 从键盘读取输入到line中
         // 对玩家输入进行判断：如果输入的是坐标，返回 0；如果输入的是 quit 指令，返回 1；如果输入的是 regret 指令，返回 2；如果输入有误，返回 -1
-        while ((check = inputCheckInGame()) == -1){
+        while ((check = inputCheckInGame()) == -1) {
             printf("    你的输入有误，请重新输入：");
             mygetline();
         }
-        switch (check){
+        switch (check) {
         case 0:
             quit = pvp_placeStone();
             break;
@@ -49,32 +49,32 @@ void playerVsPlayer(void){
 }
 
 // 人人对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；若判得游戏结束，返回 YES
-int pvp_placeStone(void){
+int pvp_placeStone(void) {
     int check;  // 储存读取输入的相关信息
     coordinateToPlaceStone();  // 将坐标转化为棋盘上的落子
-    if (gameRecord && readWritePermission){  // 判断是否开启记谱模式，以及是否有读写权限
+    if (gameRecord && readWritePermission) {  // 判断是否开启记谱模式，以及是否有读写权限
         recordGameRoundToLocal();  // 记录棋谱到本地
     }
-    if (judgeWin() != NOBODY || stepNum == MAXSTEP - 1){  // 判断是否有玩家获胜或者平局
+    if (judgeWin() != NOBODY || stepNum == MAXSTEP - 1) {  // 判断是否有玩家获胜或者平局
         innerBoard2Displayboard();
         printDisplayBoard();  // 显示棋盘
-        if (judgeWin() != NOBODY){
+        if (judgeWin() != NOBODY) {
             printf("    恭喜%s获胜！\n", (player == BLACK) ? "黑方" : "白方");
-        }else{
+        } else {
             printf("    平局！\n");
         }
         printf("    输入 q 返回主页, 或者输入 r 悔棋：\n");
         mygetline();
         // 对玩家输入进行判断：如果输入的是坐标，返回 0；如果输入的是 quit 指令，返回 1；如果输入的是 regret 指令，返回 2；如果输入有误，返回 -1
-        while ((check = inputCheckInGame()) == -1 || check == 0){
+        while ((check = inputCheckInGame()) == -1 || check == 0) {
             printf("    你的输入有误，请重新输入：");
             mygetline();
         }
-        if (check == 1){
+        if (check == 1) {
             return YES;
-        }else{
+        } else {
             stepNum++;
-            changePlayer();
+            player = -player;
             regret1();
             return NO;
         }
@@ -82,14 +82,14 @@ int pvp_placeStone(void){
     // 步数+1
     stepNum++;
     // 转换玩家，黑方下完白方下，白方下完黑方下
-    changePlayer();
+    player = -player;
 
     return NO;
 }
 
 // 人人对战模式的悔棋模式
-void regret1(void){
-    if (stepNum != 0){
+void regret1(void) {
+    if (stepNum != 0) {
         // 步数-1
         stepNum--;
         // 将上一步落子清除
@@ -97,8 +97,8 @@ void regret1(void){
         innerBoard[stepRecord[stepNum].x][stepRecord[stepNum].y].player = NOBODY;
         innerBoard[stepRecord[stepNum - 1].x][stepRecord[stepNum - 1].y].current = YES;
         // 转换为上一个玩家
-        changePlayer();
-        if (gameRecord && readWritePermission){  // 判断是否开启记谱模式，以及是否有读写权限
+        player = -player;
+        if (gameRecord && readWritePermission) {  // 判断是否开启记谱模式，以及是否有读写权限
             saveRegretToLocal();  // 记录悔棋到本地
         }
     }

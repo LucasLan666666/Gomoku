@@ -3,26 +3,26 @@
 #include "../gomoku.h"
 
 // 判断是否有胜者出现：若黑棋获胜，返回 BLACK；白棋获胜，返回 WHITE；未出现胜者，返回 NOBODY
-int judgeWin(void){
+int judgeWin(void) {
     // 将心中棋盘转换为虚拟棋盘
-    int vBoard[SIZE][SIZE];
+    signed char vBoard[SIZE][SIZE];
     initVBoard(vBoard);
     innerBoard2VBoard(vBoard);
-    int directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};  // 横向，纵向，主对角线，副对角线
+    signed char directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};  // 横向，纵向，主对角线，副对角线
 
-    for (int i = 0; i < SIZE; i++){
-        for (int j = 0; j < SIZE; j++){
-            if (vBoard[i][j] != NOBODY){
-                for (int k = 0; k < 4; k++){
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (vBoard[i][j] != NOBODY) {
+                for (int k = 0; k < 4; k++) {
                     int count = 0;
-                    int x = i;
-                    int y = j;
-                    while (x >= 0 && x < SIZE && y >= 0 && y < SIZE && vBoard[x][y] == vBoard[i][j]){
+                    signed char x = i;
+                    signed char y = j;
+                    while (x >= 0 && x < SIZE && y >= 0 && y < SIZE && vBoard[x][y] == vBoard[i][j]) {
                         count++;
                         x += directions[k][0];
                         y += directions[k][1];
                     }
-                    if (count >= 5){
+                    if (count >= 5) {
                         return vBoard[i][j];
                     }
                 }
@@ -33,24 +33,20 @@ int judgeWin(void){
 }
 
 // 判断下棋位置是否合法，合法返回 YES，否则返回 NO
-int isValid(Coordinate coordinate){
-    // 将心中棋盘转换为虚拟棋盘
-    int vBoard[SIZE][SIZE];
-    initVBoard(vBoard);
-    innerBoard2VBoard(vBoard);
+int isValid(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player, signed char warning) {
     if (   coordinate.x >= 0 && coordinate.x < SIZE
         && coordinate.y >= 0 && coordinate.y < SIZE
-        && vBoard[coordinate.x][coordinate.y] == NOBODY
-        && isForbiddenMove(vBoard, coordinate, player) == NO){
+        && board[coordinate.x][coordinate.y] == NOBODY
+        && isForbiddenMove(board, coordinate, player) == NO) {
         return YES;
-    }else{
-        if (player != computer){ // 若是玩家下棋，输出错误信息
-            if (coordinate.x < 0 || coordinate.x >= SIZE || coordinate.y < 0 || coordinate.y >= SIZE){
+    } else {
+        if (warning == YES) { // 是否输出错误信息
+            if (coordinate.x < 0 || coordinate.x >= SIZE || coordinate.y < 0 || coordinate.y >= SIZE) {
                 printf("    超出棋盘范围！\n");
-            }else if (vBoard[coordinate.x][coordinate.y] != NOBODY){
+            } else if (board[coordinate.x][coordinate.y] != NOBODY) {
                 printf("    此处已有棋子！\n");
             }
-            switch (isForbiddenMove(vBoard, coordinate, player)){
+            switch (isForbiddenMove(board, coordinate, player)) {
                 case OVERLINE:
                     printf("    长连禁手！\n");
                     break;
@@ -70,20 +66,20 @@ int isValid(Coordinate coordinate){
 }
 
 // 判断禁手，是返回禁手类型，否返回 NO
-int isForbiddenMove(int vBoard[SIZE][SIZE], Coordinate coordinate, int player){
-    if (player == WHITE){
+int isForbiddenMove(signed char vBoard[SIZE][SIZE], Coordinate coordinate, signed char player) {
+    if (player == WHITE) {
         return NO;
-    }if (fiveInARow(vBoard, coordinate, player) >= 1){
+    }if (fiveInARow(vBoard, coordinate, player) >= 1) {
         return NO;
-    }else if (overline(vBoard, coordinate, player) >= 1){
+    } else if (overline(vBoard, coordinate, player) >= 1) {
         return OVERLINE;
-    }else if (three(vBoard, coordinate, player) >= 2 && four(vBoard, coordinate, player) == 0 && straightFour(vBoard, coordinate, player) == 0){
+    } else if (three(vBoard, coordinate, player) >= 2 && four(vBoard, coordinate, player) == 0 && straightFour(vBoard, coordinate, player) == 0) {
         return D_THREE;
-    }else if ((four(vBoard, coordinate, player) + straightFour(vBoard, coordinate, player)) >= 2 && three(vBoard, coordinate, player) == 0){
+    } else if ((four(vBoard, coordinate, player) + straightFour(vBoard, coordinate, player)) >= 2 && three(vBoard, coordinate, player) == 0) {
         return D_FOUR;
-    }else if (three(vBoard, coordinate, player) >= 2 || (four(vBoard, coordinate, player) + straightFour(vBoard, coordinate, player)) >= 2){
+    } else if (three(vBoard, coordinate, player) >= 2 || (four(vBoard, coordinate, player) + straightFour(vBoard, coordinate, player)) >= 2) {
         return COMBINE;
-    }else{
+    } else {
         return NO;
     }
 }
