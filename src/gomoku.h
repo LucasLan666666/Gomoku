@@ -21,9 +21,8 @@
 #define      D_FOUR                           3  // 定义双四禁手
 #define     COMBINE                           4  // 定义组合禁手
 
-#define  SCAN_WIDTH                           9  // 定义扫描宽度，以自我为中心取一个正方形扫描
-#define       WIDTH     SCAN_WIDTH*SCAN_WIDTH-1  // 定义决策树搜索宽度
-#define       DEPTH                           3  // 定义决策树搜索深度
+#define       WIDTH                          80  // 定义决策树每一层最大搜索宽度
+#define       DEPTH                           1  // 定义决策树搜索深度
 #define         MAX                           1  // 定义 MAX 层
 #define         MIN                          -1  // 定义 MIN 层
 #define       INFTY                  2000000000  // 定义无穷
@@ -45,14 +44,22 @@ typedef struct Stone{
 
 // 决策树的结点
 typedef struct Node {
-    signed char board[SIZE][SIZE]; // 棋盘
+    Coordinate coordinate; // 父结点（对手）的落子坐标
+    signed char board[SIZE][SIZE]; // 落子后的棋盘格局
     signed char player; // 当前等待落子的玩家，BLACK 表示黑方，WHITE 表示白方
     int score; // 当前局面的分数
     signed char type; // 所在层类型，分为 MAX 和 MIN
-    signed char floor; // 当前结点的层数
-    struct Node* children[MAXSTEP]; // 子节点列表
-    int numChildren; // 子节点数量
+    struct Node *pParent; // 父节点
+    struct Node *pChildren; // 子节点列表
+    unsigned char numChildren; // 子节点数量
 } Node;
+
+// 两步预测
+typedef struct Pre {
+    Coordinate first; // 第一步落子坐标
+    Coordinate second; // 第二步落子坐标
+    int score; // 两步的分数
+} Pre;
 
 // 字符艺术
 extern const char* HAPPY_GOMOKU[];
@@ -66,12 +73,12 @@ extern signed char computer;  // 电脑执子，BLACK 为黑子，WHITE 为白�
 
 extern int gameRecord;  // 是否开启记谱模式，1 为是，0 为否
 extern int readWritePermission;  // 是否有读写权限，1 为是，0 为否
-extern signed char roundName[NAMESIZE + 6];  // 游戏对局名称
-extern signed char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
+extern char roundName[NAMESIZE + 6];  // 游戏对局名称
+extern char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
 
 extern int stepNum;  // 记录当前步数
 extern Coordinate stepRecord[];  // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
-extern signed char stepName[];  // 记录下棋内容的字符串
+extern char stepName[];  // 记录下棋内容的字符串
 
 // 空棋盘模板
 extern signed char emptyDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
@@ -85,14 +92,14 @@ extern signed char play2CurrentPic[]; // 白棋子的当前落子位置
 // 当前的棋盘的格局 
 extern Stone innerBoard[SIZE][SIZE];
 
-// 显示的棋盘 
+// 显示的棋盘
 extern signed char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
 // 当前等待落子的玩家，BLACK 表示黑方，WHITE 表示白方
 extern signed char player;
 
 // 记录读取到的一行
-extern signed char line[];
+extern char line[];
 
 extern int regret;  // 记录是否悔棋，YES 为是，NO 为否
 
@@ -155,7 +162,7 @@ void isRecord(void);
 int isReadWritePermission(void);
 
 // 判断文件是否存在，存在返回 1，不存在返回 0
-int isFileExist(const signed char *filename);
+int isFileExist(const char *filename);
 
 // 创立棋谱文件,询问玩家如何起名，将棋谱文件命名为玩家输入的名字，否则默认为对局开始时间
 void createGameRecordFile(void);
@@ -167,7 +174,7 @@ void recordGameRoundToLocal(void);
 void saveRegretToLocal(void);
 
 // 判断是否有胜者出现：若黑棋获胜，返回 BLACK；白棋获胜，返回 WHITE；未出现胜者，返回 NOBODY
-int judgeWin(void);
+int judgeWin(signed char board[SIZE][SIZE]);
 // 判断下棋位置是否合法，合法返回 YES，否则返回 NO
 int isValid(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player, signed char warning);
 
@@ -200,24 +207,32 @@ signed char getRandom(signed char min, signed char max);
 // AI 下棋，接受电脑颜色作为参数，调整下棋策略，返回落子坐标
 Coordinate AI(signed char computer);
 // AI 执黑
-Coordinate AI_black();
+Coordinate AI_black(void);
 // AI 执白
-Coordinate AI_white();
-// 真正的AI
-Coordinate trueAI(void);
+Coordinate AI_white(void);
+// AI1.0
+Coordinate AI_First(void);
+// AI2.0
+Coordinate AI_Second(void);
 
-// 打分函数，接受棋盘和玩家作为参数，返回一个分数
-int evaluate(signed char board[SIZE][SIZE], signed char player);
-// 比大小函数，接受两个分数，返回较大的那个
-int max(int a, int b);
-// 比大小函数，接受两个分数，返回较大的那个
-int min(int a, int b);
+// 打分函数，接受棋盘作为参数，返回一个分数
+int evaluate(signed char board[SIZE][SIZE], signed char computer);
 
-// 创建一个新的结点
-Node* createNode(signed char board[SIZE][SIZE], signed char player, signed char floor);
+// 创建一个根结点，返回指向该结点的指针
+Node *createRoot(signed char board[SIZE][SIZE], signed char player);
+// 为父节点添加子节点，返回指向子节点数组的指针
+Node *addChildrenNode(Node *pParent, unsigned char numChildren);
 // 释放结点及其子节点的内存空间
-void freeNode(Node* pnode);
+void freeNode(Node *pnode);
 // 构建决策树
-void buildDecisionTree(Node* pnode, signed char depth, int alpha, int beta);
+void buildDecisionTree(Node *pnode, signed char depth);
+
+// 通过 alpha-beta 剪枝便遍历决策树，找到最优解
+Coordinate alphaBetaPruning(Node *pnode, signed char depth, int alpha, int beta);
+// 构建决策树，搜索到深度为 1 的子节点，并返回其分数 score
+int buildOneStepDecisionTree(Node *pnode, signed char depth, int alpha, int beta);
+
+// 测试电脑运算速度
+Coordinate testSpeed(void);
 
 #endif

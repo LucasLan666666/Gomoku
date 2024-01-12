@@ -129,8 +129,13 @@ void printDisplayBoard(void) {
     printf("    本游戏支持一些指令：\n");
     printf("    quit/q -> 回到主页面  regret/r -> 悔棋\n\n");
     
+    // 将心中棋盘转换为虚拟棋盘
+    signed char vBoard[SIZE][SIZE];
+    initVBoard(vBoard);
+    innerBoard2VBoard(vBoard);
+
     // 将displayBoard输出到屏幕上
-    if (judgeWin() == NOBODY && stepNum < MAXSTEP) {
+    if (judgeWin(vBoard) == NOBODY && stepNum < MAXSTEP) {
         if (gameMode == 1) {
             for (int i = 0; i < SIZE; i++) {
                 printf("%3d %s          %s\n", SIZE - i, displayBoard[i], DOGE[i]);
@@ -141,7 +146,7 @@ void printDisplayBoard(void) {
             }
         }
     } else {
-        if (judgeWin() != computer && gameMode == 2) {
+        if (judgeWin(vBoard) != computer && gameMode == 2) {
             for (int i = 0; i < SIZE; i++) {
                 printf("%3d %s          %s\n", SIZE - i, displayBoard[i], FROG[i]);
             }

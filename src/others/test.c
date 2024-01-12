@@ -10,3 +10,15 @@ void testForSleepThree(Coordinate coordinate) {
 
     printf("    眠三能形成的冲四数量：%d\n", sleepThree(vBoard, coordinate, player));
 }
+
+// 测试电脑运算速度
+Coordinate testSpeed(void){
+    Coordinate coordinate;
+    for (int i = 0; i < MAXSTEP; i++) {
+        for (int j = 0; j < MAXSTEP; j++) {
+            coordinate = gorilla();
+        }
+    }
+    // 结论：不利用剪枝操作时，最多搜两层，否则会超时
+    return coordinate;
+}

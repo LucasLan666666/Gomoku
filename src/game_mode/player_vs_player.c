@@ -55,10 +55,16 @@ int pvp_placeStone(void) {
     if (gameRecord && readWritePermission) {  // 判断是否开启记谱模式，以及是否有读写权限
         recordGameRoundToLocal();  // 记录棋谱到本地
     }
-    if (judgeWin() != NOBODY || stepNum == MAXSTEP - 1) {  // 判断是否有玩家获胜或者平局
+
+    // 将心中棋盘转换为虚拟棋盘
+    signed char vBoard[SIZE][SIZE];
+    initVBoard(vBoard);
+    innerBoard2VBoard(vBoard);
+
+    if (judgeWin(vBoard) != NOBODY || stepNum == MAXSTEP - 1) {  // 判断是否有玩家获胜或者平局
         innerBoard2Displayboard();
         printDisplayBoard();  // 显示棋盘
-        if (judgeWin() != NOBODY) {
+        if (judgeWin(vBoard) != NOBODY) {
             printf("    恭喜%s获胜！\n", (player == BLACK) ? "黑方" : "白方");
         } else {
             printf("    平局！\n");

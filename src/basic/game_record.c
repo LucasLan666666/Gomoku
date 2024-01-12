@@ -9,11 +9,11 @@
 
 int gameRecord;  // 是否开启记谱模式，1 为是，0 为否
 int readWritePermission;  // 是否有读写权限，1 为是，0 为否
-signed char roundName[NAMESIZE + 6];  // 游戏对局名称
-signed char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
+char roundName[NAMESIZE + 6];  // 游戏对局名称
+char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
 int stepNum;  // 记录当前步数
 Coordinate stepRecord[MAXSTEP];  // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
-signed char stepName[13];  // 记录下棋内容的字符串
+char stepName[13];  // 记录下棋内容的字符串
 
 // 从键盘读取输入判断是否开启记谱模式，y 为是，n 为否，并将结果记录在 gameRecord 和 readWritePermission中
 void isRecord(void) {
@@ -48,13 +48,13 @@ int isReadWritePermission(void) {
 }
 
 // 判断文件是否存在，存在返回 1，不存在返回 0
-int isFileExist(const signed char *filename) {
+int isFileExist(const char *filename) {
     return access(filename, F_OK) != -1;
 }
 
 // 创立棋谱文件,询问玩家如何起名，将棋谱文件命名为玩家输入的名字，否则默认为对局开始时间
 void createGameRecordFile(void) {
-    signed char localTime[NAMESIZE];  // 用于储存对局开始时间
+    char localTime[NAMESIZE];  // 用于储存对局开始时间
     // 先创建棋谱文件夹
     mkdir("game_record", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
