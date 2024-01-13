@@ -33,20 +33,18 @@ Coordinate testAI(void) {
         coordinate.x = 2;
         coordinate.y = 1;
     } else if (stepNum == 4) {
-        coordinate.x = 3;
+        coordinate.x = 9;
         coordinate.y = 1;
-    } else if (stepNum == 6) {
-        coordinate.x = 3;
-        coordinate.y = 2;
-    } else if (stepNum == 8) {
-        coordinate.x = 2;
-        coordinate.y = 3;
+    // } else if (stepNum == 6) {
+    //     coordinate.x = 3;
+    //     coordinate.y = 2;
+    // } else if (stepNum == 8) {
+    //     coordinate.x = 2;
+    //     coordinate.y = 3;
     } else {
         // 开局布阵完毕，用 AI2.0 判断
         coordinate = AI_Second();
         // coordinate = gorilla();
     }
-    coordinate = AI_Second();
-    // coordinate = gorilla();
     return coordinate;
 }

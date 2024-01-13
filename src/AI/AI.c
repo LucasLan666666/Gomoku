@@ -184,7 +184,7 @@ Coordinate AI_Second(void){
     }
 
     int minScore = sequence[0].score; // 记录当前层的最低分
-    int maxMinScore = sequence[0].score; // 记录所有层的最低分中的最高分
+    int maxMinScore = -INFTY; // 记录所有层的最低分中的最高分
     Coordinate bestStep = sequence[0].first; // 记录最佳落子
 
     // 从预测落子列表中找到最高分的落子，选择对应的第一颗棋子
