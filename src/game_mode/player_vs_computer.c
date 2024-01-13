@@ -45,8 +45,8 @@ void playerVsComputer(void) {
             }
         } else {
             stepRecord[stepNum] = AI(computer);  // AI 下棋
-            // stepRecord[stepNum] = gorilla();  // 电脑随机下棋
             // stepRecord[stepNum] = testAI();  // 测试AI 下棋
+            // stepRecord[stepNum] = gorilla();  // 电脑随机下棋
             // stepRecord[stepNum] = testSpeed();  // 测试电脑运算速度
             check = 0;  // 因为电脑默认只会下棋，不会悔棋
         }
