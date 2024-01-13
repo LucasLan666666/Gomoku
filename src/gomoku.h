@@ -196,6 +196,8 @@ int sleepThree(signed char board[SIZE][SIZE], Coordinate coordinate, signed char
 void testForSleepThree(Coordinate coordinate);
 // 判断活三，返回能形成活四的数量
 int threeForWin(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player);
+// 判断二，返回二的数量
+int two(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player);
 
 // 复制虚拟棋盘的副本
 void copyBoard(signed char to[SIZE][SIZE], signed char from[SIZE][SIZE]);
@@ -234,5 +236,7 @@ int buildOneStepDecisionTree(Node *pnode, signed char depth, int alpha, int beta
 
 // 测试电脑运算速度
 Coordinate testSpeed(void);
+// 测试电脑下棋能力，先设定几个预定的走法
+Coordinate testAI(void);
 
 #endif
