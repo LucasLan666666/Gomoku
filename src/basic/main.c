@@ -19,7 +19,7 @@ int main() {
                 playerVsComputer();
                 break;
             case 3:
-                End();
+                end();
                 break;
         }
     }
@@ -48,7 +48,7 @@ void homePage(void) {
     if (gameMode == 2) {
         whoGoFirst();  // 决定人机模式的先手
     } else if (gameMode == 3) {
-        End();
+        end();
     }
 
     isRecord();
@@ -60,10 +60,10 @@ void homePage(void) {
 }
 
 // 直接清屏退出游戏
-void End(void) {
+void end(void) {
     int clear = system("clear");
     (void)clear;
-    printf("感谢您的使用！\n");
+    printf("感谢您的支持！有空常来玩儿~\n");
     exit(0);
 }
 

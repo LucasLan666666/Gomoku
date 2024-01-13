@@ -23,7 +23,7 @@ void mygetline(void) {
         c = getchar();
     }
     if (c == EOF) {  //读到EOF，退出程序
-        End();
+        end();
     } else if (c == '\n') {
         line[i] = '\0';
     } else if (i == MAXLINE - 1) {

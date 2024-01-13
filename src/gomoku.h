@@ -105,7 +105,7 @@ extern int regret;  // 记录是否悔棋，YES 为是，NO 为否
 
 void homePage(void);  // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
 void whoGoFirst(void); // 提示玩家输入自己执子的颜色，并修改 computer 的值
-void End(void);  // 直接清屏退出游戏
+void end(void);  // 直接清屏退出游戏
 
 void playerVsPlayer(void);  // 人人对战模式
 int pvp_placeStone(void);  // 人人对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；若判得游戏结束，返回 YES
