@@ -27,17 +27,17 @@ Coordinate testSpeed(void){
 Coordinate testAI(void) {
     Coordinate coordinate;
     if (stepNum == 0) {
-        coordinate.x = 1;
-        coordinate.y = 1;
+        coordinate.x = 0;
+        coordinate.y = 0;
     } else if (stepNum == 2) {
-        coordinate.x = 2;
-        coordinate.y = 1;
+        coordinate.x = 0;
+        coordinate.y = 14;
     } else if (stepNum == 4) {
-        coordinate.x = 9;
-        coordinate.y = 1;
-    // } else if (stepNum == 6) {
-    //     coordinate.x = 3;
-    //     coordinate.y = 2;
+        coordinate.x = 14;
+        coordinate.y = 0;
+    } else if (stepNum == 6) {
+        coordinate.x = 14;
+        coordinate.y = 14;
     // } else if (stepNum == 8) {
     //     coordinate.x = 2;
     //     coordinate.y = 3;

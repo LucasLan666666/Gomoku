@@ -63,8 +63,8 @@ void homePage(void) {
 void End(void) {
     int clear = system("clear");
     (void)clear;
-    exit(0);
     printf("感谢您的使用！\n");
+    exit(0);
 }
 
 // 提示玩家输入自己执子的颜色，并修改 computer 的值

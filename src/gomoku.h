@@ -216,6 +216,8 @@ Coordinate AI_white(void);
 Coordinate AI_First(void);
 // AI2.0
 Coordinate AI_Second(void);
+// 挣扎函数，接受棋盘和电脑颜色作为参数，调整下棋策略，返回落子坐标
+Coordinate struggle(signed char board[SIZE][SIZE], signed char computer);
 
 // 打分函数，接受棋盘作为参数，返回一个分数
 int evaluate(signed char board[SIZE][SIZE], signed char computer);
