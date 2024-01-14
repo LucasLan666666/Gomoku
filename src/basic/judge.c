@@ -4,7 +4,7 @@
 
 // 判断是否有胜者出现：若黑棋获胜，返回 BLACK；白棋获胜，返回 WHITE；未出现胜者，返回 NOBODY
 int judgeWin(signed char vBoard[SIZE][SIZE]) {
-    signed char directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}};  // 横向，纵向，主对角线，副对角线
+    signed char directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}}; // 横向，纵向，主对角线，副对角线
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
@@ -47,10 +47,10 @@ int isValid(signed char board[SIZE][SIZE], Coordinate coordinate, signed char pl
                     printf("    长连禁手！\n");
                     break;
                 case D_THREE:
-                    printf("    双三禁手！\n");
+                    printf("    三三禁手！\n");
                     break;
                 case D_FOUR:
-                    printf("    双四禁手！\n");
+                    printf("    四四禁手！\n");
                     break;
                 case COMBINE:
                     printf("    组合禁手！\n");

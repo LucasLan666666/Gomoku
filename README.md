@@ -40,7 +40,7 @@
 在命令行输入：
 
 ```bash
-cat game_record/你的存档名.txt - | ./gomoku 
+cat game_record/您的存档名.txt - | ./gomoku 
 ```
 
 ## :calendar: 更新日志

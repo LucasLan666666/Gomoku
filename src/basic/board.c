@@ -23,9 +23,9 @@ signed char emptyDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1] = {
 };
 
 // 以下是棋子的图案
-signed char play1Pic[]="●";  // 黑棋子
+signed char play1Pic[]="●"; // 黑棋子
 signed char play1CurrentPic[]="▲"; // 黑棋子的当前落子位置
-signed char play2Pic[]="◎";  // 白棋子
+signed char play2Pic[]="◎"; // 白棋子
 signed char play2CurrentPic[]="△"; // 白棋子的当前落子位置
 
 // 心中的的棋盘的格局 
@@ -117,10 +117,10 @@ void copyBoard(signed char to[SIZE][SIZE], signed char from[SIZE][SIZE]) {
 void printDisplayBoard(void) {
 	int i;
 	// 清屏
-    int clear = system("clear");  // 清屏
+    int clear = system(CLEAR_SCREEN); // 清屏
     (void)clear;
 
-    // 输出提示信息
+   // 输出提示信息
     if (gameMode == 1) {
         printf("    双      人      模      式\n\n");
     } else {
@@ -129,12 +129,12 @@ void printDisplayBoard(void) {
     printf("    本游戏支持一些指令：\n");
     printf("    quit/q -> 回到主页面  regret/r -> 悔棋\n\n");
     
-    // 将心中棋盘转换为虚拟棋盘
+   // 将心中棋盘转换为虚拟棋盘
     signed char vBoard[SIZE][SIZE];
     initVBoard(vBoard);
     innerBoard2VBoard(vBoard);
 
-    // 将displayBoard输出到屏幕上
+   // 将displayBoard输出到屏幕上
     if (judgeWin(vBoard) == NOBODY && stepNum < MAXSTEP) {
         if (gameMode == 1) {
             for (int i = 0; i < SIZE; i++) {
@@ -156,7 +156,7 @@ void printDisplayBoard(void) {
             }
         }
     }
-    // 输出最下面的一行字母A B ....
+   // 输出最下面的一行字母A B ....
     printf("   ");
     for (i = 0; i < SIZE; i++)
         printf("%2c", 'A' + i);

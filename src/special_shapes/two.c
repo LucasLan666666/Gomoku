@@ -10,16 +10,16 @@ int two(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player
     int num = 0;
 
     copyBoard(board_copy, board); // 再构建一个棋盘副本
-    board_copy[x][y] = player;  // 假设落子
+    board_copy[x][y] = player; // 假设落子
 
-    // 遍历四个方向
+   // 遍历四个方向
     for (int i = 0; i < 4; i++) {
         signed char dx1 =  directions[i][0];
         signed char dy1 =  directions[i][1];
         signed char dx2 = -directions[i][0];
         signed char dy2 = -directions[i][1];
 
-        // 正方向
+       // 正方向
         if (x + 4*dx1 >= 0 && x + 4*dx1 < SIZE && y + 4*dy1 >= 0 && y + 4*dy1 < SIZE) { // 判断从此处出发是否塞得下一个五子连珠
             if (   (x + 5*dx1 < 0 || x + 5*dx1 >= SIZE || y + 5*dy1 < 0 || y + 5*dy1 >= SIZE || board_copy[x + 5*dx1][y + 5*dy1] != player)
                 && (x + dx2 < 0 || x + dx2 >= SIZE || y + dy2 < 0 || y + dy2 >= SIZE || board_copy[x + dx2][y + dy2] != player)){ // 排除长连
@@ -49,7 +49,7 @@ int two(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player
                 }
             }
         }
-        // 反方向
+       // 反方向
     }
     return num;
 }

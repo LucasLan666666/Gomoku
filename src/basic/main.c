@@ -3,10 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "../gomoku.h"
 
-int gameMode;  // 游戏模式，1 表示双人对战，2 表示人机对战，3 表示退出游戏，-1表示输入有误
-signed char computer;  // 电脑执子，BLACK 为黑子，WHITE 为白子
+int gameMode; // 游戏模式，1 表示双人对战，2 表示人机对战，3 表示退出游戏，-1表示输入有误
+signed char computer; // 电脑执子，BLACK 为黑子，WHITE 为白子
 
 int main() {
     while (1) {
@@ -27,26 +28,26 @@ int main() {
 
 // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
 void homePage(void) {
-    int clear = system("clear");  // 清屏
+    int clear = system(CLEAR_SCREEN); // 清屏
     (void)clear;
     for (int i = 0; i < 15; i++) {
         printf("%s", HAPPY_GOMOKU[i]);
     }
     printf("作者：蓝宇舟\n");
-    printf("欢迎来到五子棋游戏！请选择你的游戏模式：\n");
+    printf("欢迎来到五子棋游戏！请选择您的游戏模式：\n");
     printf("（1）：双人对战\n");
     printf("（2）：人机对战\n");
     printf("输入“quit”或者“q”可以退出游戏(此外，在游戏任何时候输入EOF（文件结束符，linux 下默认是“Ctrl + D”），可以强制退出整个游戏)\n");
     
-    mygetline();  // 从键盘读取输入到 line 中，根据结果对 gameMode 赋值
+    mygetline(); // 从键盘读取输入到 line 中，根据结果对 gameMode 赋值
     while ((gameMode = inputCheckInHomePage()) == -1) {
-            printf("你的输入有误，请重新输入：\n");
+            printf("您的输入有误，请重新输入：\n");
             mygetline();
     }
 
-    printf("你选择了%s对战模式\n", (gameMode == 1) ? "人人" : "人机");
+    printf("您选择了%s对战模式\n", (gameMode == 1) ? "人人" : "人机");
     if (gameMode == 2) {
-        whoGoFirst();  // 决定人机模式的先手
+        whoGoFirst(); // 决定人机模式的先手
     } else if (gameMode == 3) {
         end();
     }
@@ -61,9 +62,10 @@ void homePage(void) {
 
 // 直接清屏退出游戏
 void end(void) {
-    int clear = system("clear");
-    (void)clear;
     printf("感谢您的支持！有空常来玩儿~\n");
+    sleep(1);
+    int clear = system(CLEAR_SCREEN);
+    (void)clear;
     exit(0);
 }
 
@@ -79,9 +81,9 @@ void whoGoFirst(void) {
             computer = BLACK;
             break;
         } else {
-            printf("你的输入有误，请重新输入：\n");
+            printf("您的输入有误，请重新输入：\n");
             mygetline();
         }
     }
-    printf("你选择了%s\n", (computer == BLACK) ? "白子" : "黑子");
+    printf("选择了%s\n", (computer == BLACK) ? "白子" : "黑子");
 }

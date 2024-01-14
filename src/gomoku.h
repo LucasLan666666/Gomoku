@@ -1,31 +1,37 @@
 // 头文件，包含了一些常量定义和函数声明
-#ifndef    GOMOKU_H
-#define    GOMOKU_H
+#ifndef    _GOMOKU_H
+#define    _GOMOKU_H
 
-#define        SIZE                          15  // 棋盘大小
-#define     MAXSTEP                   SIZE*SIZE  // 定义最大步数
-#define    CHARSIZE                           3  // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
+#ifdef        _WIN32
+#define CLEAR_SCREEN                       "cls" // Windows 下清屏指令
+#else
+#define CLEAR_SCREEN                     "clear" // Unix-like 环境下清屏指令
+#endif
 
-#define     MAXLINE                          50  // 定义玩家输入的最大长度
-#define    NAMESIZE                          20  // 定义玩家输入的名字的最大长度
+#define         SIZE                          15 // 棋盘大小
+#define      MAXSTEP                   SIZE*SIZE // 定义最大步数
+#define     CHARSIZE                           3 // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
 
-#define       BLACK                           1  // 定义黑方
-#define       WHITE                          -1  // 定义白方
-#define      NOBODY                           0  // 定义没有人
+#define      MAXLINE                          50 // 定义玩家输入的最大长度
+#define     NAMESIZE                          20 // 定义玩家输入的名字的最大长度
 
-#define         YES                           1  // 定义是
-#define          NO                           0  // 定义否
+#define        BLACK                           1 // 定义黑方
+#define        WHITE                          -1 // 定义白方
+#define       NOBODY                           0 // 定义没有人
 
-#define    OVERLINE                           1  // 定义长连禁手
-#define     D_THREE                           2  // 定义双三禁手
-#define      D_FOUR                           3  // 定义双四禁手
-#define     COMBINE                           4  // 定义组合禁手
+#define          YES                           1 // 定义是
+#define           NO                           0 // 定义否
 
-#define       WIDTH                          80  // 定义决策树每一层最大搜索宽度
-#define       DEPTH                           1  // 定义决策树搜索深度
-#define         MAX                           1  // 定义 MAX 层
-#define         MIN                          -1  // 定义 MIN 层
-#define       INFTY                  2000000000  // 定义无穷
+#define     OVERLINE                           1 // 定义长连禁手
+#define      D_THREE                           2 // 定义双三禁手
+#define       D_FOUR                           3 // 定义双四禁手
+#define      COMBINE                           4 // 定义组合禁手
+
+#define        WIDTH                          80 // 定义决策树每一层最大搜索宽度
+#define        DEPTH                           1 // 定义决策树搜索深度
+#define          MAX                           1 // 定义 MAX 层
+#define          MIN                          -1 // 定义 MIN 层
+#define        INFTY                  2000000000 // 定义无穷
 
 
 // 用于记录玩家落子的坐标
@@ -36,9 +42,9 @@ typedef struct Coordinate{
 
 // 用于记录棋盘上面一个子的信息
 typedef struct Stone{
-    // NO 表示不是当前落子目标，YES 表示是当前落子目标(主要用于图标显示)
+   // NO 表示不是当前落子目标，YES 表示是当前落子目标(主要用于图标显示)
     signed char current;
-    // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY 表示没有棋子
+   // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY 表示没有棋子
     signed char player;
 } Stone;
 
@@ -68,25 +74,25 @@ extern const char* DOGE[];
 extern const char* INTELLIGENT_DOGE[];
 extern const char* GAME_OVER[];
 
-extern int gameMode;  // 游戏模式，1 表示双人对战，2 表示人机对战，3 表示退出游戏，-1 表示输入有误
-extern signed char computer;  // 电脑执子，BLACK 为黑子，WHITE 为白子
+extern int gameMode; // 游戏模式，1 表示双人对战，2 表示人机对战，3 表示退出游戏，-1 表示输入有误
+extern signed char computer; // 电脑执子，BLACK 为黑子，WHITE 为白子
 
-extern int gameRecord;  // 是否开启记谱模式，1 为是，0 为否
-extern int readWritePermission;  // 是否有读写权限，1 为是，0 为否
-extern char roundName[NAMESIZE + 6];  // 游戏对局名称
-extern char pathOfRound[NAMESIZE + 22];  // 游戏对局的路径
+extern int gameRecord; // 是否开启记谱模式
+extern int readWritePermission; // 是否有读写权限
+extern char roundName[NAMESIZE + 6]; // 游戏对局名称
+extern char pathOfRound[NAMESIZE + 22]; // 游戏对局的路径
 
-extern int stepNum;  // 记录当前步数
-extern Coordinate stepRecord[];  // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
-extern char stepName[];  // 记录下棋内容的字符串
+extern int stepNum; // 记录当前步数
+extern Coordinate stepRecord[]; // 记录每一步的下棋内容，stepRecord[0] 为第一步，stepRecord[1] 为第二步，以此类推
+extern char stepName[]; // 记录下棋内容的字符串
 
 // 空棋盘模板
 extern signed char emptyDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
 // 以下是棋子的图案
-extern signed char play1Pic[];  // 黑棋子
+extern signed char play1Pic[]; // 黑棋子
 extern signed char play1CurrentPic[]; // 黑棋子的当前落子位置
-extern signed char play2Pic[];  // 白棋子
+extern signed char play2Pic[]; // 白棋子
 extern signed char play2CurrentPic[]; // 白棋子的当前落子位置
 
 // 当前的棋盘的格局 
@@ -101,19 +107,19 @@ extern signed char player;
 // 记录读取到的一行
 extern char line[];
 
-extern int regret;  // 记录是否悔棋，YES 为是，NO 为否
+extern int regret; // 记录是否悔棋，YES 为是，NO 为否
 
-void homePage(void);  // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
+void homePage(void); // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
 void whoGoFirst(void); // 提示玩家输入自己执子的颜色，并修改 computer 的值
-void end(void);  // 直接清屏退出游戏
+void end(void); // 直接清屏退出游戏
 
-void playerVsPlayer(void);  // 人人对战模式
-int pvp_placeStone(void);  // 人人对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；若判得游戏结束，返回 YES
-void regret1(void);  // 人人对战模式的悔棋模式
+void playerVsPlayer(void); // 人人对战模式
+int pvp_placeStone(void); // 人人对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；若判得游戏结束，返回 YES
+void regret1(void); // 人人对战模式的悔棋模式
 
-void playerVsComputer(void);  // 人机对战模式
-int pve_placeStone(void);  // 人机对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；如果是电脑，直接修改 innerBoard 的内容；若判得游戏结束，返回 YES
-void regret2(void);  // 人机对战模式的悔棋模式
+void playerVsComputer(void); // 人机对战模式
+int pve_placeStone(void); // 人机对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；如果是电脑，直接修改 innerBoard 的内容；若判得游戏结束，返回 YES
+void regret2(void); // 人机对战模式的悔棋模式
 
 // 初始化一个空棋盘格局
 void initInnerBoard(void);
@@ -158,7 +164,7 @@ void coordinateToPlaceStone(void);
 // 从键盘读取输入判断是否开启记谱模式，y 为是，n 为否，并将结果记录在 gameRecord 和 readWritePermission 中
 void isRecord(void);
 
-// 判断当前目录下是否有读写权限，有则返回 1，没有返回 0
+// 判断当前目录下是否有读写权限，有则返回 YES，没有返回 NO
 int isReadWritePermission(void);
 
 // 判断文件是否存在，存在返回 1，不存在返回 0

@@ -31,7 +31,7 @@ void playerVsPlayer(void) {
         mygetline();  // 从键盘读取输入到line中
         // 对玩家输入进行判断：如果输入的是坐标，返回 0；如果输入的是 quit 指令，返回 1；如果输入的是 regret 指令，返回 2；如果输入有误，返回 -1
         while ((check = inputCheckInGame()) == -1) {
-            printf("    你的输入有误，请重新输入：");
+            printf("    您的输入有误，请重新输入：");
             mygetline();
         }
         switch (check) {
@@ -73,7 +73,7 @@ int pvp_placeStone(void) {
         mygetline();
         // 对玩家输入进行判断：如果输入的是坐标，返回 0；如果输入的是 quit 指令，返回 1；如果输入的是 regret 指令，返回 2；如果输入有误，返回 -1
         while ((check = inputCheckInGame()) == -1 || check == 0) {
-            printf("    你的输入有误，请重新输入：");
+            printf("    您的输入有误，请重新输入：");
             mygetline();
         }
         if (check == 1) {
