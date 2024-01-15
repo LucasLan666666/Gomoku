@@ -1,37 +1,37 @@
 // 头文件，包含了一些常量定义和函数声明
-#ifndef    _GOMOKU_H
-#define    _GOMOKU_H
+#ifndef       _GOMOKU_H
+#define       _GOMOKU_H
 
-#ifdef        _WIN32
-#define CLEAR_SCREEN                       "cls" // Windows 下清屏指令
+#ifdef           _WIN32
+#define    CLEAR_SCREEN           "cls" // Windows 下清屏指令
 #else
-#define CLEAR_SCREEN                     "clear" // Unix-like 环境下清屏指令
+#define    CLEAR_SCREEN         "clear" // Unix-like 环境下清屏指令
 #endif
 
-#define         SIZE                          15 // 棋盘大小
-#define      MAXSTEP                   SIZE*SIZE // 定义最大步数
-#define     CHARSIZE                           3 // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
+#define            SIZE              15 // 棋盘大小
+#define         MAXSTEP       SIZE*SIZE // 定义最大步数
+#define        CHARSIZE               3 // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
 
-#define      MAXLINE                          50 // 定义玩家输入的最大长度
-#define     NAMESIZE                          20 // 定义玩家输入的名字的最大长度
+#define         MAXLINE              50 // 定义玩家输入的最大长度
+#define        NAMESIZE              20 // 定义玩家输入的名字的最大长度
 
-#define        BLACK                           1 // 定义黑方
-#define        WHITE                          -1 // 定义白方
-#define       NOBODY                           0 // 定义没有人
+#define           BLACK               1 // 定义黑方
+#define           WHITE              -1 // 定义白方
+#define          NOBODY               0 // 定义没有人
 
-#define          YES                           1 // 定义是
-#define           NO                           0 // 定义否
+#define             YES               1 // 定义是
+#define              NO               0 // 定义否
 
-#define     OVERLINE                           1 // 定义长连禁手
-#define      D_THREE                           2 // 定义双三禁手
-#define       D_FOUR                           3 // 定义双四禁手
-#define      COMBINE                           4 // 定义组合禁手
+#define        OVERLINE               1 // 定义长连禁手
+#define         D_THREE               2 // 定义三三禁手
+#define          D_FOUR               3 // 定义四四禁手
+#define         COMBINE               4 // 定义组合禁手
 
-#define        WIDTH                          80 // 定义决策树每一层最大搜索宽度
-#define        DEPTH                           1 // 定义决策树搜索深度
-#define          MAX                           1 // 定义 MAX 层
-#define          MIN                          -1 // 定义 MIN 层
-#define        INFTY                  2000000000 // 定义无穷
+#define           WIDTH              80 // 定义决策树每一层最大搜索宽度
+#define           DEPTH               1 // 定义决策树搜索深度
+#define             MAX               1 // 定义 MAX 层
+#define             MIN              -1 // 定义 MIN 层
+#define           INFTY      2000000000 // 定义无穷
 
 
 // 用于记录玩家落子的坐标
@@ -90,16 +90,16 @@ extern char stepName[]; // 记录下棋内容的字符串
 extern signed char emptyDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
 // 以下是棋子的图案
-extern signed char play1Pic[]; // 黑棋子
-extern signed char play1CurrentPic[]; // 黑棋子的当前落子位置
-extern signed char play2Pic[]; // 白棋子
-extern signed char play2CurrentPic[]; // 白棋子的当前落子位置
+extern const char play1Pic[]; // 黑棋子
+extern const char play1CurrentPic[]; // 黑棋子的当前落子位置
+extern const char play2Pic[]; // 白棋子
+extern const char play2CurrentPic[]; // 白棋子的当前落子位置
 
 // 当前的棋盘的格局 
 extern Stone innerBoard[SIZE][SIZE];
 
 // 显示的棋盘
-extern signed char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
+extern char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
 // 当前等待落子的玩家，BLACK 表示黑方，WHITE 表示白方
 extern signed char player;
@@ -107,19 +107,17 @@ extern signed char player;
 // 记录读取到的一行
 extern char line[];
 
-extern int regret; // 记录是否悔棋，YES 为是，NO 为否
-
 void homePage(void); // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
-void whoGoFirst(void); // 提示玩家输入自己执子的颜色，并修改 computer 的值
+void whoGoFirst(void); // 提示玩家输入电脑执子的颜色，并修改 computer 的值
 void end(void); // 直接清屏退出游戏
 
 void playerVsPlayer(void); // 人人对战模式
-int pvp_placeStone(void); // 人人对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；若判得游戏结束，返回 YES
-void regret1(void); // 人人对战模式的悔棋模式
+int placeStonePvP(void); // 人人对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；若判得游戏结束，返回 YES
+void regretPvP(void); // 人人对战模式的悔棋模式
 
 void playerVsComputer(void); // 人机对战模式
-int pve_placeStone(void); // 人机对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；如果是电脑，直接修改 innerBoard 的内容；若判得游戏结束，返回 YES
-void regret2(void); // 人机对战模式的悔棋模式
+int placeStonePvE(void); // 人机对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；如果是电脑，直接修改 innerBoard 的内容；若判得游戏结束，返回 YES
+void regretPvE(void); // 人机对战模式的悔棋模式
 
 // 初始化一个空棋盘格局
 void initInnerBoard(void);
@@ -135,7 +133,7 @@ void innerBoard2VBoard(signed char vBoard[SIZE][SIZE]);
 void printDisplayBoard(void);
 
 // 自己写的函数，读取一行玩家的输入，从第一个非零字符开始（注意不会读到换行符'\n'）
-void mygetline(void);
+void mygetline(char *line);
 
 /*
  *  对玩家输入进行判断：
@@ -180,7 +178,7 @@ void recordGameRoundToLocal(void);
 void saveRegretToLocal(void);
 
 // 判断是否有胜者出现：若黑棋获胜，返回 BLACK；白棋获胜，返回 WHITE；未出现胜者，返回 NOBODY
-int judgeWin(signed char board[SIZE][SIZE]);
+int getWinner(signed char board[SIZE][SIZE]);
 // 判断下棋位置是否合法，合法返回 YES，否则返回 NO
 int isValid(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player, signed char warning);
 

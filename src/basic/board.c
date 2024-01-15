@@ -23,16 +23,16 @@ signed char emptyDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1] = {
 };
 
 // 以下是棋子的图案
-signed char play1Pic[]="●"; // 黑棋子
-signed char play1CurrentPic[]="▲"; // 黑棋子的当前落子位置
-signed char play2Pic[]="◎"; // 白棋子
-signed char play2CurrentPic[]="△"; // 白棋子的当前落子位置
+const char play1Pic[]="●"; // 黑棋子
+const char play1CurrentPic[]="▲"; // 黑棋子的当前落子位置
+const char play2Pic[]="◎"; // 白棋子
+const char play2CurrentPic[]="△"; // 白棋子的当前落子位置
 
 // 心中的的棋盘的格局 
 Stone innerBoard[SIZE][SIZE];
 
 // 显示的棋盘 
-signed char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
+char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
 // 当前等待落子的玩家，1表示黑方，2表示白方
 signed char player;
@@ -135,7 +135,7 @@ void printDisplayBoard(void) {
     innerBoard2VBoard(vBoard);
 
    // 将displayBoard输出到屏幕上
-    if (judgeWin(vBoard) == NOBODY && stepNum < MAXSTEP) {
+    if (getWinner(vBoard) == NOBODY && stepNum < MAXSTEP) {
         if (gameMode == 1) {
             for (int i = 0; i < SIZE; i++) {
                 printf("%3d %s          %s\n", SIZE - i, displayBoard[i], DOGE[i]);
@@ -146,7 +146,7 @@ void printDisplayBoard(void) {
             }
         }
     } else {
-        if (judgeWin(vBoard) != computer && gameMode == 2) {
+        if (getWinner(vBoard) != computer && gameMode == 2) {
             for (int i = 0; i < SIZE; i++) {
                 printf("%3d %s          %s\n", SIZE - i, displayBoard[i], FROG[i]);
             }

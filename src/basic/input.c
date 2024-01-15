@@ -8,7 +8,7 @@
 char line[MAXLINE];  //记录读取到的一行
 
 // 自己写的函数，读取一行玩家的输入，从第一个非零字符开始（注意不会读到换行符'\n'）
-void mygetline(void) {
+void mygetline(char *line) {
     int c = 0;
     int i = 0; // 用于遍历line
     while (c == '#') {
@@ -27,8 +27,8 @@ void mygetline(void) {
     } else if (c == '\n') {
         line[i] = '\0';
     } else if (i == MAXLINE - 1) {
-        printf("您的输入过长，请重新输入:\n");
-        mygetline();
+        printf("您的输入过长，请重新输入:");
+        mygetline(line);
     }
 }
 

@@ -1,6 +1,6 @@
 CC = gcc
 
-CFLAGS1 = -O3
+CFLAGS1 = -Ofast
 
 CFLAGS2 = -Wall -Werror -g
 
@@ -16,3 +16,4 @@ debug:
 
 clean:
 	rm -f gomoku
+	

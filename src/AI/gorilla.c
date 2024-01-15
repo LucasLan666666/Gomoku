@@ -1,3 +1,4 @@
+// 大猩猩吼吼吼
 #include <stdlib.h>
 #include <time.h>
 #include "../gomoku.h"

@@ -3,7 +3,7 @@
 #include "../gomoku.h"
 
 // 判断是否有胜者出现：若黑棋获胜，返回 BLACK；白棋获胜，返回 WHITE；未出现胜者，返回 NOBODY
-int judgeWin(signed char vBoard[SIZE][SIZE]) {
+int getWinner(signed char vBoard[SIZE][SIZE]) {
     signed char directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}}; // 横向，纵向，主对角线，副对角线
 
     for (int i = 0; i < SIZE; i++) {

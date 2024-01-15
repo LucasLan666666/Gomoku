@@ -17,8 +17,8 @@ char stepName[13]; // 记录下棋内容的字符串
 
 // 从键盘读取输入判断是否开启记谱模式，1 为是，2 为否，并将结果记录在 gameRecord 和 readWritePermission中
 void isRecord(void) {
-    printf("是否记录棋谱？（1 表示是，2 表示否）\n");
-    mygetline();            
+    printf("是否记录棋谱？（1：是 2：否）");
+    mygetline(line);            
     while (1) {
         if (strcmp(line, "1") == 0) {
             gameRecord = YES;
@@ -27,8 +27,8 @@ void isRecord(void) {
             gameRecord = NO;
             break;
         } else {
-            printf("您的输入有误，请重新输入：\n");
-            mygetline();
+            printf("您的输入有误，请重新输入：");
+            mygetline(line);
         }
     }
 
@@ -61,11 +61,11 @@ void createGameRecordFile(void) {
         mkdir("game_record", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     #endif
 
-    printf("请为棋谱文件命名(不需要额外添加后缀名，若没有检测到有效输入，默认以对局开始时间命名)：\n");
-    mygetline();
+    printf("请为棋谱文件命名(不需要额外添加后缀名，若没有检测到有效输入，默认以对局开始时间命名)：");
+    mygetline(line);
     while (strlen(line) > NAMESIZE) {
-        printf("您的输入过长，请重新输入：\n");
-        mygetline();
+        printf("您的输入过长，请重新输入：");
+        mygetline(line);
     }
 
    // 获取当前时间
@@ -84,8 +84,8 @@ void createGameRecordFile(void) {
         if ((isFileExist(pathOfRound)) == 0) {
             break;
         }
-        printf("文件已存在，请重新输入：\n");
-        mygetline();
+        printf("文件已存在，请重新输入：");
+        mygetline(line);
     }
     
    // 修改时间打入棋谱的格式

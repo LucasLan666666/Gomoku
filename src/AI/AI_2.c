@@ -29,7 +29,7 @@ Coordinate AI_Second(void){
                // 落下第一颗棋子
                 board_copy[i][j] = computer;
                // 看下这一步能否形成五连，可以直接返回
-                if (judgeWin(board_copy) == computer) {
+                if (getWinner(board_copy) == computer) {
                     return temp1;
                 }
                // 如果游戏没有结束，下面通过循环，看看能不能落下第二颗棋子

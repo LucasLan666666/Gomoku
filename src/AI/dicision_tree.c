@@ -43,7 +43,7 @@ void freeNode(Node *pnode) {
 // 构建决策树
 void buildDecisionTree(Node *pnode, signed char depth) {
    // 递归终止条件：达到最大深度或者棋局已经结束
-    if (judgeWin(pnode->board) != NOBODY) { // 因为 judgeWin 是对当前棋局判断是否出现胜者，所以如果已经出现，那么胜者只可能来自上一层
+    if (getWinner(pnode->board) != NOBODY) { // 因为 getWinner 是对当前棋局判断是否出现胜者，所以如果已经出现，那么胜者只可能来自上一层
         pnode->score = (pnode->type == MIN) ? INFTY : -INFTY;
         return;
     } else if (depth == 0) {

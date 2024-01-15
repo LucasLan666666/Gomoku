@@ -4,7 +4,7 @@
 // 通过 alpha-beta 剪枝便遍历决策树，找到最优解
 Coordinate alphaBetaPruning(Node *pnode, signed char depth, int alpha, int beta) {
    // 递归终止条件：达到最大深度或者棋局已经结束
-    if (judgeWin(pnode->board) != NOBODY) { // 因为 judgeWin 是对当前棋局判断是否出现胜者，所以如果已经出现，那么胜者只可能来自上一层
+    if (getWinner(pnode->board) != NOBODY) { // 因为 getWinner 是对当前棋局判断是否出现胜者，所以如果已经出现，那么胜者只可能来自上一层
         pnode->score = (pnode->type == MIN) ? INFTY : -INFTY;
         return pnode->coordinate;
     } else if (depth == 0) {
@@ -58,7 +58,7 @@ Coordinate alphaBetaPruning(Node *pnode, signed char depth, int alpha, int beta)
 // 构建决策树，搜索到深度为 1 的子节点，并返回其分数 score
 int buildOneStepDecisionTree(Node *pnode, signed char depth, int alpha, int beta) {
    // 递归终止条件：达到最大深度或者棋局已经结束
-    if (judgeWin(pnode->board) != NOBODY) { // 因为 judgeWin 是对当前棋局判断是否出现胜者，所以如果已经出现，那么胜者只可能来自上一层
+    if (getWinner(pnode->board) != NOBODY) { // 因为 getWinner 是对当前棋局判断是否出现胜者，所以如果已经出现，那么胜者只可能来自上一层
         pnode->score = (pnode->type == MIN) ? INFTY : -INFTY;
         return pnode->score;
     } else if (depth == 0) {

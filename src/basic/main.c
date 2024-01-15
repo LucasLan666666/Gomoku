@@ -1,5 +1,5 @@
 // 如你所见，这是五子棋程序的主文件
-// 本五子棋程序使用 utf-8 编码，如果不能正常显示内容，请尝试在编译时加上参数 “-fexec-signed charset=utf-8”
+// 本五子棋程序使用 utf-8 编码
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,14 +14,11 @@ int main() {
         homePage();
         switch (gameMode) {
             case 1:
-                playerVsPlayer();
-                break;
+                playerVsPlayer(); break;
             case 2:
-                playerVsComputer();
-                break;
+                playerVsComputer(); break;
             case 3:
-                end();
-                break;
+                end(); break;
         }
     }
 }
@@ -34,16 +31,17 @@ void homePage(void) {
         printf("%s", HAPPY_GOMOKU[i]);
     }
     printf("作者：蓝宇舟\n");
-    printf("欢迎来到五子棋游戏！请选择您的游戏模式：\n");
+    printf("欢迎来到五子棋游戏！一共有以下两种游戏模式：\n");
     printf("（1）：双人对战\n");
     printf("（2）：人机对战\n");
     printf("输入“quit”或者“q”可以退出游戏，此外，在游戏任何时候输入 EOF，也可以强制退出整个游戏\n");
-    printf("（EOF 为文件结束符，Linux 下默认是“Ctrl + D”，Windows 下默认是“Ctrl + Z”后回车）");
+    printf("（EOF 为文件结束符，Linux 下默认是“Ctrl + D”，Windows 下默认是“Ctrl + Z”后回车）\n");
+    printf("请选择您的游戏模式（1：人人 2：人机）：");
     
-    mygetline(); // 从键盘读取输入到 line 中，根据结果对 gameMode 赋值
+    mygetline(line); // 从键盘读取输入到 line 中，根据结果对 gameMode 赋值
     while ((gameMode = inputCheckInHomePage()) == -1) {
-            printf("您的输入有误，请重新输入：\n");
-            mygetline();
+            printf("您的输入有误，请重新输入：");
+            mygetline(line);
     }
 
     printf("您选择了%s对战模式\n", (gameMode == 1) ? "人人" : "人机");
@@ -63,28 +61,28 @@ void homePage(void) {
 
 // 直接清屏退出游戏
 void end(void) {
-    printf("感谢您的支持！有空常来玩儿~\n");
-    sleep(1);
+    printf("\n感谢您的支持！有空常来玩儿~\n");
+    sleep(2);
     int clear = system(CLEAR_SCREEN);
     (void)clear;
     exit(0);
 }
 
-// 提示玩家输入自己执子的颜色，并修改 computer 的值
+// 提示玩家输入电脑执子的颜色，并修改 computer 的值
 void whoGoFirst(void) {
-    printf("下面请选择您所执子的颜色（黑色为 1，白色为 2）：\n");
-    mygetline();            
+    printf("下面请选择电脑所执子的颜色（1：黑色 2：白色）：");
+    mygetline(line);            
     while (1) {
         if ((strcmp(line, "1") == 0) || (strcmp(line, "") == 0)) {
-            computer = WHITE;
-            break;
-        } else if (strcmp(line, "2") == 0) { 
             computer = BLACK;
             break;
+        } else if (strcmp(line, "2") == 0) { 
+            computer = WHITE;
+            break;
         } else {
-            printf("您的输入有误，请重新输入：\n");
-            mygetline();
+            printf("您的输入有误，请重新输入：");
+            mygetline(line);
         }
     }
-    printf("选择了%s\n", (computer == BLACK) ? "白子" : "黑子");
+    printf("您为电脑选择了%s\n", (computer == BLACK) ? "黑子" : "白子");
 }
