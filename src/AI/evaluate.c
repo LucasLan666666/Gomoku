@@ -47,7 +47,7 @@ int evaluate(signed char board[SIZE][SIZE], signed char computer) {
         }
     } else {
         for (int i = 0; i < SIZE; i++) {
-                for (int j = 0; j < SIZE; j++) {
+            for (int j = 0; j < SIZE; j++) {
                 Coordinate coordinate = {i, j};
                 if (board[i][j] == BLACK) {
                     if (   fiveInARow(board, coordinate, BLACK) > 0

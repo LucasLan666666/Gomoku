@@ -96,7 +96,7 @@ void createGameRecordFile(void) {
    // 写入文件
     fprintf(fp, "# Round Name:  %s\n", roundName);
     fprintf(fp, "# Round Time:  %s\n", localTime);
-    fprintf(fp, "# Game Mode(1 for pvp while -1 for pve):\n");
+    fprintf(fp, "# Game Mode(1 for pvp while 2 for pve):\n");
     fprintf(fp,"  %d\n", gameMode);
     if (gameMode == 2) {
         fprintf(fp, "# Player Color(1 for BLACK while 2 for WHITE):\n");
