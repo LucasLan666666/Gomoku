@@ -3,35 +3,35 @@
 #define       _GOMOKU_H
 
 #ifdef           _WIN32
-#define    CLEAR_SCREEN           "cls" // Windows 下清屏指令
+#define    CLEAR_SCREEN           "cls"   // Windows 下清屏指令
 #else
-#define    CLEAR_SCREEN         "clear" // Unix-like 环境下清屏指令
+#define    CLEAR_SCREEN         "clear"   // Unix-like 环境下清屏指令
 #endif
 
-#define            SIZE              15 // 棋盘大小
-#define         MAXSTEP       SIZE*SIZE // 定义最大步数
-#define        CHARSIZE               3 // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
+#define            SIZE              15   // 棋盘大小
+#define         MAXSTEP       SIZE*SIZE   // 定义最大步数
+#define        CHARSIZE               3   // 棋盘使用的是UTF8编码，每一个中文字符占用3个字节
 
-#define         MAXLINE              50 // 定义玩家输入的最大长度
-#define        NAMESIZE              20 // 定义玩家输入的名字的最大长度
+#define         MAXLINE              50   // 定义玩家输入的最大长度
+#define        NAMESIZE              20   // 定义玩家输入的名字的最大长度
 
-#define           BLACK               1 // 定义黑方
-#define           WHITE              -1 // 定义白方
-#define          NOBODY               0 // 定义没有人
+#define           BLACK               1   // 定义黑方
+#define           WHITE              -1   // 定义白方
+#define          NOBODY               0   // 定义没有人
 
-#define             YES               1 // 定义是
-#define              NO               0 // 定义否
+#define             YES               1   // 定义是
+#define              NO               0   // 定义否
 
-#define        OVERLINE               1 // 定义长连禁手
-#define         D_THREE               2 // 定义三三禁手
-#define          D_FOUR               3 // 定义四四禁手
-#define         COMBINE               4 // 定义组合禁手
+#define        OVERLINE               1   // 定义长连禁手
+#define         D_THREE               2   // 定义三三禁手
+#define          D_FOUR               3   // 定义四四禁手
+#define         COMBINE               4   // 定义组合禁手
 
-#define           WIDTH              80 // 定义决策树每一层最大搜索宽度
-#define           DEPTH               1 // 定义决策树搜索深度
-#define             MAX               1 // 定义 MAX 层
-#define             MIN              -1 // 定义 MIN 层
-#define           INFTY      2000000000 // 定义无穷
+#define           WIDTH              80   // 定义决策树每一层最大搜索宽度
+#define           DEPTH               1   // 定义决策树搜索深度
+#define             MAX               1   // 定义 MAX 层
+#define             MIN              -1   // 定义 MIN 层
+#define           INFTY      2000000000   // 定义无穷
 
 
 // 用于记录玩家落子的坐标
@@ -42,9 +42,9 @@ typedef struct Coordinate{
 
 // 用于记录棋盘上面一个子的信息
 typedef struct Stone{
-   // NO 表示不是当前落子目标，YES 表示是当前落子目标(主要用于图标显示)
+    // NO 表示不是当前落子目标，YES 表示是当前落子目标(主要用于图标显示)
     signed char current;
-   // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY 表示没有棋子
+    // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY 表示没有棋子
     signed char player;
 } Stone;
 

@@ -5,11 +5,11 @@
 
 // 电脑随机落子，返回落子坐标
 Coordinate gorilla(void) {
-   // 创建一颗虚拟棋子
+    // 创建一颗虚拟棋子
     Coordinate coordinate;
-   // 使用当前时间作为随机数种子
+    // 使用当前时间作为随机数种子
     srand(time(0));
-   // 将心中棋盘转换为虚拟棋盘
+    // 将心中棋盘转换为虚拟棋盘
     signed char vBoard[SIZE][SIZE];
     initVBoard(vBoard);
     innerBoard2VBoard(vBoard);

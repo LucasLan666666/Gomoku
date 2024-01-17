@@ -8,8 +8,8 @@ Coordinate struggle(signed char board[SIZE][SIZE], signed char computer){
         for (int j = 0; j < SIZE; j++){
             Coordinate coordinate = {i, j};
             if (board[i][j] == NOBODY && isValid(board, coordinate, computer, NO) == YES) {
-                if (    fiveInARow(board, coordinate, -computer) > 0
-                    || (computer == BLACK) ? overline(board, coordinate, -computer) > 0 : NO
+                if (    (fiveInARow(board, coordinate, -computer) > 0)
+                    || ((computer == BLACK) ? overline(board, coordinate, WHITE) > 0 : NO)
                     ) {
                     return coordinate;
                 }
@@ -22,7 +22,7 @@ Coordinate struggle(signed char board[SIZE][SIZE], signed char computer){
             Coordinate coordinate = {i, j};
             if (board[i][j] == NOBODY && isValid(board, coordinate, computer, NO) == YES) {
                 if (isValid(board, coordinate, -computer, NO) == YES) {
-                    if (   three(board, coordinate, -computer) + four(board, coordinate, -computer) + straightFour(board, coordinate, -computer)> 1) {
+                    if (   three(board, coordinate, -computer) + four(board, coordinate, -computer) + straightFour(board, coordinate, -computer) > 1) {
                         return coordinate;
                     }
                 }

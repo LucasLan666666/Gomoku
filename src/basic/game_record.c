@@ -55,9 +55,9 @@ int isFileExist(const char *filename) {
 void createGameRecordFile(void) {
     char localTime[NAMESIZE]; // 用于储存对局开始时间
     // 先创建棋谱文件夹
-    #ifdef _WIN32  // 如果是 Windows 系统
+    #ifdef _WIN32 // 如果是 Windows 系统
         mkdir("game_record");
-    #else  // 如果是 Unix-like 系统
+    #else // 如果是 Unix-like 系统
         mkdir("game_record", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     #endif
 
@@ -68,12 +68,12 @@ void createGameRecordFile(void) {
         mygetline(line);
     }
 
-   // 获取当前时间
+    // 获取当前时间
     time_t now = time(NULL);
     struct tm *t = localtime(&now);
         strftime(localTime, NAMESIZE, "%Y-%m-%d_%H-%M-%S", t);
     
-   // 针对玩家输入创建文件
+    // 针对玩家输入创建文件
     while (1) {
         if (strcmp(line, "") == 0) { // 玩家输入空字符，用时间命名
         sprintf(roundName, "%s%s", "Game-", localTime); // 将时间转化为字符串
@@ -88,12 +88,12 @@ void createGameRecordFile(void) {
         mygetline(line);
     }
     
-   // 修改时间打入棋谱的格式
+    // 修改时间打入棋谱的格式
     strftime(localTime, NAMESIZE, "%Y/%m/%d %H:%M:%S", t);
     
-   // 创建文件
+    // 创建文件
     FILE *fp = fopen(pathOfRound, "w"); // 创建文件
-   // 写入文件
+    // 写入文件
     fprintf(fp, "# Round Name:  %s\n", roundName);
     fprintf(fp, "# Round Time:  %s\n", localTime);
     fprintf(fp, "# Game Mode(1 for pvp while 2 for pve):\n");
@@ -112,7 +112,7 @@ void createGameRecordFile(void) {
 // 记录棋谱到本地
 void recordGameRoundToLocal(void) {
     FILE *fp = fopen(pathOfRound, "a");
-   // 写入文件
+    // 写入文件
     sprintf(stepName, "%c%d", stepRecord[stepNum].y + 'A', SIZE - stepRecord[stepNum].x); // 将坐标转化为字符串，储存在stepName中
     if (gameMode == 2 && player == computer) {
         fprintf(fp, "# ");
@@ -120,14 +120,14 @@ void recordGameRoundToLocal(void) {
         fprintf(fp, "  ");
     }
     fprintf(fp, "%s\n", stepName);
-   // 关闭文件
+    // 关闭文件
     fclose(fp);
 }
 
 void saveRegretToLocal(void) {
     FILE *fp = fopen(pathOfRound, "a");
-   // 写入文件
+    // 写入文件
     fprintf(fp, "  regret\n");
-   // 关闭文件
+    // 关闭文件
     fclose(fp);
 }

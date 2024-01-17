@@ -120,7 +120,7 @@ void printDisplayBoard(void) {
     int clear = system(CLEAR_SCREEN); // 清屏
     (void)clear;
 
-   // 输出提示信息
+    // 输出提示信息
     if (gameMode == 1) {
         printf("    双      人      模      式\n\n");
     } else {
@@ -129,12 +129,12 @@ void printDisplayBoard(void) {
     printf("    本游戏支持一些指令：\n");
     printf("    quit/q -> 回到主页面  regret/r -> 悔棋\n\n");
     
-   // 将心中棋盘转换为虚拟棋盘
+    // 将心中棋盘转换为虚拟棋盘
     signed char vBoard[SIZE][SIZE];
     initVBoard(vBoard);
     innerBoard2VBoard(vBoard);
 
-   // 将displayBoard输出到屏幕上
+    // 将displayBoard输出到屏幕上
     if (getWinner(vBoard) == NOBODY && stepNum < MAXSTEP) {
         if (gameMode == 1) {
             for (int i = 0; i < SIZE; i++) {
@@ -156,7 +156,7 @@ void printDisplayBoard(void) {
             }
         }
     }
-   // 输出最下面的一行字母A B ....
+    // 输出最下面的一行字母A B ....
     printf("   ");
     for (i = 0; i < SIZE; i++)
         printf("%2c", 'A' + i);

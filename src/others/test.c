@@ -3,7 +3,7 @@
 
 // 眠三函数功能测试（眠三判定太复杂了，所以专门开个函数测试一下）
 void testForSleepThree(Coordinate coordinate) {
-   // 将心中棋盘转换为虚拟棋盘
+    // 将心中棋盘转换为虚拟棋盘
     signed char vBoard[SIZE][SIZE];
     initVBoard(vBoard);
     innerBoard2VBoard(vBoard);
@@ -19,7 +19,7 @@ Coordinate testSpeed(void){
             coordinate = gorilla();
         }
     }
-   // 结论：不利用剪枝操作时，最多搜两层，否则会超时
+    // 结论：不利用剪枝操作时，最多搜两层，否则会超时
     return coordinate;
 }
 
@@ -32,19 +32,19 @@ Coordinate testAI(void) {
     } else if (stepNum == 2) {
         coordinate.x = 1;
         coordinate.y = 5;
-   // } else if (stepNum == 4) {
-   //     coordinate.x = 14;
-   //     coordinate.y = 0;
-   // } else if (stepNum == 6) {
-   //     coordinate.x = 14;
-   //     coordinate.y = 14;
-   // } else if (stepNum == 8) {
-   //     coordinate.x = 2;
-   //     coordinate.y = 3;
+    // } else if (stepNum == 4) {
+    //     coordinate.x = 14;
+    //     coordinate.y = 0;
+    // } else if (stepNum == 6) {
+    //     coordinate.x = 14;
+    //     coordinate.y = 14;
+    // } else if (stepNum == 8) {
+    //     coordinate.x = 2;
+    //     coordinate.y = 3;
     } else {
-       // 开局布阵完毕，用 AI2.0 判断
+        // 开局布阵完毕，用 AI2.0 判断
         coordinate = AI_Second();
-       // coordinate = gorilla();
+        // coordinate = gorilla();
     }
     return coordinate;
 }

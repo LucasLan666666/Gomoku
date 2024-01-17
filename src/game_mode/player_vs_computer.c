@@ -28,10 +28,10 @@ void playerVsComputer(void) {
             printf("    电脑落子的位置为：%s\n", stepName);
         }
 
-       // 眠三函数功能测试
-       // testForSleepThree(stepRecord[stepNum - 2]);
+        // 眠三函数功能测试
+        // testForSleepThree(stepRecord[stepNum - 2]);
 
-       // 输出当前等待落子的玩家
+        // 输出当前等待落子的玩家
         if (player != computer) {
             printf("    现在请%s落子：", (player == BLACK) ? "黑方" : "白方");
         }
@@ -45,9 +45,9 @@ void playerVsComputer(void) {
             }
         } else {
             stepRecord[stepNum] = AI(computer); // AI 下棋
-           // stepRecord[stepNum] = testAI(); // 测试AI 下棋
-           // stepRecord[stepNum] = gorilla(); // 电脑随机下棋
-           // stepRecord[stepNum] = testSpeed(); // 测试电脑运算速度
+            // stepRecord[stepNum] = testAI(); // 测试AI 下棋
+            // stepRecord[stepNum] = gorilla(); // 电脑随机下棋
+            // stepRecord[stepNum] = testSpeed(); // 测试电脑运算速度
             check = 0; // 因为电脑默认只会下棋，不会悔棋
         }
         switch (check) {
@@ -71,7 +71,7 @@ int placeStonePvE(void) {
         recordGameRoundToLocal(); // 记录棋谱到本地
     }
 
-   // 将心中棋盘转换为虚拟棋盘
+    // 将心中棋盘转换为虚拟棋盘
     signed char vBoard[SIZE][SIZE];
     initVBoard(vBoard);
     innerBoard2VBoard(vBoard);
@@ -86,7 +86,7 @@ int placeStonePvE(void) {
         }
         printf("    输入 q 返回主页, 或者输入 r 悔棋：");
         mygetline(line);
-       // 对玩家输入进行判断：如果输入的是坐标，返回 0；如果输入的是 quit 指令，返回 1；如果输入的是 regret 指令，返回 2；如果输入有误，返回 -1
+        // 对玩家输入进行判断：如果输入的是坐标，返回 0；如果输入的是 quit 指令，返回 1；如果输入的是 regret 指令，返回 2；如果输入有误，返回 -1
         while ((check = inputCheckInGame()) == -1 || check == 0) {
             printf("    您的输入有误，请重新输入:");
             mygetline(line);
@@ -104,9 +104,9 @@ int placeStonePvE(void) {
             return NO;
         }
     }
-   // 步数+1
+    // 步数+1
     stepNum++;
-   // 转换玩家，黑方下完白方下，白方下完黑方下
+    // 转换玩家，黑方下完白方下，白方下完黑方下
     player = -player;
 
     return NO;
@@ -114,7 +114,7 @@ int placeStonePvE(void) {
 
 // 人机对战模式的悔棋模式
 void regretPvE(void) {
-   // 这里只有人会悔棋，考虑到人会在机器下完后悔棋，所以一次会悔两步（到上一次自己下棋的地方）
+    // 这里只有人会悔棋，考虑到人会在机器下完后悔棋，所以一次会悔两步（到上一次自己下棋的地方）
     regretPvP();
     regretPvP();
 }

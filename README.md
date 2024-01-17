@@ -10,13 +10,6 @@
 ## 注意事项 :heavy_exclamation_mark:
 
 1.  `Linux` 环境下，请将终端的字符编码格式设置为 `utf-8` ，字符显示设置为 **窄字符**
-2.  `Windows` 环境下，可能会出现乱码，需要更改 `PowerShell` 的输出编码，需要运行前在终端输入如下命令：
-
-    ```powershell
-    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-    ```
-
-    
 3. 请确保程序执行目录下具有创建和读写文件与文件夹的权限，否则不能使用记谱与悔棋功能
 4. ***请不要在游戏过程中修改或者删除 `game_record` 文件夹以及该目录下的文件，否则会导致严重错误！*** :cold_sweat:
 
@@ -38,9 +31,7 @@
       ./gomoku
       ```
 
-      
-
-   - `Windows` 环境下，可以直接点击 `gomoku.exe` 运行，或者在 `Powershell` 输入如下命令：
+   - `Windows` 环境下，可以直接点击 `gomoku.exe` 运行，或者在 `PowerShell` / `cmd` 输入如下命令：
 
       ```powershell
       .\gomoku

@@ -10,6 +10,9 @@ int gameMode; // 游戏模式，1 表示双人对战，2 表示人机对战，3 
 signed char computer; // 电脑执子，BLACK 为黑子，WHITE 为白子
 
 int main() {
+    #ifdef _WIN32
+        system("chcp 65001"); // 设置 Windows 控制台编码为 utf-8
+    #endif
     while (1) {
         homePage();
         switch (gameMode) {

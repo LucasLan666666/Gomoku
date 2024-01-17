@@ -3,7 +3,7 @@
 
 // AI 下棋，接受电脑颜色作为参数，调整下棋策略，返回落子坐标
 Coordinate AI(signed char computer) {
-   // 创建一颗虚拟棋子
+    // 创建一颗虚拟棋子
     Coordinate coordinate;
     if (computer == BLACK) {
         coordinate = AI_black(); // 黑棋策略
@@ -15,16 +15,16 @@ Coordinate AI(signed char computer) {
 
 // AI 执黑
 Coordinate AI_black() {
-   // 创建一颗虚拟棋子
+    // 创建一颗虚拟棋子
     Coordinate coordinate;
 
-   // 先布局
+    // 先布局
     if (stepNum == 0) {
-       // 天元开局
+        // 天元开局
         coordinate.x = SIZE / 2;
         coordinate.y = SIZE / 2;
     } else if (stepNum == 2) {
-       // 白棋位置，看看能不能浦月开局
+        // 白棋位置，看看能不能浦月开局
         if (innerBoard[SIZE / 2 + 1][SIZE / 2 + 1].player == WHITE) {
             coordinate.x = SIZE / 2 + 1;
             coordinate.y = SIZE / 2 - 1;
@@ -37,7 +37,7 @@ Coordinate AI_black() {
         } else if (innerBoard[SIZE / 2 - 1][SIZE / 2 + 1].player == WHITE) {
             coordinate.x = SIZE / 2 + 1;
             coordinate.y = SIZE / 2 + 1;
-       // 看看能不能花月开局
+        // 看看能不能花月开局
         } else if (innerBoard[SIZE / 2][SIZE / 2 + 1].player == WHITE) {
             coordinate.x = SIZE / 2 + 1;
             coordinate.y = SIZE / 2 + 1;
@@ -51,11 +51,11 @@ Coordinate AI_black() {
             coordinate.x = SIZE / 2 - 1;
             coordinate.y = SIZE / 2 + 1;
         } else {
-           // 对方走棋不满足花浦月开局条件，开始使用 AI 算法
+            // 对方走棋不满足花浦月开局条件，开始使用 AI 算法
             coordinate = AI_Second();
         }
     } else {
-       // 开局布阵完毕，用 AI2.0 判断
+        // 开局布阵完毕，用 AI2.0 判断
         coordinate = AI_Second();
     }
     return coordinate;
@@ -63,10 +63,10 @@ Coordinate AI_black() {
 
 // AI 执白
 Coordinate AI_white() {
-   // 创建一颗虚拟棋子
+    // 创建一颗虚拟棋子
     Coordinate coordinate;
 
-   // 先防守
+    // 先防守
     if (stepNum == 1) {
         signed char dx = 0;
         signed char dy = 0;
@@ -91,7 +91,7 @@ Coordinate AI_white() {
             coordinate.x = first_black.x;
         }
     } else {
-       // 开局布阵完毕，用 AI2.0 判断
+        // 开局布阵完毕，用 AI2.0 判断
         coordinate = AI_Second();
     }
     return coordinate;
