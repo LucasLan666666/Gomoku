@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include "../gomoku.h"
 
+const signed char directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}}; // 横向，纵向，主对角线，副对角线
+
 // 判断是否有胜者出现：若黑棋获胜，返回 BLACK；白棋获胜，返回 WHITE；未出现胜者，返回 NOBODY
 int getWinner(signed char vBoard[SIZE][SIZE]) {
-    signed char directions[4][2] = {{0, 1}, {1, 0}, {1, 1}, {1, -1}}; // 横向，纵向，主对角线，副对角线
-
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             if (vBoard[i][j] != NOBODY) {
@@ -65,17 +65,21 @@ int isValid(signed char board[SIZE][SIZE], Coordinate coordinate, signed char pl
 int isForbiddenMove(signed char vBoard[SIZE][SIZE], Coordinate coordinate, signed char player) {
     if (player == WHITE) {
         return NO;
-    }if (fiveInARow(vBoard, coordinate, player) >= 1) {
-        return NO;
-    } else if (overline(vBoard, coordinate, player) >= 1) {
-        return OVERLINE;
-    } else if (three(vBoard, coordinate, player) >= 2 && four(vBoard, coordinate, player) == 0 && straightFour(vBoard, coordinate, player) == 0) {
-        return D_THREE;
-    } else if ((four(vBoard, coordinate, player) + straightFour(vBoard, coordinate, player)) >= 2 && three(vBoard, coordinate, player) == 0) {
-        return D_FOUR;
-    } else if (three(vBoard, coordinate, player) >= 2 || (four(vBoard, coordinate, player) + straightFour(vBoard, coordinate, player)) >= 2) {
-        return COMBINE;
-    } else {
+    }
+    if (fiveInARow(vBoard, coordinate, player) >= 1) {
         return NO;
     }
+    if (overline(vBoard, coordinate, player) >= 1) {
+        return OVERLINE;
+    }
+    if (three(vBoard, coordinate, player) >= 2 && four(vBoard, coordinate, player) == 0 && straightFour(vBoard, coordinate, player) == 0) {
+        return D_THREE;
+    }
+    if ((four(vBoard, coordinate, player) + straightFour(vBoard, coordinate, player)) >= 2 && three(vBoard, coordinate, player) == 0) {
+        return D_FOUR;
+    }
+    if (three(vBoard, coordinate, player) >= 2 || (four(vBoard, coordinate, player) + straightFour(vBoard, coordinate, player)) >= 2) {
+        return COMBINE;
+    }
+    return NO;
 }

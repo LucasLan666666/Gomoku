@@ -5,7 +5,6 @@
 int three(signed char board[SIZE][SIZE], Coordinate coordinate, signed char player) {
     signed char x = coordinate.x;
     signed char y = coordinate.y;
-    signed char directions[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}}; // 四个方向：水平、垂直、主对角线、副对角线
     signed char board_copy[SIZE][SIZE];
     int num = 0;
 

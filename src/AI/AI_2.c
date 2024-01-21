@@ -10,7 +10,7 @@ Coordinate AI_Second(void){
     innerBoard2VBoard(board);
 
     // 创建预测落子列表
-    Pre sequence[MAXSTEP*MAXSTEP];
+    Pre sequence[MAXSTEP * MAXSTEP];
 
     // 列表的真实长度
     int len = 0;
@@ -18,10 +18,9 @@ Coordinate AI_Second(void){
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             Coordinate temp1 = {i, j};
-            if (
-                    board[i][j] == NOBODY
-                &&  isValid(board, temp1, computer, NO)
-            ){
+            if (board[i][j] == NOBODY &&
+                isValid(board, temp1, computer, NO))
+            {
                 // 为了防止修改原棋盘，这里需要复制一份
                 signed char board_copy[SIZE][SIZE];
                 initVBoard(board_copy);
@@ -90,7 +89,7 @@ Coordinate AI_Second(void){
     }
 
     // 如果已知必死无疑，挣扎一下
-    if (maxMinScore == -2000000000) {
+    if (maxMinScore == -INFTY) {
         bestStep = struggle(board, computer);
     }
     return bestStep;

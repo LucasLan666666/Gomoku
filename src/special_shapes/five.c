@@ -7,11 +7,7 @@ int fiveInARow(signed char board[SIZE][SIZE], Coordinate coordinate, signed char
     signed char y = coordinate.y;
     signed char dx;
     signed char dy;
-    signed char directions[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}}; // 四个方向：水平、垂直、主对角线、副对角线
-    signed char board_copy[SIZE][SIZE];
     int num = 0;
-
-    copyBoard(board_copy, board); // 再构建一个棋盘副本
 
     // 遍历四个方向
     for (int i = 0; i < 4; i++) {
@@ -20,7 +16,7 @@ int fiveInARow(signed char board[SIZE][SIZE], Coordinate coordinate, signed char
         // 向一个方向查找
         dx = directions[i][0];
         dy = directions[i][1];
-        while (x + dx >= 0 && x + dx < SIZE && y + dy >= 0 && y + dy < SIZE && board_copy[x + dx][y + dy] == player) {
+        while (x + dx >= 0 && x + dx < SIZE && y + dy >= 0 && y + dy < SIZE && board[x + dx][y + dy] == player) {
             count++;
             dx += directions[i][0];
             dy += directions[i][1];
@@ -29,7 +25,7 @@ int fiveInARow(signed char board[SIZE][SIZE], Coordinate coordinate, signed char
         // 向相反方向查找
         dx = -directions[i][0];
         dy = -directions[i][1];
-        while (x + dx >= 0 && x + dx < SIZE && y + dy >= 0 && y + dy < SIZE && board_copy[x + dx][y + dy] == player) {
+        while (x + dx >= 0 && x + dx < SIZE && y + dy >= 0 && y + dy < SIZE && board[x + dx][y + dy] == player) {
             count++;
             dx -= directions[i][0];
             dy -= directions[i][1];

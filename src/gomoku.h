@@ -68,11 +68,11 @@ typedef struct Pre {
 } Pre;
 
 // 字符艺术
-extern const char* HAPPY_GOMOKU[];
-extern const char* FROG[];
-extern const char* DOGE[];
-extern const char* INTELLIGENT_DOGE[];
-extern const char* GAME_OVER[];
+extern const char *HAPPY_GOMOKU[];
+extern const char *FROG[];
+extern const char *DOGE[];
+extern const char *INTELLIGENT_DOGE[];
+extern const char *GAME_OVER[];
 
 extern int gameMode; // 游戏模式，1 表示双人对战，2 表示人机对战，3 表示退出游戏，-1 表示输入有误
 extern signed char computer; // 电脑执子，BLACK 为黑子，WHITE 为白子
@@ -106,6 +106,9 @@ extern signed char player;
 
 // 记录读取到的一行
 extern char line[];
+
+// 横向，纵向，主对角线，副对角线
+extern const signed char directions[4][2];
 
 void homePage(void); // 初始化整个游戏，回到主页面，根据玩家输入确定游戏模式，读到 quit 或者 q 时退出游戏
 void whoGoFirst(void); // 提示玩家输入电脑执子的颜色，并修改 computer 的值

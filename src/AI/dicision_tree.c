@@ -101,7 +101,7 @@ void buildDecisionTree(Node *pnode, signed char depth) {
 }
 
 // 从叶子节点开始回溯，找到最优解的坐标
-// Coordinate findBestMove(Node *pnode, int* row, int* col) {
+// Coordinate findBestMove(Node *pnode, int *row, int *col) {
 //     if (pnode->floor == 0) {
 //        // 已经回溯到根节点，返回最优解的坐标
 //         *row = node->bestRow;

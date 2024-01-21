@@ -16,4 +16,3 @@ debug:
 
 clean:
 	rm -f gomoku
-	

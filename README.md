@@ -76,8 +76,7 @@ cat game_record/您的存档名.txt - | ./gomoku
 - 2024.01.14:
     - 实现基本的 **人机对战** 功能，下棋能力可以达到小学生水平（应该吧 :sweat_smile: ）
 
-
-## 参考资料
+## 参考资料 :books:
 
 - [International Rules of Renju - RenjuNet](https://www.renju.net/rifrules/)
 - [lihongxun945/gobang: javascript gobang AI，JS五子棋AI，源码+教程，基于Alpha-Beta剪枝算法（不是神经网络） (github.com)](https://github.com/lihongxun945/gobang?tab=readme-ov-file)

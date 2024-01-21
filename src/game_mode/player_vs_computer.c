@@ -52,11 +52,15 @@ void playerVsComputer(void) {
         }
         switch (check) {
         case 0:
-            quit = placeStonePvE(); break;
+            quit = placeStonePvE();
+            break;
         case 1:
-            quit = YES; break; // 退出 while 循环
+            quit = YES;
+            break; // 退出 while 循环
         case 2:
-            regretPvE(); regret = YES; break;
+            regretPvE();
+            regret = YES;
+            break;
         default:
             break;
         }

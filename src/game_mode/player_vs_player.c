@@ -34,11 +34,15 @@ void playerVsPlayer(void) {
         }
         switch (check) {
         case 0:
-            quit = placeStonePvP(); break;
+            quit = placeStonePvP();
+            break;
         case 1:
-            quit = YES; break;  // 退出 while 循环
+            quit = YES;
+            break;  // 退出 while 循环
         case 2:
-            regretPvP(); regret = YES; break;
+            regretPvP();
+            regret = YES;
+            break;
         default:
             break;
         }
@@ -48,6 +52,7 @@ void playerVsPlayer(void) {
 // 人人对战下棋的主要内容，将玩家输入的正确坐标转化为心中的棋盘，记录棋谱，并判赢；若判得游戏结束，返回 YES
 int placeStonePvP(void) {
     int check;  // 储存读取输入的相关信息
+
     coordinateToPlaceStone();  // 将坐标转化为棋盘上的落子
     if (gameRecord && readWritePermission) {  // 判断是否开启记谱模式，以及是否有读写权限
         recordGameRoundToLocal();  // 记录棋谱到本地
