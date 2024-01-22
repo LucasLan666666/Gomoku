@@ -17,11 +17,14 @@ int main() {
         homePage();
         switch (gameMode) {
             case 1:
-                playerVsPlayer(); break;
+                playerVsPlayer();
+                break;
             case 2:
-                playerVsComputer(); break;
+                playerVsComputer();
+                break;
             case 3:
-                end(); break;
+                end();
+                break;
         }
     }
 }

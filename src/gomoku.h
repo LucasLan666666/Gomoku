@@ -35,13 +35,13 @@
 
 
 // 用于记录玩家落子的坐标
-typedef struct Coordinate{
+typedef struct Coordinate {
     signed char x;
     signed char y;
 } Coordinate;
 
 // 用于记录棋盘上面一个子的信息
-typedef struct Stone{
+typedef struct Stone {
     // NO 表示不是当前落子目标，YES 表示是当前落子目标(主要用于图标显示)
     signed char current;
     // 玩家，BLACK 表示黑方，WHITE 表示白方, NOBODY 表示没有棋子
