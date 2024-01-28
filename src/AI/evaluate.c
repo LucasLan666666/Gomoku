@@ -30,7 +30,7 @@ int evaluate(signed char board[SIZE][SIZE], signed char computer) {
                     if (fiveInARow(board, coordinate, BLACK) > 0) {
                         score += 500000000;
                     } else if ((three(board, coordinate, BLACK) == 1 && four(board, coordinate, BLACK) == 1) ||
-                               straightFour(board, coordinate, BLACK) > 0
+                                straightFour(board, coordinate, BLACK) > 0
                                 ) {
                         score += 5000000;
                     } else if (four(board, coordinate, BLACK) > 0) {
@@ -69,7 +69,7 @@ int evaluate(signed char board[SIZE][SIZE], signed char computer) {
                     if (fiveInARow(board, coordinate, WHITE) > 0 || overline(board, coordinate, WHITE) > 0) {
                         score += 100000000;
                     } else if (three(board, coordinate, WHITE) + four(board, coordinate, WHITE) > 1 ||
-                               straightFour(board, coordinate, WHITE) > 0
+                                straightFour(board, coordinate, WHITE) > 0
                                 ) {
                         score += 5000000;
                     } else if (four(board, coordinate, WHITE) > 0) {

@@ -95,7 +95,7 @@ extern const char play1CurrentPic[]; // 黑棋子的当前落子位置
 extern const char play2Pic[]; // 白棋子
 extern const char play2CurrentPic[]; // 白棋子的当前落子位置
 
-// 当前的棋盘的格局 
+// 当前的棋盘的格局
 extern Stone innerBoard[SIZE][SIZE];
 
 // 显示的棋盘
@@ -143,7 +143,7 @@ void mygetline(char *line);
  *      如果输入 1，返回 1；
  *      如果输入 2，返回 2；
  *      如果输入 quit 指令，返回 3；
- *      如果输入有误，返回 -1；    
+ *      如果输入有误，返回 -1；
  */
 int inputCheckInHomePage(void);
 

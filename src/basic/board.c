@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "../gomoku.h"
 
-// 空棋盘模板 
+// 空棋盘模板
 signed char emptyDisplayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1] = {
 	"┌─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┬─┐",
 	"├─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┼─┤",
@@ -28,16 +28,16 @@ const char play1CurrentPic[]="▲"; // 黑棋子的当前落子位置
 const char play2Pic[]="◎"; // 白棋子
 const char play2CurrentPic[]="△"; // 白棋子的当前落子位置
 
-// 心中的的棋盘的格局 
+// 心中的的棋盘的格局
 Stone innerBoard[SIZE][SIZE];
 
-// 显示的棋盘 
+// 显示的棋盘
 char displayBoard[SIZE][(2 * SIZE - 1) * CHARSIZE + 1];
 
 // 当前等待落子的玩家，1表示黑方，2表示白方
 signed char player;
 
-// 初始化一个空棋盘格局 
+// 初始化一个空棋盘格局
 void initInnerBoard(void) {
 	//通过二重循环，将 innerBoard 清 0
     int i, j;
@@ -78,7 +78,7 @@ void innerBoard2Displayboard(void) {
                     displayBoard[i][2 * j * CHARSIZE + 1] = play2Pic[1];
                     displayBoard[i][2 * j * CHARSIZE + 2] = play2Pic[2];
                 }
-            } else if (innerBoard[i][j].current == YES) {        
+            } else if (innerBoard[i][j].current == YES) {
                 if (innerBoard[i][j].player == BLACK) {
                     displayBoard[i][2 * j * CHARSIZE] = play1CurrentPic[0];
                     displayBoard[i][2 * j * CHARSIZE + 1] = play1CurrentPic[1];
@@ -89,7 +89,6 @@ void innerBoard2Displayboard(void) {
                     displayBoard[i][2 * j * CHARSIZE + 2] = play2CurrentPic[2];
                 }
             }
-            
         }
     }
 }
@@ -113,7 +112,7 @@ void copyBoard(signed char to[SIZE][SIZE], signed char from[SIZE][SIZE]) {
     }
 }
 
-//显示棋盘格局 
+//显示棋盘格局
 void printDisplayBoard(void) {
 	int i;
 	// 清屏
@@ -128,7 +127,7 @@ void printDisplayBoard(void) {
     }
     printf("    本游戏支持一些指令：\n");
     printf("    quit/q -> 回到主页面  regret/r -> 悔棋\n\n");
-    
+
     // 将心中棋盘转换为虚拟棋盘
     signed char vBoard[SIZE][SIZE];
     initVBoard(vBoard);

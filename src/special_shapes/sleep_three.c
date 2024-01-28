@@ -269,7 +269,7 @@ int sleepThree(signed char board[SIZE][SIZE], Coordinate coordinate, signed char
                             dx_2 += directions[i][0];
                             dy_2 += directions[i][1];
                         }
-                        
+
                         // 判断能否形成四子连珠的冲四
                         if (avail_five == 1) {
                             num++;
@@ -337,7 +337,7 @@ int sleepThree(signed char board[SIZE][SIZE], Coordinate coordinate, signed char
                     if (isForbiddenMove(board_copy, newCoordinate1, player) == NO) { // 判断第四颗棋子能否落下
                         int avail_five = 0; // 记录四子连珠两端能形成五连的数量
                         board_copy[newCoordinate1.x][newCoordinate1.y] = player; // 假设落下了第四颗棋子
-                        
+
                         // 看一看正方向第五个是不是空位
                         if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY) {
                             Coordinate newCoordinate = {x + dx_1, y + dy_1};
@@ -368,7 +368,7 @@ int sleepThree(signed char board[SIZE][SIZE], Coordinate coordinate, signed char
                             dx_2 += directions[i][0];
                             dy_2 += directions[i][1];
                         }
-                        
+
                         // 判断能否形成四子连珠的冲四
                         if (avail_five == 1) {
                             num++;
@@ -635,7 +635,7 @@ int sleepThree(signed char board[SIZE][SIZE], Coordinate coordinate, signed char
                                 avail_five++;
                             }
                         }
-                        
+
                         // 判断能否形成四子连珠的冲四
                         if (avail_five == 1) {
                             num++;
@@ -733,7 +733,7 @@ int sleepThree(signed char board[SIZE][SIZE], Coordinate coordinate, signed char
                                 avail_five++;
                             }
                         }
-                        
+
                         // 判断能否形成四子连珠的冲四
                         if (avail_five == 1) {
                             num++;

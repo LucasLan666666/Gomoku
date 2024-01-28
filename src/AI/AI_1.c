@@ -19,7 +19,7 @@ Coordinate AI_First(void) {
 
     // 通过 alpha-beta 剪枝便遍历决策树，找到最优解
     coordinate = alphaBetaPruning(root, DEPTH, -INFTY, INFTY);
-    
+
     // 释放内存
     freeNode(root);
     return coordinate;

@@ -43,7 +43,7 @@ void homePage(void) {
     printf("输入“quit”或者“q”可以退出游戏，此外，在游戏任何时候输入 EOF，也可以强制退出整个游戏\n");
     printf("（EOF 为文件结束符，Linux 下默认是“Ctrl + D”，Windows 下默认是“Ctrl + Z”后回车）\n");
     printf("请选择您的游戏模式（1：人人 2：人机）：");
-    
+
     mygetline(line); // 从键盘读取输入到 line 中，根据结果对 gameMode 赋值
     while ((gameMode = inputCheckInHomePage()) == -1) {
             printf("您的输入有误，请重新输入：");
@@ -77,12 +77,12 @@ void end(void) {
 // 提示玩家输入电脑执子的颜色，并修改 computer 的值
 void whoGoFirst(void) {
     printf("下面请选择电脑所执子的颜色（1：黑色 2：白色）：");
-    mygetline(line);            
+    mygetline(line);
     while (1) {
         if ((strcmp(line, "1") == 0) || (strcmp(line, "") == 0)) {
             computer = BLACK;
             break;
-        } else if (strcmp(line, "2") == 0) { 
+        } else if (strcmp(line, "2") == 0) {
             computer = WHITE;
             break;
         } else {

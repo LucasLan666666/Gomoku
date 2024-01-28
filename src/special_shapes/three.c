@@ -202,7 +202,7 @@ int three(signed char board[SIZE][SIZE], Coordinate coordinate, signed char play
                             dx_2 += directions[i][0];
                             dy_2 += directions[i][1];
                         }
-                        
+
                         // 判断这个 1-0-2 能否形成活四
                         if (avail_five == 2) {
                             num++;
@@ -275,7 +275,7 @@ int three(signed char board[SIZE][SIZE], Coordinate coordinate, signed char play
 
         // 2-0-1 类型，可能在两个相反方向上形成不同的活三，每个活三只有一种成活四方式
         } else if (count == 2) {
-          
+
             // 正方向的 2-0-1
             if (x + dx1 >= 0 && x + dx1 < SIZE && y + dy1 >= 0 && y + dy1 < SIZE && board_copy[x + dx1][y + dy1] == NOBODY) { // 判断是不是空位
                 signed char dx_1 = dx1;
@@ -296,7 +296,7 @@ int three(signed char board[SIZE][SIZE], Coordinate coordinate, signed char play
                     if (isForbiddenMove(board_copy, newCoordinate, player) == NO) { // 判断第四颗棋子能否落下
                         int avail_five = 0; // 记录四子连珠两端能形成五连的数量
                         board_copy[newCoordinate.x][newCoordinate.y] = player; // 假设落下了第四颗棋子
-                        
+
                         // 看一看正方向第五个是不是空位
                         if (x + dx_1 >= 0 && x + dx_1 < SIZE && y + dy_1 >= 0 && y + dy_1 < SIZE && board_copy[x + dx_1][y + dy_1] == NOBODY) {
                             Coordinate newCoordinate = {x + dx_1, y + dy_1};
@@ -327,7 +327,7 @@ int three(signed char board[SIZE][SIZE], Coordinate coordinate, signed char play
                             dx_2 += directions[i][0];
                             dy_2 += directions[i][1];
                         }
-                        
+
                         // 判断这个 2-0-1 能否形成活四
                         if (avail_five == 2) {
                             num++;
@@ -388,7 +388,7 @@ int three(signed char board[SIZE][SIZE], Coordinate coordinate, signed char play
                             dx_2 += directions[i][0];
                             dy_2 += directions[i][1];
                         }
-                        
+
                         // 判断这个 2-0-1 能否形成活四
                         if (avail_five == 2) {
                             num++;

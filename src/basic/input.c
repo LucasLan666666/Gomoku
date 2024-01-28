@@ -37,7 +37,7 @@ void mygetline(char *line) {
  *      如果输入 1，返回1；
  *      如果输入 2，返回2；
  *      如果输入 quit 指令，返回 3；
- *      如果输入有误，返回 -1；    
+ *      如果输入有误，返回 -1；
  */
 int inputCheckInHomePage(void) {
     if (strcmp(line, "1") == 0) {

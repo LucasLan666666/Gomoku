@@ -8,7 +8,7 @@ SRCDIRS = src/AI src/basic src/evaluate src/special_shapes src/game_mode src/oth
 
 SOURCES = $(foreach dir, $(SRCDIRS), $(wildcard $(dir)/*.c))
 
-all:	
+all:
 	$(CC) $(CFLAGS1) -o gomoku $(SOURCES)
 
 debug:

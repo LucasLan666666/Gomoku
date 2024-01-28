@@ -47,7 +47,7 @@
 `Linux` 环境下，在命令行输入：
 
 ```bash
-cat game_record/您的存档名.txt - | ./gomoku 
+cat game_record/您的存档名.txt - | ./gomoku
 ```
 
 ## 更新日志 :calendar:

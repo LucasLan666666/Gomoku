@@ -18,12 +18,12 @@ char stepName[13]; // 记录下棋内容的字符串
 // 从键盘读取输入判断是否开启记谱模式，1 为是，2 为否，并将结果记录在 gameRecord 和 readWritePermission中
 void isRecord(void) {
     printf("是否记录棋谱？（1：是 2：否）");
-    mygetline(line);            
+    mygetline(line);
     while (1) {
         if (strcmp(line, "1") == 0) {
             gameRecord = YES;
             break;
-        } else if (strcmp(line, "2") == 0) { 
+        } else if (strcmp(line, "2") == 0) {
             gameRecord = NO;
             break;
         } else {
@@ -72,7 +72,7 @@ void createGameRecordFile(void) {
     time_t now = time(NULL);
     struct tm *t = localtime(&now);
         strftime(localTime, NAMESIZE, "%Y-%m-%d_%H-%M-%S", t);
-    
+
     // 针对玩家输入创建文件
     while (1) {
         if (strcmp(line, "") == 0) { // 玩家输入空字符，用时间命名
@@ -87,10 +87,10 @@ void createGameRecordFile(void) {
         printf("文件已存在，请重新输入：");
         mygetline(line);
     }
-    
+
     // 修改时间打入棋谱的格式
     strftime(localTime, NAMESIZE, "%Y/%m/%d %H:%M:%S", t);
-    
+
     // 创建文件
     FILE *fp = fopen(pathOfRound, "w"); // 创建文件
     // 写入文件

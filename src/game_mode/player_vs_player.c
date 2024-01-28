@@ -21,7 +21,7 @@ void playerVsPlayer(void) {
         } else if (stepNum > 0 && regret == YES) {
             printf("    悔棋成功！\n");
         }
-        regret = NO;   
+        regret = NO;
 
         // 输出当前等待落子的玩家
         printf("    现在请%s落子：", (player == BLACK) ? "黑方" : "白方");
